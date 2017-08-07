@@ -3,6 +3,8 @@ package org.ssutown.manna2;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import org.ssutown.manna2.Fragment.FragmentSample;
+
 public class MainActivity extends FragmentActivity {
     FragmentSample fragmentSample;
 

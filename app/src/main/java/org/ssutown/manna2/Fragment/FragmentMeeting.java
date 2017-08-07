@@ -1,4 +1,4 @@
-package org.ssutown.manna2;
+package org.ssutown.manna2.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,21 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.ssutown.manna2.R;
 
-public class FragmentSetting extends Fragment {
+
+public class FragmentMeeting extends Fragment {
     TextView textView;
 
-    public static FragmentSetting newInstance(String text){
-        FragmentSetting fragmentSetting=new FragmentSetting();
+    public static FragmentMeeting newInstance(String text){
+        FragmentMeeting fragmentMeeting=new FragmentMeeting();
         Bundle bundle=new Bundle();
         bundle.putString("text",text);
-        fragmentSetting.setArguments(bundle);
-        return fragmentSetting;
+        fragmentMeeting.setArguments(bundle);
+        return fragmentMeeting;
     }
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_setting,container,false);
+        View view=inflater.inflate(R.layout.fragment_meeting,container,false);
         textView= (TextView) view.findViewById(R.id.textView);
         textView.setText(getArguments().getString("text"));
         return view;

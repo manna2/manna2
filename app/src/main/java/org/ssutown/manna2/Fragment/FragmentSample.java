@@ -1,4 +1,4 @@
-package org.ssutown.manna2;
+package org.ssutown.manna2.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.heima.tabview.library.TabView;
 import com.heima.tabview.library.TabViewChild;
+
+import org.ssutown.manna2.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ public class FragmentSample extends Fragment {
         TabViewChild tabViewChild01=new TabViewChild(R.drawable.tab01_sel,R.drawable.tab01_unsel,"일정",  FragmentPerson.newInstance("일정"));
         TabViewChild tabViewChild02=new TabViewChild(R.drawable.tab02_sel,R.drawable.tab02_unsel,"미팅방",  FragmentMeeting.newInstance("미팅방"));
         TabViewChild tabViewChild03=new TabViewChild(R.drawable.tab03_sel,R.drawable.tab03_unsel,"홈",  FragmentHome.newInstance("홈"));
-        TabViewChild tabViewChild04=new TabViewChild(R.drawable.tab04_sel,R.drawable.tab04_unsel,"스케쥴",FragmentSchedule.newInstance("스케쥴"));
+        TabViewChild tabViewChild04=new TabViewChild(R.drawable.tab04_sel,R.drawable.tab04_unsel,"스케쥴", FragmentSchedule.newInstance("스케쥴"));
         TabViewChild tabViewChild05=new TabViewChild(R.drawable.tab05_sel,R.drawable.tab05_unsel,"설정",  FragmentSetting.newInstance("설정"));
         tabViewChildList.add(tabViewChild01);
         tabViewChildList.add(tabViewChild02);

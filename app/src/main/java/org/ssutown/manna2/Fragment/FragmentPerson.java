@@ -1,4 +1,4 @@
-package org.ssutown.manna2;
+package org.ssutown.manna2.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,21 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.ssutown.manna2.R;
 
-public class FragmentHome extends Fragment {
+
+public class FragmentPerson extends Fragment {
     TextView textView;
 
-    public static FragmentHome newInstance(String text){
-        FragmentHome fragmentHome=new FragmentHome();
+    public static FragmentPerson newInstance(String text){
+        FragmentPerson fragmentPerson=new FragmentPerson();
         Bundle bundle=new Bundle();
         bundle.putString("text",text);
-        fragmentHome.setArguments(bundle);
-        return fragmentHome;
+        fragmentPerson.setArguments(bundle);
+        return fragmentPerson;
     }
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_home,container,false);
+        View view=inflater.inflate(R.layout.fragment_person,container,false);
         textView= (TextView) view.findViewById(R.id.textView);
         textView.setText(getArguments().getString("text"));
         return view;
