@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "460895601492",
+    "firebase_url": "https://manna2-c26ee.firebaseio.com",
+    "project_id": "manna2-c26ee",
+    "storage_bucket": "manna2-c26ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460895601492:android:09021a514a9b3399",
+        "android_client_info": {
+          "package_name": "org.ssutown.manna2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460895601492-b8m54p46jgsrn6i9i3d11484812l04q0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARaOUQPmdSgDY2PV3aiCSPGygb4NB3bnY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
