@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.ssutown.manna2.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
     TextView textView;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("message");
 
     public static FragmentHome newInstance(String text){
         FragmentHome fragmentHome=new FragmentHome();
@@ -27,6 +31,12 @@ public class FragmentHome extends Fragment {
         View view=inflater.inflate(R.layout.fragment_home,container,false);
         textView= (TextView) view.findViewById(R.id.textView);
         textView.setText(getArguments().getString("text"));
+
+
+        myRef.setValue("Hello, World!");
         return view;
     }
+
+
+
 }
