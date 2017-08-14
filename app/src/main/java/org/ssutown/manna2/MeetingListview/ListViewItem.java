@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 public class ListViewItem{
     private Drawable iconDrawable ;
     private String titleStr ;
-    private String descStr ;
+    private String meetingID ;
 
     public void setIcon(Drawable icon) {
         iconDrawable = icon ;
@@ -13,8 +13,8 @@ public class ListViewItem{
     public void setTitle(String title) {
         titleStr = title ;
     }
-    public void setDesc(String desc) {
-        descStr = desc ;
+    public void setMeetingID(String desc) {
+        meetingID = desc ;
     }
 
     public Drawable getIcon() {
@@ -23,7 +23,7 @@ public class ListViewItem{
     public String getTitle() {
         return this.titleStr ;
     }
-    public String getDesc() {
-        return this.descStr ;
+    public String getMeetingID() {
+        return this.meetingID ;
     }
 }
