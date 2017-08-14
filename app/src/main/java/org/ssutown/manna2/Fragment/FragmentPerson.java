@@ -6,13 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import org.ssutown.manna2.MaterialCalendar_Person.MaterialCalendarFragment;
 import org.ssutown.manna2.R;
 
 
 public class FragmentPerson extends Fragment {
-    TextView textView;
 
     public static FragmentPerson newInstance(String text){
         FragmentPerson fragmentPerson=new FragmentPerson();
@@ -25,8 +24,9 @@ public class FragmentPerson extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_person,container,false);
-        textView= (TextView) view.findViewById(R.id.textView);
-        textView.setText(getArguments().getString("text"));
+        if (savedInstanceState == null) {
+            getActivity().getFragmentManager().beginTransaction().add(R.id.main_container, new MaterialCalendarFragment()).commit();
+        }
         return view;
     }
 }
