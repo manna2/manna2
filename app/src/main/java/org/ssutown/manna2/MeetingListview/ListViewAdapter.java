@@ -42,7 +42,7 @@ public class ListViewAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
+//        TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
@@ -52,7 +52,7 @@ public class ListViewAdapter extends BaseAdapter {
         iconImageView.getLayoutParams().height = 150;
         iconImageView.getLayoutParams().width = 150;
         titleTextView.setText(listViewItem.getTitle());
-        descTextView.setText(listViewItem.getDesc());
+//        descTextView.setText(listViewItem.getMeetingID());
 
         return convertView;
     }
@@ -69,13 +69,17 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
+    public void clear(){
+        listViewItemList.clear();
+    }
+
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc) {
+    public void addItem(Drawable icon, String title, String meetingID) {
         ListViewItem item = new ListViewItem();
 
         item.setIcon(icon);
         item.setTitle(title);
-        item.setDesc(desc);
+        item.setMeetingID(meetingID);
 
         listViewItemList.add(item);
     }
