@@ -1,6 +1,6 @@
 package org.ssutown.manna2.Fragment;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
 import org.ssutown.manna2.MeetingListview.ListViewAdapter;
-import org.ssutown.manna2.R;
 import org.ssutown.manna2.MeetingListview.ListViewItem;
+import org.ssutown.manna2.R;
 
 
 public class FragmentMeeting extends Fragment {
@@ -54,14 +55,13 @@ public class FragmentMeeting extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
+
                 ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-
                 String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon() ;
 
-                // TODO : use item data.
+                Intent intent = new Intent(getActivity(), MeetingMainActivity.class);
+                startActivity(intent);
+
             }
         }) ;
 
