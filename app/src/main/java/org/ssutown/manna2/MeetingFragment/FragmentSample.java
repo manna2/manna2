@@ -1,5 +1,6 @@
 package org.ssutown.manna2.MeetingFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.heima.tabview.library.TabView;
 import com.heima.tabview.library.TabViewChild;
 
+import org.ssutown.manna2.MeetingFragment_Merge.BaseActivity;
 import org.ssutown.manna2.R;
 
 import java.util.ArrayList;
@@ -45,6 +47,10 @@ public class FragmentSample extends Fragment {
         tabView.setOnTabChildClickListener(new TabView.OnTabChildClickListener() {
             @Override
             public void onTabChildClick(int  position, ImageView currentImageIcon, TextView currentTextView) {
+                if(position==1) {
+                    Intent intent = new Intent(getActivity(), BaseActivity.class);
+                    startActivity(intent);
+                }
                 // Toast.makeText(getApplicationContext(),"position:"+position,Toast.LENGTH_SHORT).show();
             }
         });
