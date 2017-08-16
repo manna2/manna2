@@ -25,7 +25,7 @@ public class FragmentPerson extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_person,container,false);
         if (savedInstanceState == null) {
-            getActivity().getFragmentManager().beginTransaction().add(R.id.main_container, new MaterialCalendarFragment()).commit();
+            getActivity().getFragmentManager().beginTransaction().add(R.id.main_container1, new MaterialCalendarFragment()).commit();
         }
         return view;
     }
