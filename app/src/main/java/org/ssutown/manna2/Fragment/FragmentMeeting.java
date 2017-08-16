@@ -1,7 +1,6 @@
 package org.ssutown.manna2.Fragment;
 
 import android.content.Intent;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,10 +15,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
-import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
-import org.ssutown.manna2.MeetingListview.ListViewAdapter;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,14 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.MainActivity;
+import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
 import org.ssutown.manna2.MeetingListview.ListViewAdapter;
+import org.ssutown.manna2.MeetingListview.ListViewItem;
 import org.ssutown.manna2.MeetingRoom.Add_Meeting;
 import org.ssutown.manna2.MeetingRoom.meeting;
 import org.ssutown.manna2.MeetingRoom.meeting_Info;
 import org.ssutown.manna2.R;
-
-import org.ssutown.manna2.MeetingListview.ListViewItem;
-
 
 import java.util.ArrayList;
 
