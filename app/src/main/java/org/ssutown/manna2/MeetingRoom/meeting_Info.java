@@ -41,7 +41,7 @@ public class meeting_Info implements Serializable {
         endYear = eY;
         endMonth = eM;
         endDay = eD;
-        min = min;
+        this.min = min;
 
     }
 
