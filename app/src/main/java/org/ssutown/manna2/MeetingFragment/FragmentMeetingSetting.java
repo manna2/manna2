@@ -14,12 +14,12 @@ import org.ssutown.manna2.R;
 public class FragmentMeetingSetting extends Fragment {
     TextView textView;
 
-    public static FragmentHome newInstance(String text){
-        FragmentHome fragmentHome=new FragmentHome();
+    public static FragmentMeetingSetting newInstance(String text){
+        FragmentMeetingSetting fragmentMeetingSetting=new FragmentMeetingSetting();
         Bundle bundle=new Bundle();
         bundle.putString("text",text);
-        fragmentHome.setArguments(bundle);
-        return fragmentHome;
+        fragmentMeetingSetting.setArguments(bundle);
+        return fragmentMeetingSetting;
     }
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,

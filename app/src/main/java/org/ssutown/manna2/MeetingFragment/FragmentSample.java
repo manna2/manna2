@@ -3,6 +3,7 @@ package org.ssutown.manna2.MeetingFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class FragmentSample extends Fragment {
     }
     private void init(){
         //start add data
+        Log.i("meetroom1", "dfwehrd");
         List<TabViewChild> tabViewChildList=new ArrayList<>();
         TabViewChild tabViewChild01=new TabViewChild(R.drawable.notice_sel,R.drawable.notice_unsel,"공지사항",  FragmentNotice.newInstance("공지사항"));
         TabViewChild tabViewChild02=new TabViewChild(R.drawable.integrated_sel,R.drawable.integrated_unsel,"일정 통합",  FragmentIntegrated.newInstance("일정통합"));

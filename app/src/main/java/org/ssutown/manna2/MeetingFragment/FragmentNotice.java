@@ -8,18 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.ssutown.manna2.Fragment.FragmentHome;
 import org.ssutown.manna2.R;
 
 public class FragmentNotice extends Fragment {
     TextView textView;
 
-    public static FragmentHome newInstance(String text){
-        FragmentHome fragmentHome=new FragmentHome();
+    public static FragmentNotice newInstance(String text){
+        FragmentNotice fragmentNotice=new FragmentNotice();
         Bundle bundle=new Bundle();
         bundle.putString("text",text);
-        fragmentHome.setArguments(bundle);
-        return fragmentHome;
+        fragmentNotice.setArguments(bundle);
+        return fragmentNotice;
     }
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,
