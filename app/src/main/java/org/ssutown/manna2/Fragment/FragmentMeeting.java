@@ -58,6 +58,7 @@ public class FragmentMeeting extends Fragment {
 
         Button addMeeting = (Button)view.findViewById(R.id.addmeeting);
         final long userID = ((MainActivity)getActivity()).getUserID();
+
         final ArrayList<String> meetinglist = new ArrayList<>();
 
         //미팅추가버튼
@@ -82,6 +83,28 @@ public class FragmentMeeting extends Fragment {
                 for (final DataSnapshot user : dataSnapshot.getChildren()) {
                     Log.d(TAG, "userlist onDataChange: " + user.getValue(meeting.class).getMeetingID());
                     meetinglist.add(user.getValue(meeting.class).getMeetingID());
+                    Log.d(TAG, "meetinglist: " + meetinglist.toString());
+
+                    databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            adapter.clear();
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                for(int i = 0 ; i<meetinglist.size();i++){
+                                    if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
+                                        Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
+                                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
+                                    }adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -92,25 +115,26 @@ public class FragmentMeeting extends Fragment {
 
         });
 
-        databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                adapter.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    for(int i = 0 ; i<meetinglist.size();i++){
-                        if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
-                            Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
-                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
-                        }adapter.notifyDataSetChanged();
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                adapter.clear();
+//                for(DataSnapshot ds : dataSnapshot.getChildren()){
+//                    for(int i = 0 ; i<meetinglist.size();i++){
+//                        if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
+//                            Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
+//                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
+//                        }adapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         //End adding meetings
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

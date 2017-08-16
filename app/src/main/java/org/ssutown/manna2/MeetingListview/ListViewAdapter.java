@@ -69,10 +69,6 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
-    public void clear(){
-        listViewItemList.clear();
-    }
-
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable icon, String title, String meetingID) {
         ListViewItem item = new ListViewItem();
@@ -82,6 +78,10 @@ public class ListViewAdapter extends BaseAdapter {
         item.setMeetingID(meetingID);
 
         listViewItemList.add(item);
+    }
+
+    public void clear(){
+        listViewItemList.clear();
     }
 }
 
