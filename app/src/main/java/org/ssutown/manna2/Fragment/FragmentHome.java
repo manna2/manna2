@@ -15,8 +15,6 @@ import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
     TextView textView;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
 
     public static FragmentHome newInstance(String text){
         FragmentHome fragmentHome=new FragmentHome();
@@ -32,8 +30,6 @@ public class FragmentHome extends Fragment {
         textView= (TextView) view.findViewById(R.id.textView);
         textView.setText(getArguments().getString("text"));
 
-
-        myRef.setValue("Hello, World!");
         return view;
     }
 

@@ -20,6 +20,8 @@ public class MainActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
 
         login();
+
+        Log.d("ID", "onCreate: " + getUserID());
     }
 
     @Override
@@ -30,6 +32,7 @@ public class MainActivity extends FragmentActivity {
             userID = Kakao_Login.getLong("KAKAO_ID", 0);
         } else {
             Log.d("KAKAO", "onActivityResult: " + String.valueOf(Kakao_Login.getLong("KAKAO_ID", 0)));
+            userID = Kakao_Login.getLong("KAKAO_ID", 0);
         }
     }
 

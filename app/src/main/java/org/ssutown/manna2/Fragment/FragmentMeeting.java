@@ -106,7 +106,7 @@ public class FragmentMeeting extends Fragment {
                     for(int i = 0 ; i<meetinglist.size();i++){
                         if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
                             Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
-                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
+                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),ds.getValue(meeting_Info.class).getMeeting_id());
                         }adapter.notifyDataSetChanged();
                     }
                 }
@@ -122,11 +122,6 @@ public class FragmentMeeting extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-
-                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle();
-                String descStr = item.getMeetingID();
-                Drawable iconDrawable = item.getIcon();
 
                 Intent intent = new Intent(getActivity(), MeetingMainActivity.class);
                 startActivity(intent);
