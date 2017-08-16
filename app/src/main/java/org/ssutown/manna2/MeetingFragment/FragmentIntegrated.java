@@ -25,10 +25,6 @@ public class FragmentIntegrated extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_integrated,container,false);
 
-        Log.i("wldus", "dfwehrd");
-        Toast.makeText(getActivity(),"merge",Toast.LENGTH_SHORT);
-        Log.i("wldus1", "dfwehrd");
-
 //        Intent intent = new Intent(getActivity(), MeetingMainActivity.class);
 //        startActivity(intent);
 
