@@ -33,7 +33,7 @@ public class FragmentSetting extends Fragment {
         view.findViewById(R.id.outlook).setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), OutlookTest.class);
+                        Intent intent = new Intent(getActivity(), OutlookLogin.class);
                         startActivity(intent);
                     }
                 }

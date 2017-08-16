@@ -31,7 +31,7 @@
         <activity android:name=".SplashActivity"></activity>
         <activity android:name=".MeetingFragment.MeetingMainActivity"></activity>
         <activity android:name=".MeetingRoom.Add_Meeting"></activity>
-        <activity android:name=".Fragment.OutlookTest"></activity>
+        <activity android:name=".Fragment.OutlookLogin"></activity>
         <activity android:name=".MeetingFragment_Merge.BaseActivity"></activity>
 
         <activity

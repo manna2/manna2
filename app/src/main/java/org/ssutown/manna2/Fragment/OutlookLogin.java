@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Created by Jiyeon on 2017-08-16.
  */
-public class OutlookTest extends AppCompatActivity {
+public class OutlookLogin extends AppCompatActivity {
 
     final static String CLIENT_ID = "8124e310-520e-4c43-b3d6-d553c7ec72fd";
     final static String SCOPES [] = {"https://graph.microsoft.com/User.Read"};
