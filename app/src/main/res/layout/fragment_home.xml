@@ -42,8 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_below="@+id/bar32"
-        android:scaleType="fitXY"
-        android:src="@drawable/flower" />
+        android:scaleType="fitXY" />
 
 
     <TextView
@@ -54,9 +53,10 @@
         android:text="hyemin"
         android:textColor="#ff444444"
         android:textSize="30sp"
-        android:layout_above="@+id/bar33"
-        android:layout_toEndOf="@+id/home"
-        android:layout_marginBottom="48dp" />
+        android:layout_marginTop="43dp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignEnd="@+id/memolistview"
+        android:layout_marginEnd="34dp" />
 
 
     <View
@@ -140,18 +140,23 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30sp"
         android:layout_marginRight="30sp">
-
     </ListView>
-
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:srcCompat="@drawable/meeting3"
-        android:layout_above="@+id/linear31"
-        android:layout_alignEnd="@+id/home"
-        android:layout_marginEnd="52dp" />
+        android:layout_above="@+id/bar33"
+        android:layout_alignStart="@+id/memolistview"
+        android:layout_marginStart="12dp" />
 
+    <ImageButton
+        android:id="@+id/chagne"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/bar32"
+        app:srcCompat="@drawable/shuffle" />
 
 </RelativeLayout>
