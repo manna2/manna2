@@ -2,6 +2,7 @@ package org.ssutown.manna2.Fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,8 +58,9 @@ public class FragmentMeeting extends Fragment {
         final ListView listview = (ListView)view.findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        Button addMeeting = (Button)view.findViewById(R.id.addmeeting);
+        ImageButton addMeeting = (ImageButton)view.findViewById(R.id.addmeeting);
         final long userID = ((MainActivity)getActivity()).getUserID();
+        Log.d("userID", "meeting user ID: " + userID);
 
         final ArrayList<String> meetinglist = new ArrayList<>();
 
