@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.MainActivity;
-import org.ssutown.manna2.MeetingListview.ListViewAdapter;
+import org.ssutown.manna2.MeetingRoom.meeting;
 import org.ssutown.manna2.MeetingRoom.meeting_Info;
+import org.ssutown.manna2.NoticeListview.ListViewAdapter;
 import org.ssutown.manna2.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class FragmentNotice extends Fragment {
 
@@ -34,6 +38,7 @@ public class FragmentNotice extends Fragment {
     final long userID = MainActivity.userID;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final DatabaseReference databaseReference = firebaseDatabase.getReference();
+    String contexts;
 
     public static FragmentNotice newInstance(String text){
         FragmentNotice fragmentNotice=new FragmentNotice();
@@ -91,8 +96,12 @@ public class FragmentNotice extends Fragment {
 
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String contexts = noticecontexts.getText().toString();
-                        addnotice(contexts);
+                        contexts = noticecontexts.getText().toString();
+                        databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(contexts);
+                        long noticeid = MakeRandom();
+                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),
+                                String.valueOf(userID), contexts, String.valueOf(noticeid));
+
                     }
                 });
                 alert.setNegativeButton("no",new DialogInterface.OnClickListener() {
@@ -108,59 +117,41 @@ public class FragmentNotice extends Fragment {
         //add notice 후
 
         //공지사항 추가가
-//        databaseReference.child("meeting_Info").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                noticelist.clear();
-//                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    noticelist.add(ds.getValue(meeting.class).getMeetingID());
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//
-//        });
-
-        return view;
-    }
-
-    public void addnotice(String context){
-        final String contexts1 = context;
-        Log.i("1", "wldus");
         databaseReference.child("meeting_Info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("2", "wldus");
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds : dataSnapshot.getChildren()){
-                                Log.i("4", meetingid);
-                                Log.i("4.1", ds.getValue(meeting_Info.class).getMeeting_id());
-                                if((meetingid.equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
-                                    databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(contexts1);
-                                    Log.i("5", "wldus");
-                                }
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
+                noticelist.clear();
+                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if(meetingid.equals(ds.getValue(meeting_Info.class).getMeeting_id())){
+                        long noticeid = MakeRandom();
+
+                    }
+                    noticelist.add(ds.getValue(meeting.class).getMeetingID());
+
 
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
+
         });
+
+        return view;
     }
 
+    public long MakeRandom(){
+        Random random = new Random();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+        Date date = new Date();
+        String today = df.format(date);
+        String ran = String.valueOf(random.nextInt()%9000+10000);
 
+        String id = today+ran;
+        long noticeid = Long.valueOf(id);
+
+        return noticeid;
+
+    }
 }
