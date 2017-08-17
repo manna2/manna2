@@ -27,30 +27,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SplashActivity"></activity>
-        <activity android:name=".MeetingFragment.MeetingMainActivity"></activity>
-        <activity android:name=".MeetingRoom.Add_Meeting"></activity>
-        <activity android:name=".Fragment.OutlookLogin"></activity>
-        <activity android:name=".MeetingFragment_Merge.BaseActivity"></activity>
-
-        <activity
-            android:name="com.microsoft.identity.client.BrowserTabActivity">
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".MeetingFragment.MeetingMainActivity" />
+        <activity android:name=".MeetingRoom.Add_Meeting" />
+        <activity android:name=".Fragment.OutlookLogin" />
+        <activity android:name=".MeetingFragment_Merge.BaseActivity" />
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!--Add in your scheme/host from registered redirect URI-->
-                <!--By default, the scheme should be similar to 'msal[appId]' -->
-                <data android:scheme="msal8124e310-520e-4c43-b3d6-d553c7ec72fd"
-                    android:host="auth" />
+                <!-- Add in your scheme/host from registered redirect URI -->
+                <!-- By default, the scheme should be similar to 'msal[appId]' -->
+                <data
+                    android:host="auth"
+                    android:scheme="msal8124e310-520e-4c43-b3d6-d553c7ec72fd" />
             </intent-filter>
         </activity>
-
-
-
-
+        <activity android:name=".HomeFragment.ChangeProfile"></activity>
     </application>
 
 </manifest>

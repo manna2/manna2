@@ -42,13 +42,22 @@
         android:layout_marginTop="5dp"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/addmeeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.2"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:onClick="addmeeting"
+        android:scaleType="centerInside"
+        android:src="@drawable/plus1"
+        android:text="meeting"
+        tools:ignore="ContentDescription,HardcodedText"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/person"
-        android:text="Button" />
+        android:layout_marginEnd="18dp"
+        android:layout_alignParentTop="true"/>
 
     <ListView
         android:id="@+id/listview1"
