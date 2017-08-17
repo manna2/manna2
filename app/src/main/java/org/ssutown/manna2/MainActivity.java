@@ -8,6 +8,8 @@ import android.util.Log;
 
 import org.ssutown.manna2.Fragment.FragmentSample;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MainActivity extends FragmentActivity {
     FragmentSample fragmentSample;
     long userID;
@@ -18,7 +20,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.use_in_fragment);
         fragmentSample = new FragmentSample();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
-
+        
         login();
     }
 
