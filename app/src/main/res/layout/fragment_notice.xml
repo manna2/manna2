@@ -33,6 +33,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 
+
+    <Button
+        android:id="@+id/addnotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/roomname"
+        android:text="Button" />
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -47,6 +57,7 @@
         android:layout_below="@+id/bar22"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 
 
 </RelativeLayout>
