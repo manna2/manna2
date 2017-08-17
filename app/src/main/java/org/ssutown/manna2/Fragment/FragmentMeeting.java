@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +34,9 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 
+
 public class FragmentMeeting extends Fragment {
+
 
     public static FragmentMeeting newInstance(String text){
         FragmentMeeting fragmentMeeting=new FragmentMeeting();
@@ -65,7 +66,6 @@ public class FragmentMeeting extends Fragment {
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"addButton",Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getActivity(), Add_Meeting.class);
                 i.putExtra("user_id",userID);
                 startActivity(i);
@@ -93,7 +93,7 @@ public class FragmentMeeting extends Fragment {
                                 for(int i = 0 ; i<meetinglist.size();i++){
                                     if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
                                         Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
-                                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
+                                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),ds.getValue(meeting_Info.class).getMeeting_id());
                                     }adapter.notifyDataSetChanged();
                                 }
                             }
@@ -143,10 +143,11 @@ public class FragmentMeeting extends Fragment {
 
                 ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
                 String titleStr = item.getTitle();
-                String descStr = item.getMeetingID();
+                String meetingid = item.getMeetingID();
                 Drawable iconDrawable = item.getIcon();
 
                 Intent intent = new Intent(getActivity(), MeetingMainActivity.class);
+                intent.putExtra("meetingid",meetingid);
                 startActivity(intent);
 
             }

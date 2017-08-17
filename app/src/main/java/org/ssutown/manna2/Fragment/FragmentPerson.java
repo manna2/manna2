@@ -36,7 +36,7 @@ public class FragmentPerson extends Fragment {
         Context context = this.getActivity();
         final SharedPreferences login = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        if(login.getBoolean("key", true)) {
+//        if(login.getBoolean("key", true)) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
             // 제목셋팅
             alertDialogBuilder.setTitle("계정 연동");
@@ -79,7 +79,7 @@ public class FragmentPerson extends Fragment {
 
             // 다이얼로그 보여주기
             alertDialog.show();
-        }
+//        }
 
         return view;
     }
