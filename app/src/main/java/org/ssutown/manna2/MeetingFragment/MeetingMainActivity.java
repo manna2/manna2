@@ -21,8 +21,5 @@ public class MeetingMainActivity extends FragmentActivity {
         meetingid = i.getExtras().getString("meetingid");
     }
 
-    public String getMeetingid(){
-        return meetingid;
-    }
 
 }

@@ -10,7 +10,7 @@ import org.ssutown.manna2.Fragment.FragmentSample;
 
 public class MainActivity extends FragmentActivity {
     FragmentSample fragmentSample;
-    long userID;
+    public static long userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
