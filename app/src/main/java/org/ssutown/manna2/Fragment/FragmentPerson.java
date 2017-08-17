@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.ssutown.manna2.GoogleLogin.GoogleLogin;
 import org.ssutown.manna2.MaterialCalendar_Person.MaterialCalendarFragment;
 import org.ssutown.manna2.R;
 
@@ -53,6 +54,9 @@ public class FragmentPerson extends Fragment {
 //                                        Intent intent = new Intent(getActivity(), OutlookTest.class);
 //                                        startActivity(intent);
                                     //여기에 나헤언니가 작업한 구글 로그인 창 띄우면 됨
+                                    Intent intent = new Intent(getContext(), GoogleLogin.class);
+                                    startActivity(intent);
+                                    //
                                     SharedPreferences.Editor et1 = login.edit();
                                     et1.putBoolean("key", false);
                                     et1.commit();
