@@ -10,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.ssutown.manna2.R;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -76,8 +79,8 @@ public class ListViewAdapter extends BaseAdapter {
         item.setIcon(icon);
         item.setTitle(title);
         item.setMeetingID(meetingID);
-
         listViewItemList.add(item);
+
     }
 
     public void clear(){

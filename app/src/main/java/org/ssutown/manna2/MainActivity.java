@@ -20,6 +20,9 @@ public class MainActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
 
         login();
+
+        SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
+        userID = Kakao_Login.getLong("KAKAO_ID", 0);
     }
 
     @Override
