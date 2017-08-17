@@ -1,7 +1,6 @@
 package org.ssutown.manna2.NoticeListview;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewItem.getUserIcon());
+        iconImageView.setImageResource(R.drawable.meeting3);
         iconImageView.getLayoutParams().height = 150;
         iconImageView.getLayoutParams().width = 150;
         userName.setText(listViewItem.getUsername());
@@ -71,7 +70,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String Username, String contents, String noticeID) {
+    public void addItem(String icon, String Username, String contents, String noticeID) {
         ListViewItem item = new ListViewItem();
 
         item.setContents(contents);

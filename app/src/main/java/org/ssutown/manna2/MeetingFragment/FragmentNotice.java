@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.MainActivity;
-import org.ssutown.manna2.MeetingRoom.meeting;
 import org.ssutown.manna2.MeetingRoom.meeting_Info;
 import org.ssutown.manna2.NoticeListview.ListViewAdapter;
+import org.ssutown.manna2.NoticeListview.ListViewItem;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
@@ -97,10 +96,10 @@ public class FragmentNotice extends Fragment {
                 alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         contexts = noticecontexts.getText().toString();
-                        databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(contexts);
                         long noticeid = MakeRandom();
-                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),
-                                String.valueOf(userID), contexts, String.valueOf(noticeid));
+                        ListViewItem newitem = new ListViewItem(String.valueOf(userID),
+                               "df",contexts, String.valueOf(noticeid));
+                        databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
 
                     }
                 });
@@ -117,30 +116,32 @@ public class FragmentNotice extends Fragment {
         //add notice 후
 
         //공지사항 추가가
-        databaseReference.child("meeting_Info").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("meeting_Info").child(meetingid).child("Notices").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                noticelist.clear();
-                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if(meetingid.equals(ds.getValue(meeting_Info.class).getMeeting_id())){
-                        long noticeid = MakeRandom();
 
-                    }
-                    noticelist.add(ds.getValue(meeting.class).getMeetingID());
+                adapter.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    adapter.addItem(ds.getValue(ListViewItem.class).getUserIcon(),
+                            ds.getValue(ListViewItem.class).getUsername(),
+                            ds.getValue(ListViewItem.class).getContents(),
+                            ds.getValue(ListViewItem.class).getNoticeID());
+
+
 
 
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         });
+
+
 
         return view;
     }
-
     public long MakeRandom(){
         Random random = new Random();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -150,8 +151,6 @@ public class FragmentNotice extends Fragment {
 
         String id = today+ran;
         long noticeid = Long.valueOf(id);
-
         return noticeid;
-
     }
 }

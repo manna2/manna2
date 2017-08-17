@@ -1,14 +1,20 @@
 package org.ssutown.manna2.NoticeListview;
 
-import android.graphics.drawable.Drawable;
-
 public class ListViewItem{
     //공지사항
 
     private String Username;
-    private Drawable UserIcon ;
+    private String UserIcon ;
     private String contents ;
     private String noticeID ;
+
+    public ListViewItem(String a, String b, String c, String d){
+        Username = a;
+        UserIcon = b;
+        contents = c;
+        noticeID = d;
+    }
+    public ListViewItem(){}
 
     public void setContents(String contents) {
         this.contents = contents;
@@ -18,7 +24,7 @@ public class ListViewItem{
         this.noticeID = noticeID;
     }
 
-    public void setUserIcon(Drawable userIcon) {
+    public void setUserIcon(String userIcon) {
         UserIcon = userIcon;
     }
 
@@ -26,7 +32,7 @@ public class ListViewItem{
         Username = username;
     }
 
-    public Drawable getUserIcon() {
+    public String getUserIcon() {
         return UserIcon;
     }
 
