@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#99000000"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
         android:id="@+id/bar21"
         />
 
@@ -28,9 +30,9 @@
         android:textSize="30sp"
         android:layout_gravity="center"
         android:id="@+id/roomname"
+
         android:background="#ffffffff"
         android:layout_below="@+id/bar21"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 
 
