@@ -20,7 +20,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.use_in_fragment);
         fragmentSample = new FragmentSample();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
-        
         login();
     }
 
