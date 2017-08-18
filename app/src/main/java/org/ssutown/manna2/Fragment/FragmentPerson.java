@@ -38,7 +38,7 @@ public class FragmentPerson extends Fragment {
 
 //        if(login.getBoolean("key", true)) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            // 제목셋팅
+            // 제목셋팅key
             alertDialogBuilder.setTitle("계정 연동");
 
             // AlertDialog 셋팅
