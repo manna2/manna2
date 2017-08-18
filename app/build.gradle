@@ -45,6 +45,9 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
+    compile 'com.google.android.gms:play-services-auth:10.2.6'
+
+
     testCompile 'junit:junit:4.12'
     compile 'com.microsoft.identity.client:msal:0.1.1'
 }

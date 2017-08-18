@@ -34,6 +34,7 @@
         <activity android:name=".MeetingRoom.Add_Meeting"></activity>
         <activity android:name=".Fragment.OutlookLogin"></activity>
         <activity android:name=".MeetingFragment_Merge.BaseActivity"></activity>
+        <activity android:name=".Fragment.GoogleLogin"></activity>
 
         <activity
             android:name="com.microsoft.identity.client.BrowserTabActivity">
@@ -49,8 +50,9 @@
             </intent-filter>
         </activity>
 
-
-
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
 
     </application>
 
