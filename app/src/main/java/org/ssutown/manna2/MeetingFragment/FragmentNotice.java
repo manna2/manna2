@@ -9,8 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -72,7 +72,7 @@ public class FragmentNotice extends Fragment {
         final ListView listview = (ListView)view.findViewById(R.id.listview2);
         listview.setAdapter(adapter);
 
-        Button addNotice = (Button)view.findViewById(R.id.addnotice);
+        ImageButton addNotice = (ImageButton)view.findViewById(R.id.addnotice);
 //        final long userID = ((MainActivity)getActivity()).getUserID();
 
 //        final ArrayList<String> meetinglist = new ArrayList<>();
