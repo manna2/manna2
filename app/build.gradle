@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "org.ssutown.manna2"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,9 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
+
 
     compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
@@ -30,6 +33,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
 
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile 'com.android.volley:volley:1.0.0'
+
     compile project(':tabviewlibrary')
 
     compile 'com.android.volley:volley:1.0.0'
@@ -38,10 +46,21 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:10.2.6'
     compile 'com.google.firebase:firebase-crash:10.2.6'
     compile 'com.google.firebase:firebase-auth:10.2.6'
-    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.alamkanak:android-week-view:1.2.6'
+
+    compile 'pub.devrel:easypermissions:0.3.0'
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-calendar:v3-rev254-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
+    compile 'com.google.android.gms:play-services-auth:10.2.6'
+    
     testCompile 'junit:junit:4.12'
+    compile 'com.microsoft.identity.client:msal:0.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
