@@ -49,14 +49,15 @@ public class FragmentNotice extends Fragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_notice,container,false);
+        final View view=inflater.inflate(R.layout.fragment_notice,container,false);
         //공지사항 이름 띄우기
         databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     if((meetingid.equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
-                        TextView textview = (TextView)getActivity().findViewById(R.id.roomname);
+
+                        TextView textview = (TextView) view.findViewById(R.id.roomname);
                         textview.setText(ds.getValue(meeting_Info.class).getMeeting_name());
                     }
                 }

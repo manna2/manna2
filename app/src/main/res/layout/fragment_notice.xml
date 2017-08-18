@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,7 +21,7 @@
         />
 
     <TextView
-        android:text="text"
+        android:text="dfw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
@@ -34,13 +33,20 @@
         android:layout_marginTop="5dp" />
 
 
-    <Button
-        android:id="@+id/addnotice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/roomname"
-        android:text="Button" />
+    <ImageButton
+    android:id="@+id/addnotice"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:scaleType="centerInside"
+    android:src="@drawable/plus1"
+    android:text="meeting"
+    tools:ignore="ContentDescription,HardcodedText"
+    android:layout_alignParentEnd="true"
+    android:layout_marginEnd="18dp"
+    android:layout_alignParentTop="true"/>
 
 
     <View
@@ -52,11 +58,18 @@
         android:layout_marginTop="5dp"
         />
 
-    <ListView
-        android:id="@+id/listview2"
-        android:layout_below="@+id/bar22"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_below="@+id/bar22"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/listview2"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 
 
