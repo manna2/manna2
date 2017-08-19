@@ -25,6 +25,17 @@
         android:src="@drawable/ic_next_calendar"
         android:contentDescription="@string/calendar_next"/>
 
+    <ImageView
+        android:id="@+id/material_calendar_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/plus_button"
+        android:contentDescription="add"/>
+
     <TextView
         android:id="@+id/material_calendar_month_name"
         android:layout_width="wrap_content"
