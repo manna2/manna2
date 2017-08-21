@@ -1,6 +1,8 @@
 package org.ssutown.manna2.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,8 +13,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,18 +24,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.ssutown.manna2.HomeFragment.ChangeProfile;
 import org.ssutown.manna2.HomeFragment.MemoListAdapter;
 import org.ssutown.manna2.HomeFragment.MemoListItem;
+import org.ssutown.manna2.HomeFragment.profile;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingListview.ListViewAdapter;
 import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
 
+    TextView textView;
+
     public static long userID;
+    private static final int PROFILE_CHANGED = 100;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
+    TextView nickname;
+    ImageView profileimage;
     public static FragmentHome newInstance(String text){
         FragmentHome fragmentHome=new FragmentHome();
         Bundle bundle=new Bundle();
@@ -39,12 +50,15 @@ public class FragmentHome extends Fragment {
         fragmentHome.setArguments(bundle);
         return fragmentHome;
     }
+
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_home,container,false);
 
         userID = ((MainActivity)getActivity()).getUserID();
+        ImageButton changeProfile= (ImageButton)view.findViewById(R.id.chagne);
 
         Log.d("userID", "Home user ID: " + userID);
 
@@ -53,6 +67,9 @@ public class FragmentHome extends Fragment {
         adapter = new MemoListAdapter();
         final ListView memo = (ListView)view.findViewById(R.id.memolistview);
         memo.setAdapter(adapter);
+
+        nickname = (TextView)view.findViewById(R.id.nickname);
+
 
         //메모추가
         final ImageButton addmemo =(ImageButton) view.findViewById(R.id.memoplus);
@@ -91,9 +108,31 @@ public class FragmentHome extends Fragment {
             }
         });
 
+        //profile설정
+        changeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent change = new Intent(getActivity(), ChangeProfile.class);
+                change.putExtra("userid", String.valueOf(userID));
+                getActivity().startActivityForResult(change,100);
+//                startActivityForResult(change,100);
+            }
+        });
+
+        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return view;
     }
-
 
 
 }

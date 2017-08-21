@@ -128,9 +128,6 @@ public class FragmentNotice extends Fragment {
                             ds.getValue(ListViewItem.class).getContents(),
                             ds.getValue(ListViewItem.class).getNoticeID());
 
-
-
-
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -139,10 +136,9 @@ public class FragmentNotice extends Fragment {
             }
         });
 
-
-
         return view;
     }
+
     public long MakeRandom(){
         Random random = new Random();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
