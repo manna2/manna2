@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -23,6 +25,8 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+
+import org.ssutown.manna2.HomeFragment.profile;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -175,6 +179,10 @@ public class SplashActivity extends AppCompatActivity {
                     editor.putBoolean("KAKAO_LOGIN", true);
                     editor.putLong("KAKAO_ID",userProfile.getId());
                     editor.commit();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = database.getReference();
+                    profile profile = new profile("NEW USER","bear");
+                    databaseReference.child("user_Info").child(String.valueOf(userProfile.getId())).child("profile").setValue(profile);
 
                     Log.d(TAG, "onSuccess: id " + Kakao_Login.getLong("KAKAO_ID",0) + " " + Kakao_Login.getBoolean("KAKAO_LOGIN",false));
                     Intent returnIntent = new Intent();

@@ -1,9 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.ssutown.manna2.HomeFragment.ChangeProfile">
 
-</android.support.constraint.ConstraintLayout>
+    <View
+        android:id="@+id/bar31"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#ffffffff"
+        android:text="CHANGE PROFILE"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_below="@+id/bar31"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:id="@+id/bar32"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/home"
+        android:background="#99000000"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/home"
+        android:id="@+id/relativeLayout">
+
+        <ImageButton
+            android:id="@+id/hedgehog"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/hedgehog"
+            android:layout_alignTop="@+id/fox"
+            android:layout_alignStart="@+id/cheetha" />
+
+        <ImageButton
+            android:id="@+id/bear"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/bear"
+            android:layout_marginTop="26dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/cat"
+            android:layout_marginEnd="22dp" />
+
+        <ImageButton
+            android:id="@+id/cat"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/cat"
+            android:layout_alignTop="@+id/bear"
+            android:layout_centerHorizontal="true" />
+
+        <ImageButton
+            android:id="@+id/cheetha"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignTop="@+id/cat"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/cat"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/cheetah" />
+
+
+        <ImageButton
+            android:id="@+id/cow"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignStart="@+id/bear"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/cow" />
+
+        <ImageButton
+            android:id="@+id/fox"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/fox"
+            android:layout_alignTop="@+id/cow"
+            android:layout_alignStart="@+id/cat" />
+
+        <ImageButton
+            android:id="@+id/tiger"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/tiger"
+            android:layout_below="@+id/cow"
+            android:layout_alignStart="@+id/cow"
+            android:layout_marginTop="19dp"
+            android:layout_alignEnd="@+id/cow" />
+
+        <ImageButton
+            android:id="@+id/wolf"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/wolf"
+            android:layout_alignTop="@+id/tiger"
+            android:layout_alignStart="@+id/fox" />
+
+        <ImageButton
+            android:id="@+id/pig"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/meeting3"
+            android:layout_alignTop="@+id/wolf"
+            android:layout_alignStart="@+id/hedgehog" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:text="Nickname" />
+
+    <ImageButton
+        android:id="@+id/finish"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/plus1" />
+
+
+</RelativeLayout>
