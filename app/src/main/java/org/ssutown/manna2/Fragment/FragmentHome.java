@@ -2,7 +2,6 @@ package org.ssutown.manna2.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,9 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.ssutown.manna2.HomeFragment.ChangeProfile;
 import org.ssutown.manna2.HomeFragment.MemoListAdapter;
 import org.ssutown.manna2.HomeFragment.MemoListItem;
-import org.ssutown.manna2.HomeFragment.profile;
 import org.ssutown.manna2.MainActivity;
-import org.ssutown.manna2.MeetingListview.ListViewAdapter;
 import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
@@ -119,17 +115,17 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         return view;
     }
