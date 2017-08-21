@@ -50,8 +50,8 @@ public class OutlookLogin extends AppCompatActivity {
     Button signOutButton;
 
     /* Azure AD Variables */
-    private PublicClientApplication sampleApp;
-    private AuthenticationResult authResult;
+    private static PublicClientApplication sampleApp;
+    private static AuthenticationResult authResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +139,9 @@ public class OutlookLogin extends AppCompatActivity {
 
             /* update the UI to post call Graph state */
                 updateSuccessUI();
+
+                Intent intent = new Intent(getActivity(), OutlookCalendar.class);
+                startActivity(intent);
             }
 
             @Override
@@ -183,6 +186,10 @@ public class OutlookLogin extends AppCompatActivity {
 
             /* update the UI to post call Graph state */
                 updateSuccessUI();
+
+                Intent intent = new Intent(getActivity(), OutlookCalendar.class);
+                startActivity(intent);
+
             }
 
             @Override
@@ -329,4 +336,11 @@ public class OutlookLogin extends AppCompatActivity {
         ((TextView) findViewById(R.id.graphData)).setText("No Data");
     }
 
+    public static AuthenticationResult getAuthResult() {
+        return authResult;
+    }
+
+    public static PublicClientApplication getSampleApp() {
+        return sampleApp;
+    }
 }

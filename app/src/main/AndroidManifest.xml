@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeFragment.ChangeProfile"></activity>
+        <activity android:name=".Fragment.OutlookCalendar"></activity>
     </application>
 
 </manifest>
