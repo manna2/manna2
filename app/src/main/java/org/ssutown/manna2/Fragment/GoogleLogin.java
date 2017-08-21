@@ -405,6 +405,7 @@ public class GoogleLogin extends Activity
          * @return List of Strings describing returned events.
          * @throws IOException
          */
+        
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
             DateTime now = new DateTime(System.currentTimeMillis());
