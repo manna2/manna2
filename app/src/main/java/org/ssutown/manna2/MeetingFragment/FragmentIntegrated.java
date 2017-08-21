@@ -9,8 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import org.ssutown.manna2.MeetingFragment_Merge.BaseActivity;
+import android.widget.TextView;
+import android.widget.Toast;
+import org.ssutown.manna2.Fragment.FragmentHome;
+import org.ssutown.manna2.MaterialCalendar_Person.MaterialCalendarFragment;
+
+
 import org.ssutown.manna2.R;
 
 public class FragmentIntegrated extends Fragment {
@@ -26,9 +31,17 @@ public class FragmentIntegrated extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_integrated,container,false);
-//
+
 //        Intent intent = new Intent(getActivity(), BaseActivity.class);
 //        startActivity(intent);
+
+
+//        Intent intent = new Intent(getActivity(), BaseActivity.class);
+//        startActivity(intent);
+
+        Toast.makeText(getActivity(),"merge",Toast.LENGTH_SHORT);
+
+
 
         return view;
     }

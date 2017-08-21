@@ -155,7 +155,7 @@ public class FragmentMeeting extends Fragment {
 
             }
         }) ;
-        
+
 
         return view;
     }
