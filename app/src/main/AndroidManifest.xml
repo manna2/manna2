@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".KakaoLogin.GlobalApplication"
@@ -27,12 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".SplashActivity" />
         <activity android:name=".MeetingFragment.MeetingMainActivity" />
         <activity android:name=".MeetingRoom.Add_Meeting" />
         <activity android:name=".Fragment.OutlookLogin" />
         <activity android:name=".MeetingFragment_Merge.BaseActivity" />
+        <activity android:name=".Fragment.GoogleLogin"></activity>
+
         <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -46,8 +51,10 @@
                     android:scheme="msal8124e310-520e-4c43-b3d6-d553c7ec72fd" />
             </intent-filter>
         </activity>
+
         <activity android:name=".HomeFragment.ChangeProfile"></activity>
         <activity android:name=".Fragment.OutlookCalendar"></activity>
+
     </application>
 
 </manifest>
