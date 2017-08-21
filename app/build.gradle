@@ -43,6 +43,7 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:10.2.6'
     compile 'com.google.firebase:firebase-auth:10.2.6'
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.alamkanak:android-week-view:1.2.6'
     testCompile 'junit:junit:4.12'

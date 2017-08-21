@@ -33,6 +33,9 @@ public class MainActivity extends FragmentActivity {
             profile profile = new profile("NEW USER","bear");
             databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
         }
+
+        Log.d("ID", "onCreate: " + getUserID());
+
     }
 
     @Override

@@ -39,27 +39,28 @@ import static android.content.ContentValues.TAG;
 
 public class FragmentMeeting extends Fragment {
 
-    public static FragmentMeeting newInstance(String text){
-        FragmentMeeting fragmentMeeting=new FragmentMeeting();
-        Bundle bundle=new Bundle();
-        bundle.putString("text",text);
+    public static FragmentMeeting newInstance(String text) {
+        FragmentMeeting fragmentMeeting = new FragmentMeeting();
+        Bundle bundle = new Bundle();
+        bundle.putString("text", text);
         fragmentMeeting.setArguments(bundle);
         return fragmentMeeting;
     }
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_meeting,container,false);
+        View view = inflater.inflate(R.layout.fragment_meeting, container, false);
 
         final ListViewAdapter adapter;
 
         adapter = new ListViewAdapter();
-        final ListView listview = (ListView)view.findViewById(R.id.listview1);
+        final ListView listview = (ListView) view.findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        ImageButton addMeeting = (ImageButton)view.findViewById(R.id.addmeeting);
-        final long userID = ((MainActivity)getActivity()).getUserID();
+        ImageButton addMeeting = (ImageButton) view.findViewById(R.id.addmeeting);
+        final long userID = ((MainActivity) getActivity()).getUserID();
         Log.d("userID", "meeting user ID: " + userID);
 
         final ArrayList<String> meetinglist = new ArrayList<>();
@@ -68,9 +69,9 @@ public class FragmentMeeting extends Fragment {
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"addButton",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "addButton", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getActivity(), Add_Meeting.class);
-                i.putExtra("user_id",userID);
+                i.putExtra("user_id", userID);
                 startActivity(i);
             }
         });
@@ -92,12 +93,13 @@ public class FragmentMeeting extends Fragment {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             adapter.clear();
-                            for(DataSnapshot ds : dataSnapshot.getChildren()){
-                                for(int i = 0 ; i<meetinglist.size();i++){
-                                    if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                for (int i = 0; i < meetinglist.size(); i++) {
+                                    if ((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))) {
                                         Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
-                                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),"Account Box Black 36dp");
-                                    }adapter.notifyDataSetChanged();
+                                        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3), ds.getValue(meeting_Info.class).getMeeting_name(), "Account Box Black 36dp");
+                                    }
+                                    adapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -118,6 +120,23 @@ public class FragmentMeeting extends Fragment {
 
         });
 
+        databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                adapter.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    for (int i = 0; i < meetinglist.size(); i++) {
+                        if ((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))) {
+                            Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
+                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3), ds.getValue(meeting_Info.class).getMeeting_name(), ds.getValue(meeting_Info.class).getMeeting_id());
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
 //        databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -136,28 +155,19 @@ public class FragmentMeeting extends Fragment {
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
 //
-//            }
-//        });
+            }
+        });
         //End adding meetings
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-
-                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle();
-                String descStr = item.getMeetingID();
-                Drawable iconDrawable = item.getIcon();
 
                 Intent intent = new Intent(getActivity(), MeetingMainActivity.class);
                 startActivity(intent);
 
             }
-        }) ;
-        
+        });
 
         return view;
     }
-
-
 }

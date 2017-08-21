@@ -34,6 +34,8 @@ import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
 
+    TextView textView;
+
     public static long userID;
     private static final int PROFILE_CHANGED = 100;
 
@@ -128,7 +130,6 @@ public class FragmentHome extends Fragment {
 
             }
         });
-
 
         return view;
     }
