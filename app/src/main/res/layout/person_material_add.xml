@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.ssutown.manna2.MaterialCalendar_Person.AddAppointment_Person">
+
+
+    <DatePicker
+        android:id="@+id/startDay"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/appoint_name" />
+
+    <TimePicker
+        android:id="@+id/startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:timePickerMode="spinner"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignEnd="@+id/startDay" />
+
+    <DatePicker
+        android:id="@+id/endDay"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_below="@+id/startDay"
+        android:layout_alignStart="@+id/startDay"
+        android:layout_marginTop="70dp" />
+
+    <TimePicker
+        android:id="@+id/endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:timePickerMode="spinner"
+        android:layout_below="@+id/textView4"
+        android:layout_alignEnd="@+id/endDay" />
+
+    <EditText
+        android:id="@+id/appoint_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textLongMessage"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="121dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="29dp"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title : "
+        android:layout_marginStart="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="58dp" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginBottom="14dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/appoint_name"
+        android:layout_alignStart="@+id/appoint_name"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:text="START"
+        android:layout_alignTop="@+id/startDay"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/endDay"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_marginBottom="37dp"
+        android:text="END" />
+
+
+</RelativeLayout>

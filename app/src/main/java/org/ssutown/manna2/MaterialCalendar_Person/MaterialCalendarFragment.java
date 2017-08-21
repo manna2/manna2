@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import org.ssutown.manna2.R;
 
@@ -30,6 +31,7 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
     //Views
     ImageView mPrevious;
     ImageView mNext;
+    ImageView mPlus;
     TextView mMonthName;
     GridView mCalendar;
 
@@ -110,6 +112,11 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
                 }
             }
 
+            mPlus = (ImageView)rootView.findViewById(R.id.material_calendar_add);
+            if(mPlus != null) {
+                mPlus.setOnClickListener(this);
+            }
+
             // ListView for saved events in calendar
             mSavedEventsListView = (ListView) rootView.findViewById(R.id.saved_events_listView);
         }
@@ -144,6 +151,11 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
                 case R.id.material_calendar_next:
                     MaterialCalendar.nextOnClick(mNext, mMonthName, mCalendar, mMaterialCalendarAdapter);
                     break;
+
+                case R.id.material_calendar_add:
+                    //일정추가
+                    Intent intent = new Intent(getActivity(),AddAppointment_Person.class);
+                    startActivity(intent);
 
                 default:
                     break;

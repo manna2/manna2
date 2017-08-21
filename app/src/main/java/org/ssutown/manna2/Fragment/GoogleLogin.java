@@ -115,10 +115,15 @@ public class GoogleLogin extends Activity
 
         setContentView(activityLayout);
 
+
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+
+
+//        getResultsFromApi();
+
     }
 
 
@@ -131,15 +136,26 @@ public class GoogleLogin extends Activity
      * appropriate.
      */
     private void getResultsFromApi() {
+
+        Log.v("googleLog","getResultFromApi");
+
         if (! isGooglePlayServicesAvailable()) {
+            Log.v("googleLog","isGooglePlayServicesAvailable");
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
+            Log.v("googleLog","chooseAccount");
             chooseAccount();
         } else if (! isDeviceOnline()) {
+            Log.v("googleLog","isDeviceOnline");
             mOutputText.setText("No network connection available.");
         } else {
+            Log.v("googleLog","MakeRequestTask");
             new MakeRequestTask(mCredential).execute();
+            Log.v("googleLog","End of MakeRequestTask");
+//            finish();
         }
+
+        Log.v("googleLog","End of getResultFromApi");
     }
 
     /**
@@ -154,12 +170,14 @@ public class GoogleLogin extends Activity
      */
     @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
     private void chooseAccount() {
+
         if (EasyPermissions.hasPermissions(
                 this, Manifest.permission.GET_ACCOUNTS)) {
             String accountName = getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
+                sendAccountName(accountName);
                 getResultsFromApi();
             } else {
                 // Start a dialog from which the user can choose an account
@@ -174,7 +192,17 @@ public class GoogleLogin extends Activity
                     "This app needs to access your Google account (via Contacts).",
                     REQUEST_PERMISSION_GET_ACCOUNTS,
                     Manifest.permission.GET_ACCOUNTS);
+
+            Log.v("googleLog","require Google account");
+
         }
+    }
+
+    public void sendAccountName(String select_accountName) {
+        SharedPreferences selectedAccountName = getApplicationContext().getSharedPreferences("selectedAccountName", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = selectedAccountName.edit();
+        editor.putString("accountName_a", select_accountName);
+        editor.commit();
     }
 
     /**
@@ -213,6 +241,7 @@ public class GoogleLogin extends Activity
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         mCredential.setSelectedAccountName(accountName);
+                        sendAccountName(accountName);
                         getResultsFromApi();
                     }
                 }
@@ -271,9 +300,15 @@ public class GoogleLogin extends Activity
      * @return true if the device has a network connection, false otherwise.
      */
     private boolean isDeviceOnline() {
+
+        Log.v("googleLog","isDeviceOnline()");
+
         ConnectivityManager connMgr =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        Log.v("googleLog","End of isDeviceOnline()");
+
         return (networkInfo != null && networkInfo.isConnected());
     }
 
@@ -283,10 +318,16 @@ public class GoogleLogin extends Activity
      *     date on this device; false otherwise.
      */
     private boolean isGooglePlayServicesAvailable() {
+
+        Log.v("googleLog","isGooglePlayServicesAvailable()");
+
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
         final int connectionStatusCode =
                 apiAvailability.isGooglePlayServicesAvailable(this);
+
+        Log.v("googleLog","End of isGooglePlayServicesAvailable()");
+
         return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
@@ -336,6 +377,9 @@ public class GoogleLogin extends Activity
                     transport, jsonFactory, credential)
                     .setApplicationName("Google Calendar API Android Quickstart")
                     .build();
+
+            Log.v("googleLog","makeRequestTaskConstructor");
+
         }
 
         /**
@@ -345,6 +389,9 @@ public class GoogleLogin extends Activity
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
+
+                Log.v("googleLog","doInBackground");
+
                 return getDataFromApi();
             } catch (Exception e) {
                 mLastError = e;
@@ -363,7 +410,7 @@ public class GoogleLogin extends Activity
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary")
-                    .setMaxResults(10)
+                    .setMaxResults(100)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)

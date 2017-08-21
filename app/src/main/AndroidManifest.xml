@@ -35,6 +35,7 @@
         <activity android:name=".Fragment.OutlookLogin" />
         <activity android:name=".MeetingFragment_Merge.BaseActivity" />
         <activity android:name=".Fragment.GoogleLogin"></activity>
+        <activity android:name=".MaterialCalendar_Person.AddAppointment_Person"></activity>
 
         <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
 
