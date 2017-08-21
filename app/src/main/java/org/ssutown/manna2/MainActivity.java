@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.Fragment.FragmentSample;
 import org.ssutown.manna2.HomeFragment.profile;
@@ -24,16 +27,33 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.use_in_fragment);
         fragmentSample = new FragmentSample();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference();
+        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot == null){
+                    profile profile = new profile("NEW USER","bear");
+                    databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         login();
 
         SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
         userID = Kakao_Login.getLong("KAKAO_ID", 0);
-        if (Kakao_Login.getBoolean("Kakao_Login", false)){
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference databaseReference = database.getReference();
-            profile profile = new profile("NEW USER","bear");
-            databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
-        }
+//        if (Kakao_Login.getBoolean("Kakao_Login", false)){
+////            FirebaseDatabase database = FirebaseDatabase.getInstance();
+////            DatabaseReference databaseReference = database.getReference();
+//            profile = new profile("NEW USER","bear");
+//            databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
+//        }
 
         Log.d("ID", "onCreate: " + getUserID());
 
