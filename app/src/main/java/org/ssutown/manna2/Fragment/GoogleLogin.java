@@ -36,11 +36,16 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -65,6 +70,10 @@ public class GoogleLogin extends Activity
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+
+    long userID = FragmentHome.userID;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference calendardb = database.getReference();
 
     /**
      * Create the main activity.
@@ -411,7 +420,7 @@ public class GoogleLogin extends Activity
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary")
-                    .setMaxResults(100)
+                    .setMaxResults(50)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
@@ -419,15 +428,103 @@ public class GoogleLogin extends Activity
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
+                DateTime end = event.getEnd().getDateTime();
                 if (start == null) {
                     // All-day events don't have start times, so just use
                     // the start date.
                     start = event.getStart().getDate();
+                    end = event.getEnd().getDate();
                 }
                 eventStrings.add(
-                        String.format("%s (%s)", event.getSummary(), start));
+                        String.format("%s (%s) (%s)", event.getSummary(), start, end));
+                Log.i("calendar", start.toString()+ end.toString());
+                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
+
             }
             return eventStrings;
+        }
+
+        public void saveEventtoFirebase(String event, String start, String end){
+            long uniquekey = MakeRandom();
+            String eventname = event;
+            String eventstart = start;
+            String eventend = end;
+
+            if(start.contains("T")){
+                String tempstart[] = eventstart.split("T");
+                String tempstart1 = tempstart[0];
+                String tempstart2 = tempstart[1];
+
+                String startday1[] = tempstart1.split("-");
+                String starttime[] = tempstart2.split(":");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String starthour = starttime[0];
+                String startminute = starttime[1];
+
+                String tempend[] = eventend.split("T");
+                String tempend1 = tempend[0];
+                String tempend2 = tempend[1];
+
+
+                String endday1[] = tempend1.split("-");
+                String endtime[] = tempend2.split(":");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                String endhour = endtime[0];
+                String endminute = endtime[1];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+
+            }
+            else{
+                String startday1[] = start.split("-");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String endday1[] = end.split("-");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,null,null, endyear, endmonth, endday, null, null);
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+            }
+
+
+
+
+
+
+
+        }
+
+        public long MakeRandom(){
+            Random random = new Random();
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+            Date date = new Date();
+            String today = df.format(date);
+            String ran = String.valueOf(random.nextInt()%9000+10000);
+
+            String id = today+ran;
+            long noticeid = Long.valueOf(id);
+            return noticeid;
         }
 
 
@@ -462,8 +559,8 @@ public class GoogleLogin extends Activity
                             GoogleLogin.REQUEST_AUTHORIZATION);
                 } else {
                     mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
-                }
+                        + mLastError.getMessage());
+            }
             } else {
                 mOutputText.setText("Request cancelled.");
             }
