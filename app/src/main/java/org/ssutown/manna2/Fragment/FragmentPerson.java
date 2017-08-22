@@ -57,7 +57,7 @@ public class FragmentPerson extends Fragment {
                                 //
                                 SharedPreferences.Editor et1 = login.edit();
                                 et1.putBoolean("key", false);
-
+                                et1.apply();
                             }
                         })
                 .setNegativeButton("아웃룩",
@@ -67,7 +67,7 @@ public class FragmentPerson extends Fragment {
 
                                 SharedPreferences.Editor et1 = login.edit();
                                 et1.putBoolean("key", false);
-                                et1.commit();
+                                et1.apply();
 
                                 Intent intent = new Intent(getActivity(), OutlookLogin.class);
                                 startActivity(intent);
@@ -82,12 +82,9 @@ public class FragmentPerson extends Fragment {
         alertDialog.show();
         }
 
-
         if (savedInstanceState == null) {
             getActivity().getFragmentManager().beginTransaction().add(R.id.main_container1, new MaterialCalendarFragment()).commit();
         }
-
-
 
         return view;
     }
