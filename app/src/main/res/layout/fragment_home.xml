@@ -45,7 +45,7 @@
         android:scaleType="fitXY" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profile"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="fitXY"
@@ -64,7 +64,7 @@
         android:textSize="30sp"
         android:layout_marginBottom="10dp"
         tools:text="hyemin"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/profile"
         android:layout_centerHorizontal="true" />
 
 

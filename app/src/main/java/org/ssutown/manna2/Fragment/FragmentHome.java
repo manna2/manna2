@@ -2,6 +2,7 @@ package org.ssutown.manna2.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -66,6 +67,7 @@ public class FragmentHome extends Fragment {
         memo.setAdapter(adapter);
 
         nickname = (TextView)view.findViewById(R.id.nickname);
+        profileimage = (ImageView)view.findViewById(R.id.profile);
 
 
         //메모추가
@@ -120,6 +122,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
+//                Drawable drawable = getActivity().getResources().getDrawable(R.drawable.bear);
+                profileimage.setImageDrawable(setProfileIamge(dataSnapshot.getValue(profile.class).getAnimal()));
             }
 
             @Override
@@ -131,5 +135,40 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
+    public Drawable setProfileIamge(String animal) {
+        Drawable drawable;
+        switch (animal) {
+            case "bear":
+                drawable = getActivity().getResources().getDrawable(R.drawable.bear);
+                break;
+            case "cat":
+                drawable = getResources().getDrawable(R.drawable.cat);
+                break;
+            case "cheetha":
+                drawable = getResources().getDrawable(R.drawable.cheetah);
+                break;
+            case "cow":
+                drawable = getResources().getDrawable(R.drawable.cow);
+                break;
+            case "fox":
+                drawable = getResources().getDrawable(R.drawable.fox);
+                break;
+            case "hedgehog":
+                drawable = getResources().getDrawable(R.drawable.hedgehog);
+                break;
+            case "tiger":
+                drawable = getResources().getDrawable(R.drawable.tiger);
+                break;
+            case "wolf":
+                drawable = getResources().getDrawable(R.drawable.wolf);
+                break;
+            case "pig":
+                drawable = getResources().getDrawable(R.drawable.meeting3);
+                break;
+            default:
+                drawable = getResources().getDrawable(R.drawable.bear);
+        }
+        return drawable;
+    }
 
 }
