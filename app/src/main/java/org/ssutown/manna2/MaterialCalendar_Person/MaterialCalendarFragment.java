@@ -2,6 +2,7 @@ package org.ssutown.manna2.MaterialCalendar_Person;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +14,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.ssutown.manna2.Fragment.CalendarItem;
+import org.ssutown.manna2.Fragment.FragmentHome;
 import org.ssutown.manna2.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Random;
 
 /**
  * Created by Maximilian on 9/1/14.
@@ -39,11 +45,16 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
     private MaterialCalendarAdapter mMaterialCalendarAdapter;
 
     // Saved Events Adapter
-    protected static SavedEventsAdapter mSavedEventsAdapter;
+    protected static CalendarEventsAdapter mSavedEventsAdapter;
     protected static ListView mSavedEventsListView;
 
-    protected static ArrayList<HashMap<String, Integer>> mSavedEventsPerDay;
-    protected static ArrayList<Integer> mSavedEventDays;
+    protected static ArrayList<String> mSavedDay;
+    protected static ArrayList<CalendarItem> mSavedEvents;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference calendardb = database.getReference();
+
+    protected long userID = FragmentHome.userID;
 
     protected static int mNumEventsOnDay = 0;
 
@@ -121,6 +132,36 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
             mSavedEventsListView = (ListView) rootView.findViewById(R.id.saved_events_listView);
         }
 
+
+        mSavedEvents = new ArrayList<CalendarItem>();
+        mSavedDay = new ArrayList<String>();
+
+        calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mSavedEvents.clear();
+                mSavedDay.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    mSavedEvents.add(ds.getValue(CalendarItem.class));
+                    //들어감
+                }
+                for(int i=0;i<mSavedEvents.size();i++) {
+                    String a = "year" + mSavedEvents.get(i).getStartyear() + "month" + mSavedEvents.get(i).getStartmonth() +
+                            "day" + mSavedEvents.get(i).getStartday();
+                    //들어감
+                    mSavedDay.add(a);
+                }
+                mMaterialCalendarAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         return rootView;
     }
 
@@ -129,7 +170,7 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
         super.onActivityCreated(savedInstanceState);
 
         if (mSavedEventsListView != null) {
-            mSavedEventsAdapter = new SavedEventsAdapter(getActivity()); //원래 getActivity()
+            mSavedEventsAdapter = new CalendarEventsAdapter(); //원래 getActivity()
             mSavedEventsListView.setAdapter(mSavedEventsAdapter);
             mSavedEventsListView.setOnItemClickListener(this);
             Log.d("EVENTS_ADAPTER", "set adapter");
@@ -186,70 +227,45 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
 
     // Saved Events
     protected static void getSavedEventsForCurrentMonth() {
-        /**
-         *  -- IMPORTANT --
-         *  This is where you get saved event info
-         */
 
-        // -- Ideas on what could be done here --
-        // Probably pull from some database
-        // cross check event dates with current calendar month and year
-
-        // For loop adding each event date to ArrayList
-        // Also get ArrayList<SavedEvents>
-
-        mSavedEventsPerDay = new ArrayList<HashMap<String, Integer>>();
-
-        /**
-         * Make sure to use this variable name or update in CalendarAdapter 'setSavedEvent'
-         */
-        mSavedEventDays = new ArrayList<Integer>();
-
-        // This is just used for testing purposes to show saved events on the calendar
-        Random random = new Random();
-        int randomNumOfEvents = random.nextInt(10 - 1) + 1;
-
-        for (int i = 0; i < randomNumOfEvents; i++) {
-            int day = random.nextInt(MaterialCalendar.mNumDaysInMonth - 1) + 1;
-            int eventPerDay = random.nextInt(5 - 1) + 1;
-
-            HashMap<String, Integer> dayInfo = new HashMap<String, Integer>();
-            dayInfo.put("day" + day, eventPerDay);
-
-            mSavedEventDays.add(day);
-            mSavedEventsPerDay.add(dayInfo);
-
-            Log.d("EVENTS_PER DAY", String.valueOf(dayInfo));
-        }
-
-        Log.d("SAVED_EVENT_DATES", String.valueOf(mSavedEventDays));
     }
 
     protected static void showSavedEventsListView(int position) {
         Boolean savedEventsOnThisDay = false;
         int selectedDate = -1;
+        int selectedMonth = -1;
+        int selectedYear = -1;
+        String a = "";
 
-        if (MaterialCalendar.mFirstDay != -1 && mSavedEventDays != null && mSavedEventDays.size
+        if (MaterialCalendar.mFirstDay != -1 && mSavedDay != null && mSavedDay.size
                 () > 0) {
             selectedDate = position - (6 + MaterialCalendar.mFirstDay);
-            Log.d("SELECTED_SAVED_DATE", String.valueOf(selectedDate));
+            selectedMonth = MaterialCalendar.mMonth + 1;
+            selectedYear = MaterialCalendar.mYear;
 
-            for (int i = 0; i < mSavedEventDays.size(); i++) {
-                if (selectedDate == mSavedEventDays.get(i)) {
+            if ((selectedMonth < 10) && (selectedDate < 10)) {
+                a = "year" + selectedYear + "month0" + selectedMonth + "day0" + selectedDate;
+
+            } else if ((selectedMonth < 10)) {
+                a = "year" + selectedYear + "month0" + selectedMonth + "day" + selectedDate;
+            } else if (selectedDate < 10) {
+                a = "year" + selectedYear + "month" + selectedMonth + "day0" + selectedDate;
+            } else {
+                a = "year" + selectedYear + "month" + selectedMonth + "day" + selectedDate;
+            }
+
+            for (int i = 0; i < mSavedDay.size(); i++) {
+                if (a.equals(mSavedDay.get(i))) {
                     savedEventsOnThisDay = true;
                 }
             }
         }
 
-        Log.d("SAVED_EVENTS_BOOL", String.valueOf(savedEventsOnThisDay));
-
         if (savedEventsOnThisDay) {
-            Log.d("POS", String.valueOf(selectedDate));
-            if (mSavedEventsPerDay != null && mSavedEventsPerDay.size() > 0) {
-                for (int i = 0; i < mSavedEventsPerDay.size(); i++) {
-                    HashMap<String, Integer> x = mSavedEventsPerDay.get(i);
-                    if (x.containsKey("day" + selectedDate)) {
-                        mNumEventsOnDay = mSavedEventsPerDay.get(i).get("day" + selectedDate);
+            if (mSavedDay != null && mSavedDay.size() > 0) {
+                for (int i = 0; i < mSavedDay.size(); i++) {
+                    String x = mSavedDay.get(i);
+                    if (x.equals(a)) {
                         Log.d("NUM_EVENT_ON_DAY", String.valueOf(mNumEventsOnDay));
                     }
                 }
@@ -259,6 +275,12 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
         }
 
         if (mSavedEventsAdapter != null && mSavedEventsListView != null) {
+            mSavedEventsAdapter.clear();
+            for(int i=0;i<mSavedDay.size(); i++){
+                if(mSavedDay.get(i).equals(a)){
+                    mSavedEventsAdapter.addItem(mSavedEvents.get(i).getEventname(), String.valueOf(mSavedEvents.get(i).getStart())+String.valueOf(mSavedEvents.get(i).getEnd()));
+                }
+            }
             mSavedEventsAdapter.notifyDataSetChanged();
 
             // Scrolls back to top of ListView before refresh

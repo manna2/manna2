@@ -182,17 +182,26 @@ public class MaterialCalendarAdapter extends BaseAdapter {
         // Reset saved position indicator
         mHolder.mSavedEventImageView.setVisibility(View.INVISIBLE);
 
-        if (MaterialCalendar.mFirstDay != -1 && MaterialCalendarFragment.mSavedEventDays != null &&
-                MaterialCalendarFragment.mSavedEventDays.size() > 0) {
+        if (MaterialCalendar.mFirstDay != -1 && MaterialCalendarFragment.mSavedDay != null &&
+                MaterialCalendarFragment.mSavedDay.size() > 0) {
 
             int startingPosition = mWeekDayNames - mGridViewIndexOffset + MaterialCalendar.mFirstDay;
-            Log.d("SAVEDG_POS", String.valueOf(startingPosition));
             if (position > startingPosition) {
-                for (int i = 0; i < MaterialCalendarFragment.mSavedEventDays.size(); i++) {
-                    int savedEventPosition = startingPosition + MaterialCalendarFragment.mSavedEventDays.get(i);
+                for (int i = 0; i < MaterialCalendarFragment.mSavedDay.size(); i++) {
+                    //mSaveTestDay에서 year이랑 month뽑아내서 맞는 달 찾아내서 비교하는 코드
+                    int realyear = MaterialCalendar.mYear;
+                    int realmonth = MaterialCalendar.mMonth+1;
+                    String[] temp1 = MaterialCalendarFragment.mSavedDay.get(i).split("month");
+                    String[] temp2 = temp1[0].split("ear");
+                    String year = temp2[1];
+                    String[] temp3 = temp1[1].split("day");
+                    String month = temp3[0];
+                    String day = temp3[1];
+                    int savedEventPosition = -1;
+                    if(realyear == Integer.valueOf(year) && realmonth == Integer.valueOf(month)){
+                        savedEventPosition = startingPosition + Integer.valueOf(day);
+                    }
 
-                    Log.d("POSITION", String.valueOf(position));
-                    Log.d("SAVED_POSITION", String.valueOf(savedEventPosition));
                     if (position == savedEventPosition) {
                         mHolder.mSavedEventImageView.setVisibility(View.VISIBLE);
                     }
