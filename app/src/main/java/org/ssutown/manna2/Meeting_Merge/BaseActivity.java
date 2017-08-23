@@ -3,6 +3,7 @@ package org.ssutown.manna2.Meeting_Merge;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
@@ -10,14 +11,24 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.ssutown.manna2.Fragment.CalendarItem;
+import org.ssutown.manna2.MainActivity;
+import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
 
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
@@ -33,6 +44,12 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
 
+    private ArrayList<String> memberID = MeetingMainActivity.MemberID;
+    private long userID = MainActivity.userID;
+    private ArrayList<HashMap<String, String>> mSavedEvents;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReference();
+
     protected ArrayList<String> aaa = new ArrayList<>();
     protected int test = 0;
 
@@ -44,6 +61,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+
 
         Calendar startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
@@ -85,6 +104,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        mSavedEvents = new ArrayList<HashMap<String, String>>();
+        mSavedEvents.clear();
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -113,6 +135,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         aaa.add("cccc");
 
         setupDateTimeInterpreter(false);
+        getCalendar();
     }
 
     /**
@@ -142,6 +165,56 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
             }
         });
     }
+
+    public void getCalendar() {
+
+        for (int i = 0; i < memberID.size(); i++) {
+            databaseReference.child("user_Info").
+                    child(String.valueOf(memberID.get(i))).child("calendar").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        HashMap<String, String> temp = new HashMap<String, String>();
+
+                        if(ds.getValue(CalendarItem.class).getStarthour().equals("x")){
+                              temp.put("year" + ds.getValue(CalendarItem.class).getStartyear()
+                                                + "month" + ds.getValue(CalendarItem.class).getStartmonth()
+                                                + "day" + ds.getValue(CalendarItem.class).getStartday(),
+                                        "year" + ds.getValue(CalendarItem.class).getEndyear()
+                                                + "month" + ds.getValue(CalendarItem.class).getEndmonth()
+                                                + "day" + ds.getValue(CalendarItem.class).getEndday());
+                        }else {
+                            temp.put("year" + ds.getValue(CalendarItem.class).getStartyear()
+                                            + "month" + ds.getValue(CalendarItem.class).getStartmonth()
+                                            + "day" + ds.getValue(CalendarItem.class).getStartday(),
+                                    ds.getValue(CalendarItem.class).getStarthour()
+                                            + ":" + ds.getValue(CalendarItem.class).getStartminute()
+                                            + "-" + ds.getValue(CalendarItem.class).getEndhour()
+                                            + ":" + ds.getValue(CalendarItem.class).getEndminute());
+                        }
+                        mSavedEvents.add(temp);
+                    }
+//                    if (i == userinfo.size()) {
+//                        mergeCalendar();
+//                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        for(int i=0;i<mSavedEvents.size(); i++){
+            Log.i("calendar", mSavedEvents.get(i).toString());
+        }
+
+
+
+    }
+
+
 
     protected String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
