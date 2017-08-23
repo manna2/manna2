@@ -181,6 +181,7 @@ public class SplashActivity extends AppCompatActivity {
                     editor.commit();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference databaseReference = database.getReference();
+
                     profile profile = new profile("NEW USER","bear");
                     databaseReference.child("user_Info").child(String.valueOf(userProfile.getId())).child("profile").setValue(profile);
 
