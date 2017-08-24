@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.ssutown.manna2.Fragment.FragmentHome;
@@ -25,8 +26,8 @@ public class FragmentMeetingSetting extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_meeting_setting,container,false);
-        textView= (TextView) view.findViewById(R.id.textView);
-        textView.setText(getArguments().getString("text"));
+
+
 
 
         return view;

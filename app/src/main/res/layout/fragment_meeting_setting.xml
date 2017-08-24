@@ -1,19 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffffff"
-    android:gravity="center"
-    >
+    android:background="#ffffffff">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:id="@+id/bar81"
+        />
 
     <TextView
-        android:id="@+id/textView"
+        android:text="미팅 설정"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:textColor="#333333"
-        android:textStyle="bold"
-        android:text="TEXT"
+        android:layout_gravity="center"
+        android:id="@+id/meetsetting"
+        android:background="#ffffffff"
+        android:layout_below="@+id/bar81"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:layout_below="@+id/meetsetting"
+        android:layout_marginTop="5dp"
+        android:id="@+id/bar82"
         />
-</LinearLayout>
+
+    <Button
+        android:id="@+id/setmeeting"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="미팅설정변경"
+        android:layout_below="@+id/bar82"
+        android:layout_centerHorizontal="true" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:layout_below="@+id/setmeeting"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/bar83"
+        />
+
+    <Button
+        android:id="@+id/invite"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="카카오톡으로초대하기"
+        android:layout_below="@+id/bar83"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:layout_below="@+id/invite"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/bar84"
+        />
+
+    <TextView
+        android:id="@+id/member"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/invite"
+        android:layout_below="@+id/bar84"
+        android:layout_centerVertical="true"
+        android:text="멤버목록"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+
+    <ListView
+        android:id="@+id/memberlistview"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:layout_below="@+id/member"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></ListView>
+
+</RelativeLayout>
