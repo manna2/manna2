@@ -1,9 +1,8 @@
 package org.ssutown.manna2.MeetingRoom;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -49,15 +48,42 @@ public class Add_Meeting extends AppCompatActivity {
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meeting_info = new meeting_Info(meetingName.getText().toString(),"0",startDay.getYear(),startDay.getMonth(),startDay.getDayOfMonth(),endDay.getYear(),endDay.getMonth(),endDay.getDayOfMonth(),min.getText().toString());
+                String StartMonth, StartDay, EndMonth, EndDay;
+                if(startDay.getMonth() <10){
+                    StartMonth="0"+String.valueOf(startDay.getMonth());
+                }
+                else{
+                    StartMonth=String.valueOf(startDay.getMonth());
+                }
+                if(startDay.getDayOfMonth() < 10){
+                    StartDay = "0"+String.valueOf(startDay.getDayOfMonth());
+                }
+                else{
+                    StartDay = String.valueOf(startDay.getDayOfMonth());
+                }
+                if(endDay.getMonth() <10){
+                    EndMonth="0"+String.valueOf(endDay.getMonth());
+                }
+                else{
+                    EndMonth=String.valueOf(endDay.getMonth());
+                }
+                if(endDay.getDayOfMonth() < 10){
+                    EndDay = "0"+String.valueOf(endDay.getDayOfMonth());
+                }
+                else{
+                    EndDay = String.valueOf(endDay.getDayOfMonth());
+                }
+
+
+
+                meeting_info = new meeting_Info(meetingName.getText().toString(),"0",String.valueOf(startDay.getYear()),StartMonth,StartDay,String.valueOf(endDay.getYear()),EndMonth,EndDay,min.getText().toString());
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
 
                 meeting meeting = new meeting(meeting_info.getMeeting_id());
                 databaseReference.child("user_Info").child(String.valueOf(userID)).child("personalMeetingList").push().setValue(meeting);
 
-                String key = databaseReference.child("meeting_List").push().getKey();
-                databaseReference.child("meeting_List").child(key).setValue(meeting_info);
+                databaseReference.child("meeting_List").push().setValue(meeting_info);
 
                 User user = new User(String.valueOf(userID));
                 databaseReference.child("meeting_Info").child(meeting_info.getMeeting_id()).child("Users").push().setValue(user);

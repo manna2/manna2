@@ -14,18 +14,18 @@ public class meeting_Info implements Serializable {
     private String meeting_name;
     private String meeting_id;
 
-    private int startYear;
-    private int startMonth;
-    private int startDay;
+    private String startYear;
+    private String startMonth;
+    private String startDay;
 
-    private int endYear;
-    private int endMonth;
-    private int endDay;
+    private String endYear;
+    private String endMonth;
+    private String endDay;
     private String min;
 
     public meeting_Info(){};
 
-    public meeting_Info(String name, String id, int sY, int sM, int sD, int eY, int eM, int eD, String min){
+    public meeting_Info(String name, String id, String sY, String sM, String sD, String eY, String eM, String eD, String min){
 
         Random random = new Random();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -51,27 +51,27 @@ public class meeting_Info implements Serializable {
 
     public String getMeeting_name() {return meeting_name;}
 
-    public int getStartYear() {
+    public String getStartYear() {
         return startYear;
     }
 
-    public int getStartMonth() {
+    public String getStartMonth() {
         return startMonth;
     }
 
-    public int getStartDay(){
+    public String getStartDay(){
         return startDay;
     }
 
-    public int getEndYear() {
+    public String getEndYear() {
         return endYear;
     }
 
-    public int getEndMonth() {
+    public String getEndMonth() {
         return endMonth;
     }
 
-    public int getEndDay(){
+    public String getEndDay(){
         return endDay;
     }
 
@@ -79,27 +79,27 @@ public class meeting_Info implements Serializable {
         return min;
     }
 
-    public void setStartYear(int startYear) {
+    public void setStartYear(String startYear) {
         this.startYear = startYear;
     }
 
-    public void setStartMonth(int startMonth) {
+    public void setStartMonth(String startMonth) {
         this.startMonth = startMonth;
     }
 
-    public void setStartDay(int startDay) {
+    public void setStartDay(String startDay) {
         this.startDay = startDay;
     }
 
-    public void setEndYear(int endYear) {
+    public void setEndYear(String endYear) {
         this.endYear = endYear;
     }
 
-    public void setEndMonth(int endMonth) {
+    public void setEndMonth(String endMonth) {
         this.endMonth = endMonth;
     }
 
-    public void setEndDay(int endDay) {
+    public void setEndDay(String endDay) {
         this.endDay = endDay;
     }
 

@@ -20,6 +20,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class MainActivity extends FragmentActivity {
     FragmentSample fragmentSample;
     public static long userID;
+    public static String animal;
+    public static String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,26 +30,11 @@ public class MainActivity extends FragmentActivity {
         fragmentSample = new FragmentSample();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentSample).show(fragmentSample).commit();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference();
-        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot == null){
-                    profile profile = new profile("NEW USER","bear");
-                    databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         login();
 
         SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
         userID = Kakao_Login.getLong("KAKAO_ID", 0);
+
 //        if (Kakao_Login.getBoolean("Kakao_Login", false)){
 ////            FirebaseDatabase database = FirebaseDatabase.getInstance();
 ////            DatabaseReference databaseReference = database.getReference();
@@ -65,9 +52,49 @@ public class MainActivity extends FragmentActivity {
         if (Kakao_Login.getBoolean("Kakao_Login", false)) {
             Log.d("KAKAO", "onActivityResult: " + String.valueOf(Kakao_Login.getLong("KAKAO_ID", 0)));
             userID = Kakao_Login.getLong("KAKAO_ID", 0);
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference databaseReference = database.getReference();
+            databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot == null){
+                        profile profile = new profile("NEW USER","bear");
+                        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
+                        nickname = dataSnapshot.getValue(profile.class).getNickname();
+                        animal = dataSnapshot.getValue(profile.class).getAnimal();
+                    }else{
+                        nickname = dataSnapshot.getValue(profile.class).getNickname();
+                        animal = dataSnapshot.getValue(profile.class).getAnimal();
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         } else {
             Log.d("KAKAO", "onActivityResult: " + String.valueOf(Kakao_Login.getLong("KAKAO_ID", 0)));
             userID = Kakao_Login.getLong("KAKAO_ID", 0);
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference databaseReference = database.getReference();
+            databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot == null){
+                        profile profile = new profile("NEW USER","bear");
+                        databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").setValue(profile);
+                        nickname = dataSnapshot.getValue(profile.class).getNickname();
+                        animal = dataSnapshot.getValue(profile.class).getAnimal();
+                    }else{
+                        nickname = dataSnapshot.getValue(profile.class).getNickname();
+                        animal = dataSnapshot.getValue(profile.class).getAnimal();
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -79,6 +106,10 @@ public class MainActivity extends FragmentActivity {
     public long getUserID(){
         return userID;
     }
+
+    public String getAnimal() {return animal;}
+
+    public String getNickname(){return nickname;}
 
 }
 
