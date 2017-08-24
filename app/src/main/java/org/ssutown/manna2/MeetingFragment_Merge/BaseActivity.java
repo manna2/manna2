@@ -254,13 +254,18 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     }
 
     public void mergeCalendar() {
-        Log.i("mergecalendar", "dfw");
 
-//        Log.i("dkssud", String.valueOf(mSavedEvents.size()));
-////        String a[] = {"year2017month07day11", "year2017month07day12"};
-//        String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
-//        // 여기는 나중에 날짜 받으면 수정해주면 될듯
-//
+        Log.i("dkssud", String.valueOf(mSavedEvents.size()));
+//        String a[] = {"year2017month07day11", "year2017month07day12"};
+        String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
+        // 여기는 나중에 날짜 받으면 수정해주면 될듯
+        String startendDate = MeetingMainActivity.startendDate;
+        Log.i("dkssud", startendDate+"입니다");
+
+
+        //시작 날짜 parse해주고, 며칠동안 있는지 따로 저장해주고
+        //mergeCalendar class만들어서 작업
+
 //        mergeCalendars = new ArrayList<MergeCalendar>();
 //        mergeCalendars.clear();
 //        int[] count;
