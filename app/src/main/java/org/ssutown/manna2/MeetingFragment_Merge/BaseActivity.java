@@ -49,6 +49,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
+    private ArrayList<MergeCalendar> mergeCalendars;
 
 
     protected ArrayList<String> aaa = new ArrayList<>();
@@ -181,9 +182,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                             if(ds.getValue(CalendarItem.class).getStartyear().equals(ds.getValue(CalendarItem.class).getEndyear()) &&
                                     ds.getValue(CalendarItem.class).getStartmonth().equals(ds.getValue(CalendarItem.class).getEndmonth()) &&
                                             ds.getValue(CalendarItem.class).getStartday().equals(ds.getValue(CalendarItem.class).getEndday())) {
-                                temp.put("year" + ds.getValue(CalendarItem.class).getStartyear()
-                                                + "month" + ds.getValue(CalendarItem.class).getStartmonth()
-                                                + "day" + ds.getValue(CalendarItem.class).getStartday(),
+                                temp.put(ds.getValue(CalendarItem.class).getStartyear()
+                                                +ds.getValue(CalendarItem.class).getStartmonth()
+                                                +ds.getValue(CalendarItem.class).getStartday(),
                                         "0");
                                 mSavedEvents.add(temp);
                             }
@@ -201,18 +202,18 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
                                 }
 
-                                temp.put("year" + ds.getValue(CalendarItem.class).getStartyear()
-                                                + "month" + ds.getValue(CalendarItem.class).getStartmonth()
-                                                + "day" + ds.getValue(CalendarItem.class).getStartday(),
-                                        result+"+year" + ds.getValue(CalendarItem.class).getEndyear()
-                                                + "month" + ds.getValue(CalendarItem.class).getEndmonth()
-                                                + "day" + ds.getValue(CalendarItem.class).getEndday());
+                                temp.put(ds.getValue(CalendarItem.class).getStartyear()
+                                                +ds.getValue(CalendarItem.class).getStartmonth()
+                                                +ds.getValue(CalendarItem.class).getStartday(),
+                                        result+"+" + ds.getValue(CalendarItem.class).getEndyear()
+                                                + ds.getValue(CalendarItem.class).getEndmonth()
+                                                + ds.getValue(CalendarItem.class).getEndday());
                                 mSavedEvents.add(temp);
                             }
                         }else {
-                            temp.put("year" + ds.getValue(CalendarItem.class).getStartyear()
-                                            + "month" + ds.getValue(CalendarItem.class).getStartmonth()
-                                            + "day" + ds.getValue(CalendarItem.class).getStartday(),
+                                temp.put(ds.getValue(CalendarItem.class).getStartyear()
+                                            + ds.getValue(CalendarItem.class).getStartmonth()
+                                            +ds.getValue(CalendarItem.class).getStartday(),
                                     ds.getValue(CalendarItem.class).getStarthour()
                                             + ":" + ds.getValue(CalendarItem.class).getStartminute()
                                             + "-" + ds.getValue(CalendarItem.class).getEndhour()
@@ -260,28 +261,29 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
         // 여기는 나중에 날짜 받으면 수정해주면 될듯
         String startendDate = MeetingMainActivity.startendDate;
-        Log.i("dkssud", startendDate+"입니다");
+        Log.i("dkssud1", startendDate+"입니다");
+        String startyear = startendDate.substring(0,4);
+        String startmonth = startendDate.substring(4,6);
+        String startday = startendDate.substring(6,8);
+        String interval = startendDate.substring(8);
 
-
+        startendDate = startendDate.substring(0,8);
+        Log.i("dkssud2",startyear+startmonth+startday+interval+"입니다");
         //시작 날짜 parse해주고, 며칠동안 있는지 따로 저장해주고
         //mergeCalendar class만들어서 작업
 
-//        mergeCalendars = new ArrayList<MergeCalendar>();
-//        mergeCalendars.clear();
-//        int[] count;
-//        int daysum = 5;
-//        for (int i = 0; i < 5; i++) {
-//            count = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-////            count = new int[24];
-//            Log.i("infori", String.valueOf(i));
-//            Log.i("infori", String.valueOf(mSavedEvents.size()));
-//            for (int j = 0; j < mSavedEvents.size(); j++) {
-//                Log.i("inforj", String.valueOf(mSavedEvents.size()));
+        mergeCalendars = new ArrayList<MergeCalendar>();
+        mergeCalendars.clear();
+        int[] count;
+        int daysum = Integer.valueOf(interval);
+        for (int i = 0; i < daysum; i++) {
+            count = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            for (int j = 0; j < mSavedEvents.size(); j++) {
+                Log.i("inforj", String.valueOf(mSavedEvents.size()));
 //                //여기서 string잘못뽑아서 에러날수도 있어
 //                String yearmonthday[] = mSavedEvents.get(j).toString().split("=");
 //                yearmonthday[0] = yearmonthday[0].replace("{", "");
-//                Log.i("mSavedEvents", yearmonthday[0]);
-//                Log.i("a[]", a[i]);
+                Log.i("mSavedEvents", mSavedEvents.get(j).toString());
 //
 //                if (yearmonthday[0].equals(a[i])) {
 //                    //종일 이벤트는 처리 안해줌
@@ -301,8 +303,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 ////                    mergeCalendars.add(mergecal);
 ////                    Log.i("forhyemin1", String.valueOf(mergeCalendars.size()));
 //
-//                }
-//            }
+                }
+            }
 //
 //            MergeCalendar mergecal = new MergeCalendar(count, a[i]);
 //            mergeCalendars.add(mergecal);
