@@ -26,6 +26,8 @@ import org.ssutown.manna2.R;
 
 import java.util.ArrayList;
 
+import static org.ssutown.manna2.MainActivity.animal;
+
 
 public class MeetingMainActivity extends FragmentActivity {
     public static String meetingid;
@@ -36,7 +38,7 @@ public class MeetingMainActivity extends FragmentActivity {
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
 
-    ArrayList<Users> users = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,14 @@ public class MeetingMainActivity extends FragmentActivity {
 
         MemberID = new ArrayList<String>();
 
+
         databaseReference.child("meeting_Info").child(meetingid).child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                MemberID.clear();
+                users.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    MemberID.add(ds.getValue(User.class).getUserID());
+                    users.add(new User(ds.getValue(User.class).getAnimal(),ds.getValue(User.class).getNickname(),ds.getValue(User.class).getUserID()));
+                    showArrayList();
                 }
             }
             @Override
@@ -110,6 +114,14 @@ public class MeetingMainActivity extends FragmentActivity {
         String result = String.valueOf(diffDays);
         return result;
 
+    }
+
+    public void showArrayList(){
+        for(int i = 0; i<users.size(); i++){
+            Log.d("MeetingMain", "showArrayList: " + users.get(i).getAnimal());
+            Log.d("MeetingMain", "showArrayList: " + users.get(i).getNickname());
+            Log.d("MeetingMain", "showArrayList: " + users.get(i).getUserID());
+        }
     }
 
 
