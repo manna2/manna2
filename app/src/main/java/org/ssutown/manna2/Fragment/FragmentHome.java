@@ -122,7 +122,6 @@ public class FragmentHome extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
-//                Drawable drawable = getActivity().getResources().getDrawable(R.drawable.bear);
                 profileimage.setImageDrawable(setProfileIamge(dataSnapshot.getValue(profile.class).getAnimal()));
             }
 

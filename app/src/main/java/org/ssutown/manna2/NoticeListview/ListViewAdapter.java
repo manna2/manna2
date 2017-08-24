@@ -1,6 +1,8 @@
 package org.ssutown.manna2.NoticeListview;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 public class ListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    String animal;
 
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
@@ -47,10 +50,13 @@ public class ListViewAdapter extends BaseAdapter {
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
 
+//        int image = R.drawable.bear;
+
+        Log.d("listviewAdapter", "getView: " + animal);
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageResource(R.drawable.meeting3);
-        iconImageView.getLayoutParams().height = 150;
-        iconImageView.getLayoutParams().width = 150;
+        iconImageView.setImageResource(setProfileIamge(animal));
+        iconImageView.getLayoutParams().height = 130;
+        iconImageView.getLayoutParams().width = 130;
         userName.setText(listViewItem.getUsername());
         noticecontents.setText(listViewItem.getContents());
 
@@ -72,6 +78,9 @@ public class ListViewAdapter extends BaseAdapter {
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String icon, String Username, String contents, String noticeID) {
         ListViewItem item = new ListViewItem();
+        Log.d("adapter", "addItem: ");
+
+        animal = icon;
 
         item.setContents(contents);
         item.setNoticeID(noticeID);
@@ -84,5 +93,43 @@ public class ListViewAdapter extends BaseAdapter {
     public void clear(){
         listViewItemList.clear();
     }
+
+
+    public int setProfileIamge(String animal) {
+        int drawable;
+        switch (animal) {
+            case "bear":
+                drawable = R.drawable.bear;
+                break;
+            case "cat":
+                drawable = R.drawable.cat;
+                break;
+            case "cheetha":
+                drawable = R.drawable.cheetah;
+                break;
+            case "cow":
+                drawable = R.drawable.cow;
+                break;
+            case "fox":
+                drawable = R.drawable.fox;
+                break;
+            case "hedgehog":
+                drawable = R.drawable.hedgehog;
+                break;
+            case "tiger":
+                drawable = R.drawable.tiger;
+                break;
+            case "wolf":
+                drawable = R.drawable.wolf;
+                break;
+            case "pig":
+                drawable = R.drawable.meeting3;
+                break;
+            default:
+                drawable = R.drawable.bear;
+        }
+        return drawable;
+    }
+
 }
 

@@ -3,9 +3,11 @@ package org.ssutown.manna2.MeetingFragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.ssutown.manna2.HomeFragment.profile;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingRoom.meeting_Info;
 import org.ssutown.manna2.NoticeListview.ListViewAdapter;
@@ -38,6 +41,8 @@ public class FragmentNotice extends Fragment {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final DatabaseReference databaseReference = firebaseDatabase.getReference();
     String contexts;
+    String animal = "bear";
+    String nickname = "new";
 
     public static FragmentNotice newInstance(String text){
         FragmentNotice fragmentNotice=new FragmentNotice();
@@ -66,9 +71,8 @@ public class FragmentNotice extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        final ListViewAdapter adapter;
 
-        adapter = new ListViewAdapter();
+        final ListViewAdapter adapter = new ListViewAdapter();
         final ListView listview = (ListView)view.findViewById(R.id.listview2);
         listview.setAdapter(adapter);
 
@@ -116,15 +120,15 @@ public class FragmentNotice extends Fragment {
 
         //add notice 후
 
+
         //공지사항 추가가
         databaseReference.child("meeting_Info").child(meetingid).child("Notices").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 adapter.clear();
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    adapter.addItem(ds.getValue(ListViewItem.class).getUserIcon(),
-                            ds.getValue(ListViewItem.class).getUsername(),
+                for(final DataSnapshot ds: dataSnapshot.getChildren()) {
+                    adapter.addItem(animal,
+                            nickname,
                             ds.getValue(ListViewItem.class).getContents(),
                             ds.getValue(ListViewItem.class).getNoticeID());
 
@@ -150,4 +154,5 @@ public class FragmentNotice extends Fragment {
         long noticeid = Long.valueOf(id);
         return noticeid;
     }
+
 }
