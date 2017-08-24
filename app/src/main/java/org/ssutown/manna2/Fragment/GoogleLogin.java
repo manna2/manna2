@@ -501,7 +501,7 @@ public class GoogleLogin extends Activity
                 String endday = endday1[2];
 
                 CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
-                        startday,null,null, endyear, endmonth, endday, null, null);
+                        startday,"x","x", endyear, endmonth, endday, "x", "x");
 
                 calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
                 list.tostring();
