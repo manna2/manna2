@@ -2,7 +2,6 @@ package org.ssutown.manna2.Fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -34,7 +32,6 @@ import org.ssutown.manna2.R;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
-
 
 
 public class FragmentMeeting extends Fragment {
@@ -94,7 +91,9 @@ public class FragmentMeeting extends Fragment {
                             adapter.clear();
                             for(DataSnapshot ds : dataSnapshot.getChildren()){
                                 for(int i = 0 ; i<meetinglist.size();i++){
-                                    if((meetinglist.get(i).toString().equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
+                                    if((meetinglist.get(i).
+                                            equals(ds.getValue(meeting_Info.class).
+                                                    getMeeting_id()))){
                                         Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
                                         adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),ds.getValue(meeting_Info.class).getMeeting_id());
                                     }adapter.notifyDataSetChanged();
