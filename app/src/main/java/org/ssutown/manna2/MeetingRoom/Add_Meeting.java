@@ -30,6 +30,8 @@ public class Add_Meeting extends AppCompatActivity {
     EditText min;
 
     long userID;
+    String nickname;
+    String animal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class Add_Meeting extends AppCompatActivity {
 
         Intent i = getIntent();
         userID = i.getExtras().getLong("user_id");
+        animal = i.getExtras().getString("animal");
+        nickname = i.getExtras().getString("nickname");
 
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +89,7 @@ public class Add_Meeting extends AppCompatActivity {
 
                 databaseReference.child("meeting_List").push().setValue(meeting_info);
 
-                User user = new User(String.valueOf(userID));
+                User user = new User(animal,nickname,String.valueOf(userID));
                 databaseReference.child("meeting_Info").child(meeting_info.getMeeting_id()).child("Users").push().setValue(user);
 
                 finish();

@@ -28,6 +28,8 @@ import org.ssutown.manna2.HomeFragment.MemoListAdapter;
 import org.ssutown.manna2.HomeFragment.MemoListItem;
 import org.ssutown.manna2.HomeFragment.profile;
 import org.ssutown.manna2.MainActivity;
+import org.ssutown.manna2.MeetingFragment.Users;
+import org.ssutown.manna2.MeetingRoom.User;
 import org.ssutown.manna2.R;
 
 public class FragmentHome extends Fragment {
@@ -68,7 +70,6 @@ public class FragmentHome extends Fragment {
 
         nickname = (TextView)view.findViewById(R.id.nickname);
         profileimage = (ImageView)view.findViewById(R.id.profile);
-
 
         //메모추가
         final ImageButton addmemo =(ImageButton) view.findViewById(R.id.memoplus);
