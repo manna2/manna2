@@ -127,11 +127,14 @@ public class FragmentNotice extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
                 for(final DataSnapshot ds: dataSnapshot.getChildren()) {
-                    adapter.addItem(animal,
-                            nickname,
-                            ds.getValue(ListViewItem.class).getContents(),
-                            ds.getValue(ListViewItem.class).getNoticeID());
-
+                    for(int i = 0; i<((MeetingMainActivity)getActivity()).users.size(); i++){
+                        if(((MeetingMainActivity)getActivity()).users.get(i).getUserID().equals(ds.getValue(ListViewItem.class).getUsername())) {
+                            adapter.addItem(((MeetingMainActivity)getActivity()).users.get(i).getAnimal(),
+                                    ((MeetingMainActivity)getActivity()).users.get(i).getNickname(),
+                                    ds.getValue(ListViewItem.class).getContents(),
+                                    ds.getValue(ListViewItem.class).getNoticeID());
+                        }
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
