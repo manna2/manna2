@@ -258,7 +258,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
         Log.i("dkssud", String.valueOf(mSavedEvents.size()));
 //        String a[] = {"year2017month07day11", "year2017month07day12"};
-        String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
+//        String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
         // 여기는 나중에 날짜 받으면 수정해주면 될듯
         String startendDate = MeetingMainActivity.startendDate;
         Log.i("dkssud1", startendDate+"입니다");
@@ -268,6 +268,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         String interval = startendDate.substring(8);
 
         startendDate = startendDate.substring(0,8);
+        String currentDate = startendDate;
         Log.i("dkssud2",startyear+startmonth+startday+interval+"입니다");
         //시작 날짜 parse해주고, 며칠동안 있는지 따로 저장해주고
         //mergeCalendar class만들어서 작업
@@ -279,153 +280,49 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         for (int i = 0; i < daysum; i++) {
             count = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             for (int j = 0; j < mSavedEvents.size(); j++) {
-                Log.i("inforj", String.valueOf(mSavedEvents.size()));
-//                //여기서 string잘못뽑아서 에러날수도 있어
-//                String yearmonthday[] = mSavedEvents.get(j).toString().split("=");
-//                yearmonthday[0] = yearmonthday[0].replace("{", "");
                 Log.i("mSavedEvents", mSavedEvents.get(j).toString());
-//
-//                if (yearmonthday[0].equals(a[i])) {
-//                    //종일 이벤트는 처리 안해줌
-//                    String dayParsetime[] = mSavedEvents.get(j).toString().split("=");
-//                    String startParseend[] = dayParsetime[1].split("-");
-//                    String starttime[] = startParseend[0].split(":");
-//                    String endtime[] = startParseend[1].split(":");
-//                    int starthour = Integer.valueOf(starttime[0]);
-//                    endtime[0] = endtime[0].replace("}", "");
-//                    int endhour = Integer.valueOf(endtime[0]);
-//                    Log.i("forhyemin", "i: " + String.valueOf(i) + "j :" + String.valueOf(j) +
-//                            "starthour: " + String.valueOf(starthour) + "endhour: " + String.valueOf(endhour));
-//                    for (int k = starthour; k < endhour; k++) {
-//                        count[k]++;
-//                    }
-////                    MergeCalendar mergecal = new MergeCalendar(count, a[i]);
-////                    mergeCalendars.add(mergecal);
-////                    Log.i("forhyemin1", String.valueOf(mergeCalendars.size()));
-//
+                String saveCurrentday1 = mSavedEvents.get(j).toString().substring(1,9);
+                String saveCurrentday2 = mSavedEvents.get(j).toString().substring(10);
+
+                if(saveCurrentday1.equals(currentDate)) {
+                    //종일말고 시간 일정 먼저
+                    if (saveCurrentday2.contains(":")) {
+                        int starthour = Integer.valueOf(saveCurrentday2.substring(0, 2));
+                        int endhour = Integer.valueOf(saveCurrentday2.substring(6, 8));
+                        for (int k = starthour; k < endhour; k++) {
+                            count[k]++;
+                        }
+                    } else {
+                        for (int k = 0; k < 24; k++)
+                            count[k]++;
+                    }
                 }
+
+                }
+            for(int a=0;a<24;a++) {
+                Log.i("count", String.valueOf(count[a])+"이다");
             }
-//
-//            MergeCalendar mergecal = new MergeCalendar(count, a[i]);
-//            mergeCalendars.add(mergecal);
-//            Log.i("forhyemin1", String.valueOf(mergeCalendars.size()));
-//
-//        }
-//
-//        eventList.clear();
-////        Calendar startTime = Calendar.getInstance();
-////        startTime.set(Calendar.MONTH, month-1);//7월
-////        startTime.set(Calendar.YEAR, 2017);//연도
-////        startTime.set(Calendar.DATE, 17);
-////        startTime.set(Calendar.HOUR_OF_DAY, 0);//2시
-////        startTime.set(Calendar.MINUTE, 00);
-////        Calendar endTime = (Calendar) startTime.clone();
-////        endTime.set(Calendar.HOUR_OF_DAY, 1);
-////
-////        endTime.set(Calendar.MINUTE, 00);
-////        endTime.set(Calendar.MONTH, month-1); // 7월
-////        WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
-////        event.setColor(getResources().getColor(R.color.event_color_03));
-////        eventList.add(event);
-////
-////        startTime = Calendar.getInstance();
-////        startTime.set(Calendar.MONTH, month-1);//7월
-////        startTime.set(Calendar.YEAR, 2017);//연도
-////        startTime.set(Calendar.DATE, 17);
-////        startTime.set(Calendar.HOUR_OF_DAY, 1);//2시
-////        startTime.set(Calendar.MINUTE, 00);
-////        endTime = (Calendar) startTime.clone();
-////        endTime.set(Calendar.HOUR_OF_DAY, 2);
-////        endTime.set(Calendar.MINUTE, 00);
-////        endTime.set(Calendar.MONTH, month-1); // 7월
-////        event = new WeekViewEvent(10, " ", startTime, endTime);
-////        event.setColor(getResources().getColor(R.color.event_color_02));
-////        eventList.add(event);
-//
-//        int filter = 2;
-//        Calendar startTime = Calendar.getInstance();
-//        Calendar endTime;
-//
-//        for(int i =0; i < mergeCalendars.size(); i++){
-//            int tmpcount[] = mergeCalendars.get(i).getCount();
-//            String date = mergeCalendars.get(i).getDate();
-//            int year = Integer.parseInt(date.substring(4,8));
-//            int month = Integer.parseInt(date.substring(13,15));
-//            int day = Integer.parseInt(date.substring(18,20));
-//
-//            Log.d("aaa", "getEventList: " + year + month + day);
-//            Log.d("aaa", "userinfo Size: " + userinfo.size());
-//
-//            for(int k = 0; k<tmpcount.length; k++){
-//                int available = userinfo.size() - tmpcount[k];
-//                int tmp = k+1;
-//                Log.d("aaa", "getEventList: " + k + " " + tmp);
-//                if(available >= filter){
-//                    startTime = Calendar.getInstance();
-//                    startTime.set(Calendar.MONTH, month-1);//7월
-//                    startTime.set(Calendar.YEAR, year);//연도
-//                    startTime.set(Calendar.DATE, day);
-//                    startTime.set(Calendar.HOUR_OF_DAY, k);//2시
-//                    startTime.set(Calendar.MINUTE, 00);
-//                    endTime = (Calendar) startTime.clone();
-//                    endTime.set(Calendar.HOUR_OF_DAY, tmp);
-//                    endTime.set(Calendar.MINUTE, 00);
-//                    endTime.set(Calendar.MONTH, month-1); // 7월
-//                    WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
-//                    event.setColor(getResources().getColor(R.color.event_color_03));
-//                    eventList.add(event);
-//                } else if(available < filter){
-//                    if(available == 0){
-//                        startTime = Calendar.getInstance();
-//                        startTime.set(Calendar.MONTH, month-1);//7월
-//                        startTime.set(Calendar.YEAR, year);//연도
-//                        startTime.set(Calendar.DATE, day);
-//                        startTime.set(Calendar.HOUR_OF_DAY, k);//2시
-//                        startTime.set(Calendar.MINUTE, 00);
-//                        endTime = (Calendar) startTime.clone();
-//                        endTime.set(Calendar.HOUR_OF_DAY, tmp);
-//                        endTime.set(Calendar.MINUTE, 00);
-//                        endTime.set(Calendar.MONTH, month-1); // 7월
-//                        WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
-//                        event.setColor(getResources().getColor(R.color.event_color_02));
-//                        eventList.add(event);
-//                    }else{
-//                        startTime = Calendar.getInstance();
-//                        startTime.set(Calendar.MONTH, month-1);//7월
-//                        startTime.set(Calendar.YEAR, year);//연도
-//                        startTime.set(Calendar.DATE, day);
-//                        startTime.set(Calendar.HOUR_OF_DAY, k);//2시
-//                        startTime.set(Calendar.MINUTE, 00);
-//                        endTime = (Calendar) startTime.clone();
-//                        endTime.set(Calendar.HOUR_OF_DAY, tmp);
-//                        endTime.set(Calendar.MINUTE, 00);
-//                        endTime.set(Calendar.MONTH, month-1); // 7월
-//                        WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
-//                        event.setColor(getResources().getColor(R.color.event_color_04));
-//                        eventList.add(event);
-//                    }
-//                }
-//
-//            }
-//
-//            mWeekView.notifyDatasetChanged();
-//        }
-//
-//        complete = true;
-//
-//        Log.d("aa", "onCreate: complete" + complete);
-//
-//        int dkssud1[] = mergeCalendars.get(0).getCount();
-//        int dkssud2[] = mergeCalendars.get(1).getCount();
-//
-//        Log.i("forhyemin", mergeCalendars.get(0).getDate());
-//        for (int i = 0; i < 24; i++) {
-//            Log.i("forhyemin 1번째 i : ", String.valueOf(i) + "count : " + String.valueOf(dkssud1[i]));
-//        }
-//        Log.i("forhyemin", mergeCalendars.get(1).getDate());
-//        for (int i = 0; i < 24; i++) {
-//            Log.i("forhyemin 2번째 i : ", String.valueOf(i) + "count : " + String.valueOf(dkssud2[i]));
-//        }
+
+            MergeCalendar mergecal = new MergeCalendar(count, currentDate);
+            mergeCalendars.add(mergecal);
+            Log.i("forhyemin1", String.valueOf(mergeCalendars.size()));
+
+            //시간 하루 늘려주는 함수
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault());
+                    Date date1 = dateFormat.parse(currentDate);
+                    date1.setDate(date1.getDate() + 1);
+                    Log.i("date1", String.valueOf(date1));
+                    currentDate = dateFormat.format(date1);
+                    Log.i("date1", currentDate);
+
+                }
+                catch (java.text.ParseException e) {
+
+                }
+
+            }
+
 
     }
 
