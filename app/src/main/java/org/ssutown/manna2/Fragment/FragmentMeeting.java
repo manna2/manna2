@@ -91,9 +91,7 @@ public class FragmentMeeting extends Fragment {
                             adapter.clear();
                             for(DataSnapshot ds : dataSnapshot.getChildren()){
                                 for(int i = 0 ; i<meetinglist.size();i++){
-                                    if((meetinglist.get(i).
-                                            equals(ds.getValue(meeting_Info.class).
-                                                    getMeeting_id()))){
+                                    if((meetinglist.get(i).equals(ds.getValue(meeting_Info.class).getMeeting_id()))){
                                         Log.d(TAG, "meeting Info _ onDataChange: " + ds.getValue(meeting_Info.class).getMeeting_id());
                                         adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.meeting3),ds.getValue(meeting_Info.class).getMeeting_name(),ds.getValue(meeting_Info.class).getMeeting_id());
                                     }adapter.notifyDataSetChanged();
