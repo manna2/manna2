@@ -19,13 +19,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.ssutown.manna2.R;
+
+import java.util.ArrayList;
+
+
 public class MeetingMainActivity extends FragmentActivity {
     public static String meetingid;
     FragmentSample fragmentSample;
+
     public static ArrayList<String> MemberID;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
+
+    ArrayList<Users> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,7 @@ public class MeetingMainActivity extends FragmentActivity {
         meetingid = i.getExtras().getString("meetingid");
 
         MemberID = new ArrayList<String>();
+
         databaseReference.child("meeting_Info").child(meetingid).child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -97,6 +109,7 @@ public class MeetingMainActivity extends FragmentActivity {
         long diffDays = diff / (24 * 60 * 60 * 1000);
         String result = String.valueOf(diffDays);
         return result;
+
     }
 
 

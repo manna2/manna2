@@ -58,6 +58,9 @@ public class FragmentMeeting extends Fragment {
 
         ImageButton addMeeting = (ImageButton)view.findViewById(R.id.addmeeting);
         final long userID = ((MainActivity)getActivity()).getUserID();
+        final String animal = ((MainActivity)getActivity()).getAnimal();
+        final String nickname = ((MainActivity)getActivity()).getNickname();
+
         Log.d("userID", "meeting user ID: " + userID);
 
         final ArrayList<String> meetinglist = new ArrayList<>();
@@ -68,6 +71,8 @@ public class FragmentMeeting extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), Add_Meeting.class);
                 i.putExtra("user_id",userID);
+                i.putExtra("animal",animal);
+                i.putExtra("nickname",nickname);
                 startActivity(i);
             }
         });
@@ -86,6 +91,7 @@ public class FragmentMeeting extends Fragment {
                     Log.d(TAG, "meetinglist: " + meetinglist.toString());
 
                     databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             adapter.clear();
