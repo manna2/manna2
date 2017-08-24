@@ -178,7 +178,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         HashMap<String, String> temp = new HashMap<String, String>();
 
-                        if(ds.getValue(CalendarItem.class).getStarthour().equals("x")){
+                        if(ds.getValue(CalendarItem.class).getStarthour().equals("x") ){
                             if(ds.getValue(CalendarItem.class).getStartyear().equals(ds.getValue(CalendarItem.class).getEndyear()) &&
                                     ds.getValue(CalendarItem.class).getStartmonth().equals(ds.getValue(CalendarItem.class).getEndmonth()) &&
                                             ds.getValue(CalendarItem.class).getStartday().equals(ds.getValue(CalendarItem.class).getEndday())) {
@@ -205,7 +205,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                                 temp.put(ds.getValue(CalendarItem.class).getStartyear()
                                                 +ds.getValue(CalendarItem.class).getStartmonth()
                                                 +ds.getValue(CalendarItem.class).getStartday(),
-                                        result+"+" + ds.getValue(CalendarItem.class).getEndyear()
+                                        result+"]" + ds.getValue(CalendarItem.class).getEndyear()
                                                 + ds.getValue(CalendarItem.class).getEndmonth()
                                                 + ds.getValue(CalendarItem.class).getEndday());
                                 mSavedEvents.add(temp);
@@ -277,12 +277,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         mergeCalendars.clear();
         int[] count;
         int daysum = Integer.valueOf(interval);
-        for (int i = 0; i < daysum; i++) {
+        for (int i = 0; i <= daysum; i++) {
             count = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             for (int j = 0; j < mSavedEvents.size(); j++) {
                 Log.i("mSavedEvents", mSavedEvents.get(j).toString());
                 String saveCurrentday1 = mSavedEvents.get(j).toString().substring(1,9);
                 String saveCurrentday2 = mSavedEvents.get(j).toString().substring(10);
+
 
                 if(saveCurrentday1.equals(currentDate)) {
                     //종일말고 시간 일정 먼저
@@ -296,6 +297,37 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                         for (int k = 0; k < 24; k++)
                             count[k]++;
                     }
+                }
+                else if(saveCurrentday2.contains("]")){
+
+                    //며칠 걸리는 일정// 편하게 여행일정 !! 여행은 며칠동안 가따오니까!!
+
+                    String eventinterval = saveCurrentday2.split("]")[0];
+                    if(!eventinterval.equals("1")){
+                        Log.i("dkssud3", currentDate);
+                        String finalevent = saveCurrentday2.split("]")[1].substring(0,8);
+                        String interevent = "";
+                        try {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault());
+                            Date date2 = dateFormat.parse(saveCurrentday1);
+                            date2.setDate(date2.getDate() + Integer.valueOf(eventinterval));
+                            Log.i("date2", String.valueOf(date2));
+                            interevent = dateFormat.format(date2);
+                            Log.i("date2", interevent);
+
+                        }
+                        catch (java.text.ParseException e) {
+
+                        }
+
+                        if(Integer.valueOf(saveCurrentday1) < Integer.valueOf(interevent) &&
+                                Integer.valueOf(interevent) > Integer.valueOf(finalevent)){
+                            for (int k = 0; k < 24; k++)
+                                count[k]++;
+                        }
+                    }
+
+
                 }
 
                 }
