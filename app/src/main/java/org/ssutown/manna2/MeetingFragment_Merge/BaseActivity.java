@@ -282,8 +282,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
             for (int j = 0; j < mSavedEvents.size(); j++) {
                 Log.i("mSavedEvents", mSavedEvents.get(j).toString());
                 String saveCurrentday1 = mSavedEvents.get(j).toString().substring(1,9);
+                //일정 시작일
                 String saveCurrentday2 = mSavedEvents.get(j).toString().substring(10);
-
+                //일정 끝나는 일 또는 시간
 
                 if(saveCurrentday1.equals(currentDate)) {
                     //종일말고 시간 일정 먼저
@@ -303,9 +304,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     //며칠 걸리는 일정// 편하게 여행일정 !! 여행은 며칠동안 가따오니까!!
 
                     String eventinterval = saveCurrentday2.split("]")[0];
+                    //며칠동안 일정이 지속되는지
                     if(!eventinterval.equals("1")){
+                        //종일 일정이 아닐경우 여행일정
                         Log.i("dkssud3", currentDate);
+                        //currentdate는 현재 일
                         String finalevent = saveCurrentday2.split("]")[1].substring(0,8);
+                        //finalevent는 일정의 마지막 일
                         String interevent = "";
                         try {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault());
@@ -313,6 +318,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                             date2.setDate(date2.getDate() + Integer.valueOf(eventinterval));
                             Log.i("date2", String.valueOf(date2));
                             interevent = dateFormat.format(date2);
+                            //interevnet는 중간날짜
                             Log.i("date2", interevent);
 
                         }
