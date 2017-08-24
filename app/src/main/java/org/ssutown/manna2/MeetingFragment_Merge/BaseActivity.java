@@ -311,28 +311,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                         //currentdate는 현재 일
                         String finalevent = saveCurrentday2.split("]")[1].substring(0,8);
                         //finalevent는 일정의 마지막 일
-                        String interevent = "";
-                        try {
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault());
-                            Date date2 = dateFormat.parse(saveCurrentday1);
-                            date2.setDate(date2.getDate() + Integer.valueOf(eventinterval));
-                            Log.i("date2", String.valueOf(date2));
-                            interevent = dateFormat.format(date2);
-                            //interevnet는 중간날짜
-                            Log.i("date2", interevent);
 
-                        }
-                        catch (java.text.ParseException e) {
-
-                        }
-
-                        if(Integer.valueOf(saveCurrentday1) < Integer.valueOf(interevent) &&
-                                Integer.valueOf(interevent) > Integer.valueOf(finalevent)){
+                        if(Integer.valueOf(saveCurrentday1) < Integer.valueOf(currentDate) &&
+                                Integer.valueOf(currentDate) < Integer.valueOf(finalevent)){
                             for (int k = 0; k < 24; k++)
                                 count[k]++;
                         }
                     }
-
 
                 }
 
@@ -360,7 +345,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                 }
 
             }
-
 
     }
 
