@@ -37,6 +37,7 @@ public class MeetingMainActivity extends FragmentActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
+    public static String min;
 
     public static ArrayList<User> users = new ArrayList<>();
 
@@ -91,6 +92,7 @@ public class MeetingMainActivity extends FragmentActivity {
                        }
 
                    }
+                   min = ds.getValue(meeting_Info.class).getMin();
                 }
             }
             @Override

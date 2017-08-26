@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,9 +55,12 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     DatabaseReference databaseReference = database.getReference();
     private ArrayList<MergeCalendar> mergeCalendars;
 
+    List<WeekViewEvent> eventList = new ArrayList<WeekViewEvent>();
 
     protected ArrayList<String> aaa = new ArrayList<>();
     protected int test = 0;
+    TextView filter;
+    boolean complete = false;
 
 
     List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
@@ -63,21 +68,16 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        for (int i = 0; i < eventList.size(); i++) {
+            WeekViewEvent event = eventList.get(i);
+            Log.e("onMonthChange For Loop", "Month : " + (event.getStartTime().MONTH+1) + " / Year " + event.getStartTime().YEAR );
+            if ((event.getStartTime().get(Calendar.MONTH)+1) == newMonth  && event.getStartTime().get(Calendar.YEAR) == newYear) {
+//                event.setColor(getResources().getColor(R.color.event_color_01));
+                events.add(event);
+            }
 
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
-
+        }
 
         return events;
     }
@@ -130,11 +130,30 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
 
-        TextView filter = (TextView)findViewById(R.id.member);
+        //필터설정
 
-//        Log.d("filter", String.valueOf(memberID.size()));
-//        filter.setText(memberID.size());
+        filter = (TextView)findViewById(R.id.member);
+        filter.setText(String.valueOf(memberID.size()));
 
+        Button minus = (Button)findViewById(R.id.left);
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int temp = Integer.parseInt(filter.getText().toString());
+                Log.d("plus", "onClick: " + temp);
+                filter.setText(String.valueOf(temp-1));
+            }
+        });
+
+        Button plus = (Button)findViewById(R.id.right);
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int temp = Integer.parseInt(filter.getText().toString());
+                Log.d("plus", "onClick: " + temp);
+                filter.setText(String.valueOf(temp+1));
+            }
+        });
 
 
         test = 3;
@@ -146,6 +165,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         setupDateTimeInterpreter(false);
         getCalendar();
     }
+
 
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
@@ -354,6 +374,85 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                 }
 
             }
+
+            //hyemin
+        eventList.clear();
+
+//        int fil = Integer.parseInt(filter.getText().toString());
+
+        int fil = 0;
+        Calendar startTime = Calendar.getInstance();
+        Calendar endTime;
+
+        //날짜랑 카운트 받아서 하는곳
+        for(int i =0; i < mergeCalendars.size(); i++){
+            int tmpcount[] = mergeCalendars.get(i).getCount();
+            String date = mergeCalendars.get(i).getDate();
+
+            int year = Integer.parseInt(date.substring(0,4));
+            int month = Integer.parseInt(date.substring(4,6));
+            int day = Integer.parseInt(date.substring(6,8));
+
+            int min = Integer.parseInt(MeetingMainActivity.min);
+            Log.d("hyeminndate", "mergeCalendar: " + year + month + day);
+
+            Log.d("aaa", "userinfo Size: " + memberID.size());
+
+            for(int k = 0; k<tmpcount.length; k++){
+                int available = memberID.size() - tmpcount[k];
+                int tmp = k+1;
+                Log.d("aaa", "getEventList: " + k + " " + tmp);
+                if(available >= fil){
+                    startTime = Calendar.getInstance();
+                    startTime.set(Calendar.MONTH, month-1);//7월
+                    startTime.set(Calendar.YEAR, year);//연도
+                    startTime.set(Calendar.DATE, day);
+                    startTime.set(Calendar.HOUR_OF_DAY, k);//2시
+                    startTime.set(Calendar.MINUTE, 00);
+                    endTime = (Calendar) startTime.clone();
+                    endTime.set(Calendar.HOUR_OF_DAY, tmp);
+                    endTime.set(Calendar.MINUTE, 00);
+                    endTime.set(Calendar.MONTH, month-1); // 7월
+                    WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
+                    event.setColor(getResources().getColor(R.color.event_color_03));
+                    eventList.add(event);
+                } else if(fil > available && fil<min) {
+                    startTime = Calendar.getInstance();
+                    startTime.set(Calendar.MONTH, month - 1);//7월
+                    startTime.set(Calendar.YEAR, year);//연도
+                    startTime.set(Calendar.DATE, day);
+                    startTime.set(Calendar.HOUR_OF_DAY, k);//2시
+                    startTime.set(Calendar.MINUTE, 00);
+                    endTime = (Calendar) startTime.clone();
+                    endTime.set(Calendar.HOUR_OF_DAY, tmp);
+                    endTime.set(Calendar.MINUTE, 00);
+                    endTime.set(Calendar.MONTH, month - 1); // 7월
+                    WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
+                    event.setColor(getResources().getColor(R.color.event_color_04));
+                    eventList.add(event);
+                } else if( available < min){
+                    startTime = Calendar.getInstance();
+                    startTime.set(Calendar.MONTH, month-1);//7월
+                    startTime.set(Calendar.YEAR, year);//연도
+                    startTime.set(Calendar.DATE, day);
+                    startTime.set(Calendar.HOUR_OF_DAY, k);//2시
+                    startTime.set(Calendar.MINUTE, 00);
+                    endTime = (Calendar) startTime.clone();
+                    endTime.set(Calendar.HOUR_OF_DAY, tmp);
+                    endTime.set(Calendar.MINUTE, 00);
+                    endTime.set(Calendar.MONTH, month-1); // 7월
+                    WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
+                    event.setColor(getResources().getColor(R.color.event_color_02));
+                    eventList.add(event);
+                }
+
+            }
+
+            mWeekView.notifyDatasetChanged();
+        }
+
+        complete = true;
+
 
     }
 
