@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.ssutown.manna2.Fragment.CalendarItem;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
+import org.ssutown.manna2.MeetingRoom.User;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +46,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
 
-    private ArrayList<String> memberID = MeetingMainActivity.MemberID;
+    private ArrayList<User> memberID = MeetingMainActivity.users;
     private long userID = MainActivity.userID;
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -128,6 +130,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
 
+        TextView filter = (TextView)findViewById(R.id.member);
+
+//        Log.d("filter", String.valueOf(memberID.size()));
+//        filter.setText(memberID.size());
+
+
+
         test = 3;
 
         aaa.add("gggg");
@@ -171,7 +180,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         for (int i = 0; i < memberID.size(); i++) {
             final int a = i;
             databaseReference.child("user_Info").
-                    child(memberID.get(i)).child("calendar").addValueEventListener(new ValueEventListener() {
+                    child(memberID.get(i).getUserID()).child("calendar").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 

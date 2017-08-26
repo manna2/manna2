@@ -38,7 +38,7 @@ public class MeetingMainActivity extends FragmentActivity {
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
 
-    ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
