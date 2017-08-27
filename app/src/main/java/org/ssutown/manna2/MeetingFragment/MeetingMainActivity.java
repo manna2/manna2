@@ -38,6 +38,7 @@ public class MeetingMainActivity extends FragmentActivity {
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
     public static String min;
+    public static meeting_Info info;
 
     public static ArrayList<User> users = new ArrayList<>();
 
@@ -60,7 +61,7 @@ public class MeetingMainActivity extends FragmentActivity {
                 users.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
                     users.add(new User(ds.getValue(User.class).getAnimal(),ds.getValue(User.class).getNickname(),ds.getValue(User.class).getUserID()));
-                    showArrayList();
+//                    showArrayList();
                 }
             }
             @Override
@@ -77,6 +78,8 @@ public class MeetingMainActivity extends FragmentActivity {
                     Log.i("startendday6", startendDate+"111");
                    if(meetingid.equals(ds.getValue(meeting_Info.class).getMeeting_id())){
                        Log.i("startendday2", startendDate+"111");
+                       info = ds.getValue(meeting_Info.class);
+                       Log.d("meetinginfo", info.getMeeting_id() + " " + info.getMeeting_name() + info.getEndMonth());
                        String temp1 = ds.getValue(meeting_Info.class).getStartYear()+
                                ds.getValue(meeting_Info.class).getStartMonth()+
                                ds.getValue(meeting_Info.class).getStartDay();
@@ -92,7 +95,6 @@ public class MeetingMainActivity extends FragmentActivity {
                        }
 
                    }
-                   min = ds.getValue(meeting_Info.class).getMin();
                 }
             }
             @Override
@@ -104,6 +106,8 @@ public class MeetingMainActivity extends FragmentActivity {
         Log.i("startendday4", startendDate+"111");
 
     }
+
+
     public static String diffOfDate(String begin, String end) throws Exception
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -123,6 +127,7 @@ public class MeetingMainActivity extends FragmentActivity {
             Log.d("MeetingMain", "showArrayList: " + users.get(i).getAnimal());
             Log.d("MeetingMain", "showArrayList: " + users.get(i).getNickname());
             Log.d("MeetingMain", "showArrayList: " + users.get(i).getUserID());
+            Log.d("MeetingMain", "meeting info: " + info.getMeeting_id() + info.getMeeting_name());
         }
     }
 

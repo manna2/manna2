@@ -393,7 +393,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
             int month = Integer.parseInt(date.substring(4,6));
             int day = Integer.parseInt(date.substring(6,8));
 
-            int min = Integer.parseInt(MeetingMainActivity.min);
+            int min = Integer.parseInt(MeetingMainActivity.info.getMin());
             Log.d("hyeminndate", "mergeCalendar: " + year + month + day);
 
             Log.d("aaa", "userinfo Size: " + memberID.size());

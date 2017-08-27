@@ -28,17 +28,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SplashActivity" />
         <activity android:name=".MeetingFragment.MeetingMainActivity" />
         <activity android:name=".MeetingRoom.Add_Meeting" />
         <activity android:name=".Fragment.OutlookLogin" />
         <activity android:name=".MeetingFragment_Merge.BaseActivity" />
-        <activity android:name=".Fragment.GoogleLogin"></activity>
-        <activity android:name=".MaterialCalendar_Person.AddAppointment_Person"></activity>
-
+        <activity android:name=".Fragment.GoogleLogin" />
+        <activity android:name=".MaterialCalendar_Person.AddAppointment_Person" />
         <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -52,10 +49,9 @@
                     android:scheme="msal8124e310-520e-4c43-b3d6-d553c7ec72fd" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".HomeFragment.ChangeProfile"></activity>
-        <activity android:name=".Fragment.OutlookCalendar"></activity>
-
+        <activity android:name=".HomeFragment.ChangeProfile" />
+        <activity android:name=".Fragment.OutlookCalendar" />
+        <activity android:name=".MeetingFragment.Editmeeting"></activity>
     </application>
 
 </manifest>
