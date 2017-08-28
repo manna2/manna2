@@ -52,6 +52,8 @@
         <activity android:name=".HomeFragment.ChangeProfile" />
         <activity android:name=".Fragment.OutlookCalendar" />
         <activity android:name=".MeetingFragment.Editmeeting"></activity>
+        <activity android:name=".FragmentSetting_Announce.Announce"/>
+
     </application>
 
 </manifest>
