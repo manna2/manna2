@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.ssutown.manna2.Fragment.CalendarItem;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
+import org.ssutown.manna2.MeetingRoom.User;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import static org.ssutown.manna2.MeetingFragment.MeetingMainActivity.users;
 
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
@@ -45,6 +48,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private WeekView mWeekView;
 
     private ArrayList<String> memberID = MeetingMainActivity.MemberID;
+    private ArrayList<User> user = users;
     private long userID = MainActivity.userID;
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -168,10 +172,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     public void getCalendar() {
 
-        for (int i = 0; i < memberID.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             final int a = i;
             databaseReference.child("user_Info").
-                    child(memberID.get(i)).child("calendar").addValueEventListener(new ValueEventListener() {
+                    child(users.get(i).getUserID()).child("calendar").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -225,7 +229,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     for(int i=0;i<mSavedEvents.size() ; i++){
                         Log.i("size", mSavedEvents.get(i).toString());
                     }
-                    if(a == memberID.size()-1)
+                    if(a == users.size()-1)
                         mergeCalendar();
                 }
 

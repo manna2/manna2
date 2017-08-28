@@ -19,15 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.ssutown.manna2.R;
-
-import java.util.ArrayList;
-
-import static org.ssutown.manna2.MainActivity.animal;
-
 
 public class MeetingMainActivity extends FragmentActivity {
     public static String meetingid;
@@ -38,7 +29,8 @@ public class MeetingMainActivity extends FragmentActivity {
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
 
-    ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<User> users = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
