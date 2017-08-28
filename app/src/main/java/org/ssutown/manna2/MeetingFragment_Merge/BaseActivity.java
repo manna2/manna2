@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static org.ssutown.manna2.MeetingFragment.MeetingMainActivity.users;
+
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
  * week view.
@@ -49,8 +51,8 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
-
     private ArrayList<User> memberID = MeetingMainActivity.users;
+
     private long userID = MainActivity.userID;
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -222,7 +224,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     public void getCalendar() {
 
-        for (int i = 0; i < memberID.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             final int a = i;
             databaseReference.child("user_Info").
                     child(memberID.get(i).getUserID()).child("calendar").addValueEventListener(new ValueEventListener() {
@@ -279,7 +281,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     for(int i=0;i<mSavedEvents.size() ; i++){
                         Log.i("size", mSavedEvents.get(i).toString());
                     }
-                    if(a == memberID.size()-1)
+                    if(a == users.size()-1)
                         mergeCalendar();
                 }
 
