@@ -78,7 +78,7 @@ public class AddAppointment_Person extends Activity {
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
 
-        Button btnAdd = (Button)findViewById(R.id.add);
+        Button btnAdd = (Button)findViewById(R.id.EDIT);
         btnAdd.setOnClickListener(new View.OnClickListener()
         {
             @RequiresApi(api = Build.VERSION_CODES.M)

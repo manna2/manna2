@@ -5,6 +5,55 @@
     android:layout_height="match_parent"
 
     tools:context=".MeetingFragment_Merge.BaseActivity">
+
+    <LinearLayout
+        android:id="@+id/filterview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/filter"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/filter"
+            android:contentDescription="add" />
+
+        <Button
+            android:id="@+id/left"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/signleft"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/member"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <Button
+            android:id="@+id/right"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/signright"
+            android:scaleType="fitXY" />
+
+
+    </LinearLayout>
+
+
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
         android:layout_width="match_parent"
@@ -21,6 +70,6 @@
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="#1848adff"
         app:headerColumnBackground="#ffffffff"
-        app:todayHeaderTextColor="@color/accent" />
-
+        app:todayHeaderTextColor="@color/accent"
+        android:layout_below="@+id/filterview"/>
 </RelativeLayout>

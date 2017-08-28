@@ -122,8 +122,11 @@ public class FragmentHome extends Fragment {
         databaseReference.child("user_Info").child(String.valueOf(userID)).child("profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
-                profileimage.setImageDrawable(setProfileIamge(dataSnapshot.getValue(profile.class).getAnimal()));
+                if(dataSnapshot.exists()) {
+                    nickname.setText(dataSnapshot.getValue(profile.class).getNickname());
+                    profileimage.setImageDrawable(setProfileIamge(dataSnapshot.getValue(profile.class).getAnimal()));
+                }
+
             }
 
             @Override
@@ -169,6 +172,10 @@ public class FragmentHome extends Fragment {
                 drawable = getResources().getDrawable(R.drawable.bear);
         }
         return drawable;
+    }
+
+    public void test(){
+        databaseReference.setValue("hello");
     }
 
 }

@@ -41,7 +41,7 @@ public class Add_Meeting extends AppCompatActivity {
         meetingName = (EditText) findViewById(R.id.meeting_name);
         startDay = (DatePicker)findViewById(R.id.startDay);
         endDay = (DatePicker)findViewById(R.id.endDay);
-        addMeeting = (Button)findViewById(R.id.add);
+        addMeeting = (Button)findViewById(R.id.EDIT);
         min = (EditText)findViewById(R.id.min);
 
         Intent i = getIntent();
@@ -54,10 +54,10 @@ public class Add_Meeting extends AppCompatActivity {
             public void onClick(View v) {
                 String StartMonth, StartDay, EndMonth, EndDay;
                 if(startDay.getMonth() <10){
-                    StartMonth="0"+String.valueOf(startDay.getMonth());
+                    StartMonth="0"+String.valueOf(startDay.getMonth()+1);
                 }
                 else{
-                    StartMonth=String.valueOf(startDay.getMonth());
+                    StartMonth=String.valueOf(startDay.getMonth()+1);
                 }
                 if(startDay.getDayOfMonth() < 10){
                     StartDay = "0"+String.valueOf(startDay.getDayOfMonth());
@@ -66,10 +66,10 @@ public class Add_Meeting extends AppCompatActivity {
                     StartDay = String.valueOf(startDay.getDayOfMonth());
                 }
                 if(endDay.getMonth() <10){
-                    EndMonth="0"+String.valueOf(endDay.getMonth());
+                    EndMonth="0"+String.valueOf(endDay.getMonth()+1);
                 }
                 else{
-                    EndMonth=String.valueOf(endDay.getMonth());
+                    EndMonth=String.valueOf(endDay.getMonth()+1);
                 }
                 if(endDay.getDayOfMonth() < 10){
                     EndDay = "0"+String.valueOf(endDay.getDayOfMonth());
@@ -77,8 +77,6 @@ public class Add_Meeting extends AppCompatActivity {
                 else{
                     EndDay = String.valueOf(endDay.getDayOfMonth());
                 }
-
-
 
                 meeting_info = new meeting_Info(meetingName.getText().toString(),"0",String.valueOf(startDay.getYear()),StartMonth,StartDay,String.valueOf(endDay.getYear()),EndMonth,EndDay,min.getText().toString());
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
