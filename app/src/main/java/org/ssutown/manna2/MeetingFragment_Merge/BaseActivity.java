@@ -3,6 +3,8 @@ package org.ssutown.manna2.MeetingFragment_Merge;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -134,6 +136,29 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
         filter = (TextView)findViewById(R.id.member);
         filter.setText(String.valueOf(memberID.size()));
+        filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.d("filter", "beforeTextChanged: ");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("filter", "onTextChanged: ");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d("filter", "afterTextChanged: ");
+                complete=false;
+                setupDateTimeInterpreter(false);
+                getCalendar();
+            }
+        });
+
+        for(int i = 0; i<memberID.size(); i++){
+            Log.d("memberID", memberID.get(i).getUserID());
+        }
 
         Button minus = (Button)findViewById(R.id.left);
         minus.setOnClickListener(new View.OnClickListener() {
@@ -284,7 +309,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     }
 
     public void mergeCalendar() {
-
+        Log.d("mergeCalendar111111", "mergeCalendar");
         Log.i("dkssud", String.valueOf(mSavedEvents.size()));
 //        String a[] = {"year2017month07day11", "year2017month07day12"};
 //        String a[] = {"year2017month06day20", "year2017month06day21","year2017month06day22","year2017month06day23","year2017month06day24"};
@@ -378,9 +403,9 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
             //hyemin
         eventList.clear();
 
-//        int fil = Integer.parseInt(filter.getText().toString());
+        int fil = Integer.parseInt(filter.getText().toString());
 
-        int fil = 0;
+//        int fil = 0;
         Calendar startTime = Calendar.getInstance();
         Calendar endTime;
 
@@ -394,9 +419,14 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
             int day = Integer.parseInt(date.substring(6,8));
 
             int min = Integer.parseInt(MeetingMainActivity.info.getMin());
+            fil = Integer.parseInt(filter.getText().toString());
+
+            Log.d("min", "mergeCalendar: " + min);
             Log.d("hyeminndate", "mergeCalendar: " + year + month + day);
 
             Log.d("aaa", "userinfo Size: " + memberID.size());
+
+            Log.d("mergeCalendar111111", fil + " " + min);
 
             for(int k = 0; k<tmpcount.length; k++){
                 int available = memberID.size() - tmpcount[k];
@@ -416,7 +446,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     WeekViewEvent event = new WeekViewEvent(10, " ", startTime, endTime);
                     event.setColor(getResources().getColor(R.color.event_color_03));
                     eventList.add(event);
-                } else if(fil > available && fil<min) {
+                } else if(fil > available && available >= min) {
                     startTime = Calendar.getInstance();
                     startTime.set(Calendar.MONTH, month - 1);//7월
                     startTime.set(Calendar.YEAR, year);//연도

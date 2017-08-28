@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity {
         login();
 
         getInvitation();
-        
+
         SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
         userID = Kakao_Login.getLong("KAKAO_ID", 0);
 

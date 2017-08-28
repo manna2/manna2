@@ -112,6 +112,7 @@ public class Editmeeting extends AppCompatActivity {
                         Log.d("howmany", "onDataChange: ");
 //                        databaseReference.child("meeting_List").child(key).setValue(null);
                         databaseReference.child("meeting_List").child(key).setValue(meeting_info);
+                        finish();
                     }
 
                     @Override

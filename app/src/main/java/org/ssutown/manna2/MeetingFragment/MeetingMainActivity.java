@@ -61,7 +61,7 @@ public class MeetingMainActivity extends FragmentActivity {
                 users.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
                     users.add(new User(ds.getValue(User.class).getAnimal(),ds.getValue(User.class).getNickname(),ds.getValue(User.class).getUserID()));
-//                    showArrayList();
+                    showArrayList();
                 }
             }
             @Override
