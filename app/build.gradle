@@ -61,7 +61,7 @@ dependencies {
     compile('com.google.apis:google-api-services-calendar:v3-rev254-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
-
+    compile 'de.hdodenhof:circleimageview:1.2.2'
     compile 'com.google.android.gms:play-services-auth:10.2.6'
     
     testCompile 'junit:junit:4.12'
