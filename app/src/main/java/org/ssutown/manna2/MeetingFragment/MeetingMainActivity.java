@@ -19,21 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.ssutown.manna2.R;
-
-import java.util.ArrayList;
-
-import static org.ssutown.manna2.MainActivity.animal;
-
 
 public class MeetingMainActivity extends FragmentActivity {
     public static String meetingid;
     FragmentSample fragmentSample;
 
-    public static ArrayList<String> MemberID;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
     public static String startendDate = "";
@@ -52,7 +42,6 @@ public class MeetingMainActivity extends FragmentActivity {
         Intent i = getIntent();
         meetingid = i.getExtras().getString("meetingid");
 
-        MemberID = new ArrayList<String>();
 
 
         databaseReference.child("meeting_Info").child(meetingid).child("Users").addValueEventListener(new ValueEventListener() {
@@ -61,7 +50,7 @@ public class MeetingMainActivity extends FragmentActivity {
                 users.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
                     users.add(new User(ds.getValue(User.class).getAnimal(),ds.getValue(User.class).getNickname(),ds.getValue(User.class).getUserID()));
-//                    showArrayList();
+                    showArrayList();
                 }
             }
             @Override

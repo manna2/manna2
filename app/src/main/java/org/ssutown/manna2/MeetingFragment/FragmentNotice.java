@@ -103,7 +103,7 @@ public class FragmentNotice extends Fragment {
                         contexts = noticecontexts.getText().toString();
                         long noticeid = MakeRandom();
                         ListViewItem newitem = new ListViewItem(String.valueOf(userID),
-                               "df",contexts, String.valueOf(noticeid));
+                               "bear",contexts, String.valueOf(noticeid));
                         databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
 
                     }
