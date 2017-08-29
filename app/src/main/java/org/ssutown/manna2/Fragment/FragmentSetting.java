@@ -15,13 +15,15 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import org.ssutown.manna2.FragmentSetting_Announce.Announce;
+import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLock;
+import org.ssutown.manna2.FragmentSetting_PatternLock.Security;
 import org.ssutown.manna2.R;
 
 public class FragmentSetting extends Fragment {
 
     TextView textView;
 
-    static final String[] LIST_MENU = {"암호설정", "공지사항"} ;
+    static final String[] LIST_MENU = {"개인/보안", "공지사항"} ;
 
     public static FragmentSetting newInstance(String text){
         FragmentSetting fragmentSetting=new FragmentSetting();
@@ -49,14 +51,16 @@ public class FragmentSetting extends Fragment {
 
                 if(position == 0)
                 {
+                    Intent intent = new Intent(getActivity(), Security.class);
+                    startActivity(intent);
 
                 }
                 else if(position == 1)
                 {
-                    Toast toast = Toast.makeText(getContext(),"공지사항",Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    Log.v("announce","hi");
+//                    Toast toast = Toast.makeText(getContext(),"공지사항",Toast.LENGTH_SHORT);
+//                    toast.show();
+//
+//                    Log.v("announce","hi");
 
                     Intent intent = new Intent(getActivity(),Announce.class);
                     startActivity(intent);

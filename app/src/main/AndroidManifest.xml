@@ -53,6 +53,8 @@
         <activity android:name=".Fragment.OutlookCalendar" />
         <activity android:name=".MeetingFragment.Editmeeting"></activity>
         <activity android:name=".FragmentSetting_Announce.Announce"/>
+        <activity android:name=".FragmentSetting_PatternLock.PatternLock"/>
+        <activity android:name=".FragmentSetting_PatternLock.Security"/>
 
     </application>
 
