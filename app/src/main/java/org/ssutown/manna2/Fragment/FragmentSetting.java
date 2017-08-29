@@ -4,24 +4,27 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.content.Intent;
+import android.widget.Toast;
 
 import org.ssutown.manna2.FragmentSetting_Announce.Announce;
 import org.ssutown.manna2.R;
-
 
 public class FragmentSetting extends Fragment {
 
     TextView textView;
 
+
     static final String[] LIST_MENU = {"암호잠금", "공지사항"} ;
+
 
     public static FragmentSetting newInstance(String text){
         FragmentSetting fragmentSetting=new FragmentSetting();
@@ -41,10 +44,10 @@ public class FragmentSetting extends Fragment {
         listview.setAdapter(Adapter) ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
 
-                // get TextView's Text.
                 String strText = (String) parent.getItemAtPosition(position) ;
 
                 if(position == 0)
@@ -53,11 +56,19 @@ public class FragmentSetting extends Fragment {
                 }
                 else if(position == 1)
                 {
+
                     Intent intent = new Intent(getActivity(), Announce.class);
+
+                    Toast toast = Toast.makeText(getContext(),"공지사항",Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Log.v("announce","hi");
+
                     startActivity(intent);
                 }
             }
         }) ;
+
 
         return view;
     }
