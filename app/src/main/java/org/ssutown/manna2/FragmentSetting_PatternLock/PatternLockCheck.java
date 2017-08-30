@@ -11,8 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.content.Intent;
+import android.widget.Toast;
 import android.content.SharedPreferences;
+import android.content.Intent;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
@@ -28,7 +29,7 @@ import io.reactivex.functions.Consumer;
 
 import org.ssutown.manna2.R;
 
-public class PatternLock extends AppCompatActivity {
+public class PatternLockCheck extends AppCompatActivity {
 
     private PatternLockView mPatternLockView;
 
@@ -49,16 +50,21 @@ public class PatternLock extends AppCompatActivity {
             Log.d(getClass().getName(), "Pattern complete: " +
                     PatternLockUtils.patternToString(mPatternLockView, pattern));
 
-            savePreferences(PatternLockUtils.patternToString(mPatternLockView, pattern));
+            if(new String(PatternLockUtils.patternToString(mPatternLockView, pattern)).equals(getPreferences()))
+            {   //새로운 암호를 입력할 때 두 번의 암호입력을 요구 -> 만약 두 암호가 같은 경우 ( 즉, 정상적인 경우 )
+                Toast toast = Toast.makeText(getApplicationContext(),"암호가 설정되었습니다",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else
+            {   // 두 암호가 다른 경우
+                Intent intent = new Intent(getApplication(),PatternLockCheck.class);
+                startActivity(intent);
+                finish();
+            }
 
             finish();
 
-            //새로운 암호를 입력한 후 재입력을 요구
-            Intent intent = new Intent(getApplicationContext(),PatternLockCheck.class);
-            startActivity(intent);
-
         }
-
 
         @Override
         public void onCleared() {
@@ -73,7 +79,7 @@ public class PatternLock extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_patternlock);
+        setContentView(R.layout.activity_patternlock_check);
 
         mPatternLockView = (PatternLockView) findViewById(R.id.patter_lock_view);
         mPatternLockView.setDotCount(3);
@@ -120,10 +126,10 @@ public class PatternLock extends AppCompatActivity {
 
     }
 
-    private void savePreferences(String str){
+    private String getPreferences(){
+
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("patternlock", str);
-        editor.commit();
+        return pref.getString("patternlock", "");
     }
+
 }
