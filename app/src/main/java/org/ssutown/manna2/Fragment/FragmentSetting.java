@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 
 import org.ssutown.manna2.FragmentSetting_Announce.Announce;
 import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLock;
+import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLockApproach;
 import org.ssutown.manna2.FragmentSetting_PatternLock.Security;
 import org.ssutown.manna2.FragmentSetting_PatternLock.Security_Lock;
 import org.ssutown.manna2.R;
@@ -64,6 +65,9 @@ public class FragmentSetting extends Fragment {
                     }
                     else if(getPreferences() == true)
                     {
+//                        Intent intentApproach = new Intent(getActivity(), PatternLockApproach.class);
+//                        startActivity(intentApproach);
+
                         Intent intent = new Intent(getActivity(), Security_Lock.class);
                         startActivity(intent);
                     }
