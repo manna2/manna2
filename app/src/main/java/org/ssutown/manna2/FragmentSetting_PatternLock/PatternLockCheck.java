@@ -54,13 +54,25 @@ public class PatternLockCheck extends AppCompatActivity {
             {   //새로운 암호를 입력할 때 두 번의 암호입력을 요구 -> 만약 두 암호가 같은 경우 ( 즉, 정상적인 경우 )
                 Toast toast = Toast.makeText(getApplicationContext(),"암호가 설정되었습니다",Toast.LENGTH_SHORT);
                 toast.show();
+
+                finish();
+
+                Intent intent = new Intent(getApplication(),Security_Lock.class);
+                startActivity(intent);
+
             }
             else
             {   // 두 암호가 다른 경우
                 Intent intent = new Intent(getApplication(),PatternLockCheck.class);
                 startActivity(intent);
+
+                Toast toast = Toast.makeText(getApplicationContext(),"잘못된 암호 입력입니다",Toast.LENGTH_SHORT);
+                toast.show();
+
                 finish();
             }
+
+            savePreferences(true);
 
             finish();
 
@@ -130,6 +142,13 @@ public class PatternLockCheck extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         return pref.getString("patternlock", "");
+    }
+
+    private void savePreferences(Boolean check){
+        SharedPreferences pref = getSharedPreferences("prefC", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("on/off", check);
+        editor.commit();
     }
 
 }

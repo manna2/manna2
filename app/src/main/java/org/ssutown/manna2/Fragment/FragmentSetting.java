@@ -1,5 +1,7 @@
 package org.ssutown.manna2.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -14,11 +16,15 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.content.Intent;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import org.ssutown.manna2.FragmentSetting_Announce.Announce;
 import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLock;
 import org.ssutown.manna2.FragmentSetting_PatternLock.Security;
+import org.ssutown.manna2.FragmentSetting_PatternLock.Security_Lock;
 import org.ssutown.manna2.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentSetting extends Fragment {
 
@@ -53,8 +59,16 @@ public class FragmentSetting extends Fragment {
 
                 if(position == 0)
                 {
-                    Intent intent = new Intent(getActivity(), Security.class);
-                    startActivity(intent);
+                    if(getPreferences() == false)
+                    {
+                        Intent intent = new Intent(getActivity(), Security.class);
+                        startActivity(intent);
+                    }
+                    else if(getPreferences() == true)
+                    {
+                        Intent intent = new Intent(getActivity(), Security_Lock.class);
+                        startActivity(intent);
+                    }
 
                 }
                 else if(position == 1)
@@ -75,4 +89,10 @@ public class FragmentSetting extends Fragment {
 
         return view;
     }
+
+    private Boolean getPreferences(){
+        SharedPreferences pref = this.getActivity().getSharedPreferences("prefC", Context.MODE_PRIVATE);
+        return pref.getBoolean("on/off",false);
+    }
+
 }
