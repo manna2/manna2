@@ -18,9 +18,7 @@ public class Security extends Activity {
         setContentView(R.layout.activity_security);
         CheckBox checkbox = (CheckBox) findViewById(R.id.checkbox);
 
-        checkbox.setChecked(false);
-
-
+        checkbox.setChecked(false); //우선 초기에 checkbox는 false로 설
 
         checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -35,7 +33,7 @@ public class Security extends Activity {
                         startActivity(intent);
 
                     } else {
-//                        Toast.makeText(getApplicationContext(), "안눌림", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "안눌림", Toast.LENGTH_SHORT).show();
 
 
                     }
