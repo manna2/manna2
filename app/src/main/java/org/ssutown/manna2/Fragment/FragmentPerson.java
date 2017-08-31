@@ -55,6 +55,7 @@ public class FragmentPerson extends Fragment {
                                 Intent intent = new Intent(getContext(), GoogleLogin.class);
                                 startActivity(intent);
                                 //
+
                                 SharedPreferences.Editor et1 = login.edit();
                                 et1.putBoolean("key", false);
                                 et1.apply();
