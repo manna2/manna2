@@ -58,9 +58,9 @@ public class GoogleLogin extends Activity
         implements EasyPermissions.PermissionCallbacks {
 
     GoogleAccountCredential mCredential;
-    private TextView mOutputText;
-    private Button mCallApiButton;
-    ProgressDialog mProgress;
+//    private TextView mOutputText;
+//    private Button mCallApiButton;
+//    ProgressDialog mProgress;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -85,44 +85,44 @@ public class GoogleLogin extends Activity
 
         Log.v("googleLog","onCreate");
 
-        LinearLayout activityLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        activityLayout.setLayoutParams(lp);
-        activityLayout.setOrientation(LinearLayout.VERTICAL);
-        activityLayout.setPadding(16, 16, 16, 16);
+//        LinearLayout activityLayout = new LinearLayout(this);
+//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.MATCH_PARENT);
+//        activityLayout.setLayoutParams(lp);
+//        activityLayout.setOrientation(LinearLayout.VERTICAL);
+//        activityLayout.setPadding(16, 16, 16, 16);
+//
+//        ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.WRAP_CONTENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+//        mCallApiButton = new Button(this);
+//        mCallApiButton.setText(BUTTON_TEXT);
+//        mCallApiButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mCallApiButton.setEnabled(false);
+//                mOutputText.setText("");
+//                getResultsFromApi();
+//                mCallApiButton.setEnabled(true);
+//            }
+//        });
+//        activityLayout.addView(mCallApiButton);
 
-        mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
-        mCallApiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
-                getResultsFromApi();
-                mCallApiButton.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton);
-
-        mOutputText = new TextView(this);
-        mOutputText.setLayoutParams(tlp);
-        mOutputText.setPadding(16, 16, 16, 16);
-        mOutputText.setVerticalScrollBarEnabled(true);
-        mOutputText.setMovementMethod(new ScrollingMovementMethod());
-        mOutputText.setText(
-                "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
-        activityLayout.addView(mOutputText);
-
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Calling Google Calendar API ...");
-
-        setContentView(activityLayout);
+//        mOutputText = new TextView(this);
+//        mOutputText.setLayoutParams(tlp);
+//        mOutputText.setPadding(16, 16, 16, 16);
+//        mOutputText.setVerticalScrollBarEnabled(true);
+//        mOutputText.setMovementMethod(new ScrollingMovementMethod());
+//        mOutputText.setText(
+//                "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
+//        activityLayout.addView(mOutputText);
+//
+//        mProgress = new ProgressDialog(this);
+//        mProgress.setMessage("Calling Google Calendar API ...");
+//
+//        setContentView(activityLayout);
 
 
         // Initialize credentials and service object.
@@ -131,7 +131,7 @@ public class GoogleLogin extends Activity
                 .setBackOff(new ExponentialBackOff());
 
 
-//        getResultsFromApi();
+        getResultsFromApi();
 
     }
 
@@ -156,12 +156,12 @@ public class GoogleLogin extends Activity
             chooseAccount();
         } else if (! isDeviceOnline()) {
             Log.v("googleLog","isDeviceOnline");
-            mOutputText.setText("No network connection available.");
+//            mOutputText.setText("No network connection available.");
         } else {
             Log.v("googleLog","MakeRequestTask");
             new MakeRequestTask(mCredential).execute();
             Log.v("googleLog","End of MakeRequestTask");
-//            finish();
+            finish();
         }
 
         Log.v("googleLog","End of getResultFromApi");
@@ -231,9 +231,9 @@ public class GoogleLogin extends Activity
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+//                    mOutputText.setText(
+//                            "This app requires Google Play Services. Please install " +
+//                                    "Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
                 }
@@ -507,12 +507,6 @@ public class GoogleLogin extends Activity
                 list.tostring();
             }
 
-
-
-
-
-
-
         }
 
         public long MakeRandom(){
@@ -530,24 +524,24 @@ public class GoogleLogin extends Activity
 
         @Override
         protected void onPreExecute() {
-            mOutputText.setText("");
-            mProgress.show();
+//            mOutputText.setText("");
+//            mProgress.show();
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
-            mProgress.hide();
+//            mProgress.hide();
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+//                mOutputText.setText("No results returned.");
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
-                mOutputText.setText(TextUtils.join("\n", output));
+//                mOutputText.setText(TextUtils.join("\n", output));
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+//            mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -558,11 +552,11 @@ public class GoogleLogin extends Activity
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             GoogleLogin.REQUEST_AUTHORIZATION);
                 } else {
-                    mOutputText.setText("The following error occurred:\n"
-                        + mLastError.getMessage());
+//                    mOutputText.setText("The following error occurred:\n"
+//                        + mLastError.getMessage());
             }
             } else {
-                mOutputText.setText("Request cancelled.");
+//                mOutputText.setText("Request cancelled.");
             }
         }
     }
