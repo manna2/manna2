@@ -7,6 +7,10 @@ android {
         applicationId "org.ssutown.manna2"
         minSdkVersion 21
         targetSdkVersion 23
+        multiDexEnabled true
+        dexOptions{
+            javaMaxHeapSize = "4g"
+        }
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,7 +28,7 @@ android {
 
 dependencies {
 
-
+    compile 'com.android.support:multidex:1.0.0'
     compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
     compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.KAKAO_SDK_VERSION
