@@ -97,11 +97,15 @@ public class AddAppointment_Person extends Activity {
                         Toast toast = Toast.makeText(getApplicationContext(),accountName,Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.TOP,0,0);
                         toast.show();
+
+                        Log.v("googleAdd","account != null");
                     } else {
                         // Start a dialog from which the user can choose an account
                         startActivityForResult(
                                 mCredential.newChooseAccountIntent(),
                                 REQUEST_ACCOUNT_PICKER);
+
+                        Log.v("googleAdd","startActivityForResult");
                     }
                 } else {
                     // Request the GET_ACCOUNTS permission via a user dialog
@@ -110,15 +114,15 @@ public class AddAppointment_Person extends Activity {
 //                            "This app needs to access your Google account (via Contacts).",
 //                            REQUEST_PERMISSION_GET_ACCOUNTS,
 //                            android.Manifest.permission.GET_ACCOUNTS);
-                    Log.v("googleLog","requestPermissions");
+                    Log.v("googleAdd","requestPermissions");
 
                 }
 
-                Toast toast = Toast.makeText(getApplicationContext(),accountName,Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,0,0);
-                toast.show();
+//                Toast toast = Toast.makeText(getApplicationContext(),accountName,Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.TOP,0,0);
+//                toast.show();
 
-                Log.v("googleLog","setSelectedAccountName");
+                Log.v("googleAdd","setSelectedAccountName");
 
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
@@ -156,7 +160,7 @@ public class AddAppointment_Person extends Activity {
 
                 new MakeRequestTask(mCredential).execute();
 
-                Log.v("googleLog","End of MakeRequestTask...Please");
+                Log.v("googleAdd","End of MakeRequestTask...Please");
 
                 finish();
             }
@@ -178,7 +182,7 @@ public class AddAppointment_Person extends Activity {
                     .setApplicationName("Google Calendar API Android Quickstart")
                     .build();
 
-            Log.v("googleLog","MakeRequestTask");
+            Log.v("googleAdd","MakeRequestTask");
 
         }
 
@@ -189,15 +193,11 @@ public class AddAppointment_Person extends Activity {
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-
-                Log.v("googleLog","doInBackground...Please");
-
+                Log.v("googleAdd","doInBackground");
                 insertEvent(mService,name,start,end);
                 return getDataFromApi();
             } catch (Exception e) {
-
-                Log.v("googleLog","doInBackground_exception");
-
+                Log.v("googleAdd","doInBackground_exception");
                 mLastError = e;
                 cancel(true);
                 return null;
@@ -212,7 +212,7 @@ public class AddAppointment_Person extends Activity {
 
         public void insertEvent(com.google.api.services.calendar.Calendar mService,String name_a,String start_a,String end_a) throws IOException {
 
-            Log.v("googleLog","insertEvent()");
+            Log.v("googleAdd","insertEvent()");
 
 
             try {
@@ -239,17 +239,17 @@ public class AddAppointment_Person extends Activity {
 //            event.setEnd(end);
 
             Event event = new Event()
-                    .setSummary("qwer")
+                    .setSummary("qwerqwer")
                     .setLocation("800 Howard St., San Francisco, CA 94103")
                     .setDescription("A chance to hear more about Google's developer products.");
 
-            DateTime startDateTime = new DateTime("2017-08-22T09:00:00-07:00");
+            DateTime startDateTime = new DateTime("2017-08-30T09:00:00-07:00");
             EventDateTime start = new EventDateTime()
                     .setDateTime(startDateTime)
                     .setTimeZone("America/Los_Angeles");
             event.setStart(start);
 
-            DateTime endDateTime = new DateTime("2017-08-22T17:00:00-07:00");
+            DateTime endDateTime = new DateTime("2017-08-30T17:00:00-07:00");
             EventDateTime end = new EventDateTime()
                     .setDateTime(endDateTime)
                     .setTimeZone("America/Los_Angeles");
@@ -266,6 +266,8 @@ public class AddAppointment_Person extends Activity {
         }
 
         private List<String> getDataFromApi() throws IOException {
+
+            Log.v("googleAdd","getDataFromApi()");
 
             // List the next 15 events from the primary calendar.
             DateTime now = new DateTime(System.currentTimeMillis());
@@ -289,7 +291,12 @@ public class AddAppointment_Person extends Activity {
                 eventStrings.add(
                         String.format("%s (%s ~ %s)", event.getSummary(), start,end));
             }
+
+
+
             return eventStrings;
+
+
         }
 
 
@@ -305,6 +312,8 @@ public class AddAppointment_Person extends Activity {
 
         @Override
         protected void onCancelled() {
+
+            Log.v("googleAdd","onCancelled");
 
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {

@@ -71,6 +71,13 @@ dependencies {
     // Optional, for RxJava2 adapter
     compile 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
 
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-calendar:v3-rev254-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
 }
 
 apply plugin: 'com.google.gms.google-services'
