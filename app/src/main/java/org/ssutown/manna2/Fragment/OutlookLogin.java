@@ -40,6 +40,7 @@ import java.util.Map;
  */
 public class OutlookLogin extends AppCompatActivity {
 
+    
     final static String CLIENT_ID = "8124e310-520e-4c43-b3d6-d553c7ec72fd";
     final static String SCOPES [] = {"https://graph.microsoft.com/User.Read"};
     final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/me";
