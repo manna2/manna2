@@ -480,83 +480,82 @@ public class GoogleLogin extends Activity
         }
 
 //test
-//        public void saveEventtoFirebase(String event, String start, String end){
-//            long uniquekey = MakeRandom();
-//            String eventname = event;
-//            String eventstart = start;
-//            String eventend = end;
-//
-//            if(start.contains("T")){
-//                String tempstart[] = eventstart.split("T");
-//                String tempstart1 = tempstart[0];
-//                String tempstart2 = tempstart[1];
-//
-//                String startday1[] = tempstart1.split("-");
-//                String starttime[] = tempstart2.split(":");
-//
-//                String startyear = startday1[0];
-//                String startmonth = startday1[1];
-//                String startday = startday1[2];
-//
-//                String starthour = starttime[0];
-//                String startminute = starttime[1];
-//
-//                String tempend[] = eventend.split("T");
-//                String tempend1 = tempend[0];
-//                String tempend2 = tempend[1];
-//
-//
-//                String endday1[] = tempend1.split("-");
-//                String endtime[] = tempend2.split(":");
-//
-//                String endyear = endday1[0];
-//                String endmonth = endday1[1];
-//                String endday = endday1[2];
-//
-//                String endhour = endtime[0];
-//                String endminute = endtime[1];
-//
-//                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
-//                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
-//
-//                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
-//                list.tostring();
-//
-//            }
-//            else{
-//                String startday1[] = start.split("-");
-//
-//                String startyear = startday1[0];
-//                String startmonth = startday1[1];
-//                String startday = startday1[2];
-//
-//                String endday1[] = end.split("-");
-//
-//                String endyear = endday1[0];
-//                String endmonth = endday1[1];
-//                String endday = endday1[2];
-//
-//                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
-//                        startday,"x","x", endyear, endmonth, endday, "x", "x");
-//
-//                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
-//                list.tostring();
-//            }
-//
-//        }
+        public void saveEventtoFirebase(String event, String start, String end){
+            long uniquekey = MakeRandom();
+            String eventname = event;
+            String eventstart = start;
+            String eventend = end;
 
-//test
-//        public long MakeRandom(){
-//            Random random = new Random();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
-//            Date date = new Date();
-//            String today = df.format(date);
-//            String ran = String.valueOf(random.nextInt()%9000+10000);
-//
-//            String id = today+ran;
-//            long noticeid = Long.valueOf(id);
-//            return noticeid;
-//        }
+            if(start.contains("T")){
+                String tempstart[] = eventstart.split("T");
+                String tempstart1 = tempstart[0];
+                String tempstart2 = tempstart[1];
+
+                String startday1[] = tempstart1.split("-");
+                String starttime[] = tempstart2.split(":");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String starthour = starttime[0];
+                String startminute = starttime[1];
+
+                String tempend[] = eventend.split("T");
+                String tempend1 = tempend[0];
+                String tempend2 = tempend[1];
+
+
+                String endday1[] = tempend1.split("-");
+                String endtime[] = tempend2.split(":");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                String endhour = endtime[0];
+                String endminute = endtime[1];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+
+            }
+            else{
+                String startday1[] = start.split("-");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String endday1[] = end.split("-");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,"x","x", endyear, endmonth, endday, "x", "x");
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+            }
+
+        }
+        
+        public long MakeRandom(){
+            Random random = new Random();
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+            Date date = new Date();
+            String today = df.format(date);
+            String ran = String.valueOf(random.nextInt()%9000+10000);
+
+            String id = today+ran;
+            long noticeid = Long.valueOf(id);
+            return noticeid;
+        }
 
 
         @Override
