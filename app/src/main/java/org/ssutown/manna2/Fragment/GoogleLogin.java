@@ -33,8 +33,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -96,7 +98,7 @@ public class GoogleLogin extends Activity
 //        ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
 //                ViewGroup.LayoutParams.WRAP_CONTENT,
 //                ViewGroup.LayoutParams.WRAP_CONTENT);
-
+//
 //        mCallApiButton = new Button(this);
 //        mCallApiButton.setText(BUTTON_TEXT);
 //        mCallApiButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,7 @@ public class GoogleLogin extends Activity
 //            }
 //        });
 //        activityLayout.addView(mCallApiButton);
-
+//
 //        mOutputText = new TextView(this);
 //        mOutputText.setLayoutParams(tlp);
 //        mOutputText.setPadding(16, 16, 16, 16);
@@ -206,6 +208,7 @@ public class GoogleLogin extends Activity
 
         }
     }
+
 
     public void sendAccountName(String select_accountName) {
         SharedPreferences selectedAccountName = getApplicationContext().getSharedPreferences("selectedAccountName", Activity.MODE_PRIVATE);
@@ -382,6 +385,8 @@ public class GoogleLogin extends Activity
         MakeRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+
+
             mService = new com.google.api.services.calendar.Calendar.Builder(
                     transport, jsonFactory, credential)
                     .setApplicationName("Google Calendar API Android Quickstart")
@@ -403,6 +408,9 @@ public class GoogleLogin extends Activity
 
                 return getDataFromApi();
             } catch (Exception e) {
+
+                Log.v("googleLog","doInBackground_exception");
+
                 mLastError = e;
                 cancel(true);
                 return null;
@@ -438,12 +446,40 @@ public class GoogleLogin extends Activity
                 eventStrings.add(
                         String.format("%s (%s) (%s)", event.getSummary(), start, end));
                 Log.i("calendar", start.toString()+ end.toString());
-                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
+//test                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
 
             }
+
+            //
+
+//test - complete add event to calendar
+//            Event event = new Event()
+//                    .setSummary("Google I/O 2015")
+//                    .setLocation("800 Howard St., San Francisco, CA 94103")
+//                    .setDescription("A chance to hear more about Google's developer products.");
+//
+//            DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
+//            EventDateTime start = new EventDateTime()
+//                    .setDateTime(startDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setStart(start);
+//
+//            DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
+//            EventDateTime end = new EventDateTime()
+//                    .setDateTime(endDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setEnd(end);
+//
+//            String calendarId = "primary";
+//            event = mService.events().insert(calendarId, event).execute();
+//            Log.v("qwer",mService.calendarList().get(calendarId).getCalendarId());
+//            System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+
             return eventStrings;
         }
 
+//test
         public void saveEventtoFirebase(String event, String start, String end){
             long uniquekey = MakeRandom();
             String eventname = event;
@@ -508,7 +544,7 @@ public class GoogleLogin extends Activity
             }
 
         }
-
+        
         public long MakeRandom(){
             Random random = new Random();
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -534,7 +570,7 @@ public class GoogleLogin extends Activity
             if (output == null || output.size() == 0) {
 //                mOutputText.setText("No results returned.");
             } else {
-                output.add(0, "Data retrieved using the Google Calendar API:");
+//                output.add(0, "Data retrieved using the Google Calendar API:");
 //                mOutputText.setText(TextUtils.join("\n", output));
             }
         }
@@ -554,7 +590,7 @@ public class GoogleLogin extends Activity
                 } else {
 //                    mOutputText.setText("The following error occurred:\n"
 //                        + mLastError.getMessage());
-            }
+                }
             } else {
 //                mOutputText.setText("Request cancelled.");
             }
