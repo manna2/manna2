@@ -60,9 +60,9 @@ public class GoogleLogin extends Activity
         implements EasyPermissions.PermissionCallbacks {
 
     GoogleAccountCredential mCredential;
-    private TextView mOutputText;
-    private Button mCallApiButton;
-    ProgressDialog mProgress;
+//    private TextView mOutputText;
+//    private Button mCallApiButton;
+//    ProgressDialog mProgress;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -87,44 +87,44 @@ public class GoogleLogin extends Activity
 
         Log.v("googleLog","onCreate");
 
-        LinearLayout activityLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        activityLayout.setLayoutParams(lp);
-        activityLayout.setOrientation(LinearLayout.VERTICAL);
-        activityLayout.setPadding(16, 16, 16, 16);
-
-        ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
-        mCallApiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
-                getResultsFromApi();
-                mCallApiButton.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton);
-
-        mOutputText = new TextView(this);
-        mOutputText.setLayoutParams(tlp);
-        mOutputText.setPadding(16, 16, 16, 16);
-        mOutputText.setVerticalScrollBarEnabled(true);
-        mOutputText.setMovementMethod(new ScrollingMovementMethod());
-        mOutputText.setText(
-                "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
-        activityLayout.addView(mOutputText);
-
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Calling Google Calendar API ...");
-
-        setContentView(activityLayout);
+//        LinearLayout activityLayout = new LinearLayout(this);
+//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.MATCH_PARENT);
+//        activityLayout.setLayoutParams(lp);
+//        activityLayout.setOrientation(LinearLayout.VERTICAL);
+//        activityLayout.setPadding(16, 16, 16, 16);
+//
+//        ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.WRAP_CONTENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//        mCallApiButton = new Button(this);
+//        mCallApiButton.setText(BUTTON_TEXT);
+//        mCallApiButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mCallApiButton.setEnabled(false);
+//                mOutputText.setText("");
+//                getResultsFromApi();
+//                mCallApiButton.setEnabled(true);
+//            }
+//        });
+//        activityLayout.addView(mCallApiButton);
+//
+//        mOutputText = new TextView(this);
+//        mOutputText.setLayoutParams(tlp);
+//        mOutputText.setPadding(16, 16, 16, 16);
+//        mOutputText.setVerticalScrollBarEnabled(true);
+//        mOutputText.setMovementMethod(new ScrollingMovementMethod());
+//        mOutputText.setText(
+//                "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
+//        activityLayout.addView(mOutputText);
+//
+//        mProgress = new ProgressDialog(this);
+//        mProgress.setMessage("Calling Google Calendar API ...");
+//
+//        setContentView(activityLayout);
 
 
         // Initialize credentials and service object.
@@ -133,7 +133,7 @@ public class GoogleLogin extends Activity
                 .setBackOff(new ExponentialBackOff());
 
 
-//        getResultsFromApi();
+        getResultsFromApi();
 
     }
 
@@ -158,12 +158,12 @@ public class GoogleLogin extends Activity
             chooseAccount();
         } else if (! isDeviceOnline()) {
             Log.v("googleLog","isDeviceOnline");
-            mOutputText.setText("No network connection available.");
+//            mOutputText.setText("No network connection available.");
         } else {
             Log.v("googleLog","MakeRequestTask");
             new MakeRequestTask(mCredential).execute();
             Log.v("googleLog","End of MakeRequestTask");
-//            finish();
+            finish();
         }
 
         Log.v("googleLog","End of getResultFromApi");
@@ -209,6 +209,7 @@ public class GoogleLogin extends Activity
         }
     }
 
+
     public void sendAccountName(String select_accountName) {
         SharedPreferences selectedAccountName = getApplicationContext().getSharedPreferences("selectedAccountName", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = selectedAccountName.edit();
@@ -233,9 +234,9 @@ public class GoogleLogin extends Activity
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+//                    mOutputText.setText(
+//                            "This app requires Google Play Services. Please install " +
+//                                    "Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
                 }
@@ -445,134 +446,139 @@ public class GoogleLogin extends Activity
                 eventStrings.add(
                         String.format("%s (%s) (%s)", event.getSummary(), start, end));
                 Log.i("calendar", start.toString()+ end.toString());
-                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
+//test                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
 
             }
 
             //
 
+//test - complete add event to calendar
+//            Event event = new Event()
+//                    .setSummary("Google I/O 2015")
+//                    .setLocation("800 Howard St., San Francisco, CA 94103")
+//                    .setDescription("A chance to hear more about Google's developer products.");
+//
+//            DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
+//            EventDateTime start = new EventDateTime()
+//                    .setDateTime(startDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setStart(start);
+//
+//            DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
+//            EventDateTime end = new EventDateTime()
+//                    .setDateTime(endDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setEnd(end);
+//
+//            String calendarId = "primary";
+//            event = mService.events().insert(calendarId, event).execute();
+//            Log.v("qwer",mService.calendarList().get(calendarId).getCalendarId());
+//            System.out.printf("Event created: %s\n", event.getHtmlLink());
 
-            Event event = new Event()
-                    .setSummary("qwer");
-
-            DateTime startDateTime = new DateTime("2017-08-28T09:00:00-09:00");
-            EventDateTime start = new EventDateTime()
-                    .setDateTime(startDateTime)
-                    .setTimeZone("America/Los_Angeles");
-            event.setStart(start);
-
-            DateTime endDateTime = new DateTime("2015-08-28T17:00:00-09:00");
-            EventDateTime end = new EventDateTime()
-                    .setDateTime(endDateTime)
-                    .setTimeZone("America/Los_Angeles");
-            event.setEnd(end);
-
-            String calendarId = "primary";
-            mService.events().insert(calendarId, event).execute();
-
-            //
 
             return eventStrings;
         }
 
-        public void saveEventtoFirebase(String event, String start, String end){
-            long uniquekey = MakeRandom();
-            String eventname = event;
-            String eventstart = start;
-            String eventend = end;
+//test
+//        public void saveEventtoFirebase(String event, String start, String end){
+//            long uniquekey = MakeRandom();
+//            String eventname = event;
+//            String eventstart = start;
+//            String eventend = end;
+//
+//            if(start.contains("T")){
+//                String tempstart[] = eventstart.split("T");
+//                String tempstart1 = tempstart[0];
+//                String tempstart2 = tempstart[1];
+//
+//                String startday1[] = tempstart1.split("-");
+//                String starttime[] = tempstart2.split(":");
+//
+//                String startyear = startday1[0];
+//                String startmonth = startday1[1];
+//                String startday = startday1[2];
+//
+//                String starthour = starttime[0];
+//                String startminute = starttime[1];
+//
+//                String tempend[] = eventend.split("T");
+//                String tempend1 = tempend[0];
+//                String tempend2 = tempend[1];
+//
+//
+//                String endday1[] = tempend1.split("-");
+//                String endtime[] = tempend2.split(":");
+//
+//                String endyear = endday1[0];
+//                String endmonth = endday1[1];
+//                String endday = endday1[2];
+//
+//                String endhour = endtime[0];
+//                String endminute = endtime[1];
+//
+//                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+//                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
+//
+//                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+//                list.tostring();
+//
+//            }
+//            else{
+//                String startday1[] = start.split("-");
+//
+//                String startyear = startday1[0];
+//                String startmonth = startday1[1];
+//                String startday = startday1[2];
+//
+//                String endday1[] = end.split("-");
+//
+//                String endyear = endday1[0];
+//                String endmonth = endday1[1];
+//                String endday = endday1[2];
+//
+//                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+//                        startday,"x","x", endyear, endmonth, endday, "x", "x");
+//
+//                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+//                list.tostring();
+//            }
+//
+//        }
 
-            if(start.contains("T")){
-                String tempstart[] = eventstart.split("T");
-                String tempstart1 = tempstart[0];
-                String tempstart2 = tempstart[1];
-
-                String startday1[] = tempstart1.split("-");
-                String starttime[] = tempstart2.split(":");
-
-                String startyear = startday1[0];
-                String startmonth = startday1[1];
-                String startday = startday1[2];
-
-                String starthour = starttime[0];
-                String startminute = starttime[1];
-
-                String tempend[] = eventend.split("T");
-                String tempend1 = tempend[0];
-                String tempend2 = tempend[1];
-
-
-                String endday1[] = tempend1.split("-");
-                String endtime[] = tempend2.split(":");
-
-                String endyear = endday1[0];
-                String endmonth = endday1[1];
-                String endday = endday1[2];
-
-                String endhour = endtime[0];
-                String endminute = endtime[1];
-
-                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
-                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
-
-                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
-                list.tostring();
-
-            }
-            else{
-                String startday1[] = start.split("-");
-
-                String startyear = startday1[0];
-                String startmonth = startday1[1];
-                String startday = startday1[2];
-
-                String endday1[] = end.split("-");
-
-                String endyear = endday1[0];
-                String endmonth = endday1[1];
-                String endday = endday1[2];
-
-                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
-                        startday,"x","x", endyear, endmonth, endday, "x", "x");
-
-                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
-                list.tostring();
-            }
-
-        }
-
-        public long MakeRandom(){
-            Random random = new Random();
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
-            Date date = new Date();
-            String today = df.format(date);
-            String ran = String.valueOf(random.nextInt()%9000+10000);
-
-            String id = today+ran;
-            long noticeid = Long.valueOf(id);
-            return noticeid;
-        }
+//test
+//        public long MakeRandom(){
+//            Random random = new Random();
+//            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+//            Date date = new Date();
+//            String today = df.format(date);
+//            String ran = String.valueOf(random.nextInt()%9000+10000);
+//
+//            String id = today+ran;
+//            long noticeid = Long.valueOf(id);
+//            return noticeid;
+//        }
 
 
         @Override
         protected void onPreExecute() {
-            mOutputText.setText("");
-            mProgress.show();
+//            mOutputText.setText("");
+//            mProgress.show();
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
-            mProgress.hide();
+//            mProgress.hide();
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+//                mOutputText.setText("No results returned.");
             } else {
-                output.add(0, "Data retrieved using the Google Calendar API:");
-                mOutputText.setText(TextUtils.join("\n", output));
+//                output.add(0, "Data retrieved using the Google Calendar API:");
+//                mOutputText.setText(TextUtils.join("\n", output));
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+//            mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -583,11 +589,11 @@ public class GoogleLogin extends Activity
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             GoogleLogin.REQUEST_AUTHORIZATION);
                 } else {
-                    mOutputText.setText("The following error occurred:\n"
-                        + mLastError.getMessage());
-            }
+//                    mOutputText.setText("The following error occurred:\n"
+//                        + mLastError.getMessage());
+                }
             } else {
-                mOutputText.setText("Request cancelled.");
+//                mOutputText.setText("Request cancelled.");
             }
         }
     }

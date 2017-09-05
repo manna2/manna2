@@ -50,7 +50,7 @@ public class AddAppointment_Person extends Activity {
 
     HttpTransport transport = AndroidHttp.newCompatibleTransport();
     JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
 
     private com.google.api.services.calendar.Calendar mService = null;
     GoogleAccountCredential mCredential;
@@ -223,37 +223,37 @@ public class AddAppointment_Person extends Activity {
                 e.printStackTrace();
             }
 
-//            Event event = new Event()
-//                    .setSummary(name_a);
-//
-//            DateTime startDateTime = new DateTime(start_a);
-//            EventDateTime start = new EventDateTime()
-//                    .setDateTime(startDateTime)
-//                    .setTimeZone("Asia/Seoul");
-//            event.setStart(start);
-//
-//            DateTime endDateTime = new DateTime(end_a);
-//            EventDateTime end = new EventDateTime()
-//                    .setDateTime(endDateTime)
-//                    .setTimeZone("Asia/Seoul");
-//            event.setEnd(end);
-
             Event event = new Event()
-                    .setSummary("qwerqwer")
-                    .setLocation("800 Howard St., San Francisco, CA 94103")
-                    .setDescription("A chance to hear more about Google's developer products.");
+                    .setSummary(name_a);
 
-            DateTime startDateTime = new DateTime("2017-08-30T09:00:00-07:00");
+            DateTime startDateTime = new DateTime(start_a);
             EventDateTime start = new EventDateTime()
                     .setDateTime(startDateTime)
-                    .setTimeZone("America/Los_Angeles");
+                    .setTimeZone("Asia/Seoul");
             event.setStart(start);
 
-            DateTime endDateTime = new DateTime("2017-08-30T17:00:00-07:00");
+            DateTime endDateTime = new DateTime(end_a);
             EventDateTime end = new EventDateTime()
                     .setDateTime(endDateTime)
-                    .setTimeZone("America/Los_Angeles");
+                    .setTimeZone("Asia/Seoul");
             event.setEnd(end);
+
+//            Event event = new Event()
+//                    .setSummary("qwerqwer")
+//                    .setLocation("800 Howard St., San Francisco, CA 94103")
+//                    .setDescription("A chance to hear more about Google's developer products.");
+//
+//            DateTime startDateTime = new DateTime("2017-08-30T09:00:00-07:00");
+//            EventDateTime start = new EventDateTime()
+//                    .setDateTime(startDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setStart(start);
+//
+//            DateTime endDateTime = new DateTime("2017-08-30T17:00:00-07:00");
+//            EventDateTime end = new EventDateTime()
+//                    .setDateTime(endDateTime)
+//                    .setTimeZone("America/Los_Angeles");
+//            event.setEnd(end);
 
 
             String calendarId = "primary";
