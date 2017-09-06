@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.AuthenticationResult;
 import com.microsoft.identity.client.MsalClientException;
@@ -26,6 +27,7 @@ import com.microsoft.identity.client.MsalUiRequiredException;
 import com.microsoft.identity.client.PublicClientApplication;
 import com.microsoft.identity.client.User;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.R;
@@ -42,7 +44,7 @@ public class OutlookCalendar extends AppCompatActivity {
 
     final static String CLIENT_ID = "8124e310-520e-4c43-b3d6-d553c7ec72fd";
     final static String SCOPES [] = {"https://graph.microsoft.com/Calendars.Read"};
-    final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/me/events";
+    final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/me/events?$select=subject,start,end";
 
     private static PublicClientApplication sampleApp;
     private static AuthenticationResult authResult;
@@ -113,8 +115,6 @@ public class OutlookCalendar extends AppCompatActivity {
             /* update the UI to post call Graph state */
 //                updateSuccessUI();
 
-                Intent intent = new Intent(getActivity(), OutlookCalendar.class);
-                startActivity(intent);
             }
 
             @Override
@@ -155,8 +155,6 @@ public class OutlookCalendar extends AppCompatActivity {
             /* update the UI to post call Graph state */
 //                updateSuccessUI();
 
-                Intent intent = new Intent(getActivity(), OutlookCalendar.class);
-                startActivity(intent);
 
             }
 
@@ -202,7 +200,14 @@ public class OutlookCalendar extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
             /* Successfully called graph, process data and send to UI */
-                Log.d(TAG, "Response: " + response.toString());
+//                Log.d(TAG, "Response: " + response.toString());
+
+                try { // json 파싱
+                    ParseEvent(response);
+                }
+                catch (Exception e)
+                { e.printStackTrace(); }
+
 
                 updateGraphUI(response);
             }
@@ -227,6 +232,13 @@ public class OutlookCalendar extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
+
+
+        //여기서 작업하고 나머지
+
+        onPause();
+
+
     }
 
     private void updateGraphUI(JSONObject graphResponse) {
@@ -234,5 +246,24 @@ public class OutlookCalendar extends AppCompatActivity {
         graphText.setText(graphResponse.toString());
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Remove the activity when its off the screen
+        finish();
+    }
+
+    public void ParseEvent(JSONObject event) throws Exception{
+        JSONArray events = event.getJSONArray("value");
+
+        Log.i("eventssize", String.valueOf(events.length()));
+        for(int i=0;i<events.length();i++){
+            Log.i("valuecontent", events.get(i).toString());
+        }
+
+
+
+    }
 
 }
