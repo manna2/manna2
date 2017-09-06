@@ -2,6 +2,7 @@ package org.ssutown.manna2.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -217,8 +218,6 @@ public class OutlookCalendar extends AppCompatActivity {
                 catch (Exception e)
                 { e.printStackTrace(); }
 
-
-                updateGraphUI(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -250,10 +249,6 @@ public class OutlookCalendar extends AppCompatActivity {
 
     }
 
-    private void updateGraphUI(JSONObject graphResponse) {
-        TextView graphText = (TextView) findViewById(R.id.resultcalendar1);
-        graphText.setText(graphResponse.toString());
-    }
 
     @Override
     public void onPause() {
