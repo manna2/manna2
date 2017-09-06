@@ -60,7 +60,6 @@ public class OutlookCalendar extends AppCompatActivity {
     long userID = FragmentHome.userID;
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    Button olbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +209,7 @@ public class OutlookCalendar extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
             /* Successfully called graph, process data and send to UI */
-//                Log.d(TAG, "Response: " + response.toString());
+                Log.d(TAG, "Response: " + response.toString());
 
                 try { // json 파싱
                     ParseEvent(response);
@@ -244,18 +243,9 @@ public class OutlookCalendar extends AppCompatActivity {
 
         //여기서 작업하고 나머지
 
-        onPause();
+//        onPause();
 
 
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        // Remove the activity when its off the screen
-        finish();
     }
 
     public void ParseEvent(JSONObject event) throws Exception{
