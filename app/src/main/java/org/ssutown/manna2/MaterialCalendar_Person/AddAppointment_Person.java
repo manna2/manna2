@@ -48,6 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class AddAppointment_Person extends Activity {
 
+    
     HttpTransport transport = AndroidHttp.newCompatibleTransport();
     JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
     private static final String[] SCOPES = { CalendarScopes.CALENDAR };
