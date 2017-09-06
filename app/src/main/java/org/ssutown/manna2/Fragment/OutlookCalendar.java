@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.AuthenticationResult;
@@ -32,9 +34,12 @@ import org.json.JSONObject;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Jiyeon on 2017-08-18.
@@ -48,6 +53,10 @@ public class OutlookCalendar extends AppCompatActivity {
 
     private static PublicClientApplication sampleApp;
     private static AuthenticationResult authResult;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference outlookdb = database.getReference();
+    long userID = FragmentHome.userID;
 
     private static final String TAG = MainActivity.class.getSimpleName();
     Button olbutton;
@@ -259,11 +268,99 @@ public class OutlookCalendar extends AppCompatActivity {
 
         Log.i("eventssize", String.valueOf(events.length()));
         for(int i=0;i<events.length();i++){
-            Log.i("valuecontent", events.get(i).toString());
+            String eventname = events.getJSONObject(i).getString("subject");
+            String start = events.getJSONObject(i).getJSONObject("start").getString("dateTime");
+            String end = events.getJSONObject(i).getJSONObject("end").getString("dateTime");
+
+            Log.i("valuscontent", eventname + start + end);
+
+            if (!start.substring(0,10).equals(end.substring(0,10))){
+                start = start.substring(0,10);
+                end = end.substring(0,10);
+            }
+
+            saveEventtoFirebase(eventname,start,end);
         }
 
 
 
     }
+    public void saveEventtoFirebase(String event, String start, String end){
+        long uniquekey = MakeRandom();
+        String eventname = event;
+        String eventstart = start;
+        String eventend = end;
+
+        if(start.contains("T")){
+            String tempstart[] = eventstart.split("T");
+            String tempstart1 = tempstart[0];
+            String tempstart2 = tempstart[1];
+
+            String startday1[] = tempstart1.split("-");
+            String starttime[] = tempstart2.split(":");
+
+            String startyear = startday1[0];
+            String startmonth = startday1[1];
+            String startday = startday1[2];
+
+            String starthour = starttime[0];
+            String startminute = starttime[1];
+
+            String tempend[] = eventend.split("T");
+            String tempend1 = tempend[0];
+            String tempend2 = tempend[1];
+
+
+            String endday1[] = tempend1.split("-");
+            String endtime[] = tempend2.split(":");
+
+            String endyear = endday1[0];
+            String endmonth = endday1[1];
+            String endday = endday1[2];
+
+            String endhour = endtime[0];
+            String endminute = endtime[1];
+
+            CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                    startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
+
+            outlookdb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+            list.tostring();
+
+        }
+        else{
+            String startday1[] = start.split("-");
+
+            String startyear = startday1[0];
+            String startmonth = startday1[1];
+            String startday = startday1[2];
+
+            String endday1[] = end.split("-");
+
+            String endyear = endday1[0];
+            String endmonth = endday1[1];
+            String endday = endday1[2];
+
+            CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                    startday,"x","x", endyear, endmonth, endday, "x", "x");
+
+            outlookdb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+            list.tostring();
+        }
+
+    }
+
+    public long MakeRandom(){
+        Random random = new Random();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+        Date date = new Date();
+        String today = df.format(date);
+        String ran = String.valueOf(random.nextInt()%9000+10000);
+
+        String id = today+ran;
+        long noticeid = Long.valueOf(id);
+        return noticeid;
+    }
+
 
 }
