@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MANNA2.iml" filepath="$PROJECT_DIR$/MANNA2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Manna.iml" filepath="$PROJECT_DIR$/Manna.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/manna2.iml" filepath="$PROJECT_DIR$/manna2.iml" />
       <module fileurl="file://$PROJECT_DIR$/mannaza.iml" filepath="$PROJECT_DIR$/mannaza.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tabviewlibrary/tabviewlibrary.iml" filepath="$PROJECT_DIR$/tabviewlibrary/tabviewlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/tabviewlibrary/tabviewlibrary.iml" filepath="$PROJECT_DIR$/tabviewlibrary/tabviewlibrary.iml" />
     </modules>
   </component>

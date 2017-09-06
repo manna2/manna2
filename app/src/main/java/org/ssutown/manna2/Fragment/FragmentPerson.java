@@ -70,7 +70,7 @@ public class FragmentPerson extends Fragment {
                                 et1.putBoolean("key", false);
                                 et1.apply();
 
-                                Intent intent = new Intent(getActivity(), OutlookLogin.class);
+                                Intent intent = new Intent(getActivity(), OutlookCalendar.class);
                                 startActivity(intent);
 
                             }
