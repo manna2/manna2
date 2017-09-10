@@ -502,18 +502,17 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
 
-        int month = Integer.valueOf(event.getStartTime().toString().split("MONTH=")[1].split(",")[0])+1;
-        int day = Integer.valueOf(event.getStartTime().toString().split("DAY_OF_MONTH=")[1].split(",")[0]);
+        final int month = Integer.valueOf(event.getStartTime().toString().split("MONTH=")[1].split(",")[0])+1;
+        final int day = Integer.valueOf(event.getStartTime().toString().split("DAY_OF_MONTH=")[1].split(",")[0]);
         Toast.makeText(this, "Clicked " + String.valueOf(month)+"month, "+String.valueOf(day)+"day", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("미팅 시간 정하기");
-        alert.setMessage("미팅 시간 입력");
+        alert.setMessage("미팅 시간 입력" + String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 ");
 
-// Set an EditText view to get user input
         final EditText input = new EditText(this);
         alert.setView(input);
-        input.setText("미팅 시간: "+String.valueOf(month)+"월 "+String.valueOf(day)+"일 \n"+ "시간: ");
+        input.setText("시간 및 위치: ");
 
         alert.setPositiveButton("미팅 확정", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -521,18 +520,19 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
                 long noticeid = MakeRandom();
                 ListViewItem newitem = new ListViewItem(String.valueOf(userID),
-                        "bear",value, String.valueOf(noticeid));
+                        "bear",String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 \n"+ value, String.valueOf(noticeid));
 
                 databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
-                Log.i("message", value);
-// Do something with value!
+
+
+
             }
         });
 
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-// Canceled.
+
                     }
                 });
         alert.show();

@@ -12,7 +12,7 @@ import org.ssutown.manna2.MaterialCalendar_Schedule.MaterialCalendarFragment;
 import org.ssutown.manna2.R;
 
 
-public class FragmentSchedule extends Fragment {
+public class  FragmentSchedule extends Fragment {
     TextView textView;
 
     public static FragmentSchedule newInstance(String text){
