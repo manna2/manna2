@@ -72,12 +72,32 @@
         android:id="@+id/bar84"
         />
 
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="미팅탈퇴하기"
+        android:layout_below="@+id/bar84"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:layout_below="@+id/exit"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/bar85"
+        />
+
     <TextView
         android:id="@+id/member"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/invite"
-        android:layout_below="@+id/bar84"
+        android:layout_below="@+id/bar85"
         android:layout_centerVertical="true"
         android:text="멤버목록"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />

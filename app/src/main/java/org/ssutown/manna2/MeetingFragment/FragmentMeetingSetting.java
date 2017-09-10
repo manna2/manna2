@@ -1,5 +1,8 @@
 package org.ssutown.manna2.MeetingFragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ import com.kakao.util.helper.log.Logger;
 import org.ssutown.manna2.Fragment.FragmentHome;
 import org.ssutown.manna2.MeetingListview.ListViewAdapter;
 import org.ssutown.manna2.MeetingRoom.User;
+import org.ssutown.manna2.NoticeListview.ListViewItem;
 import org.ssutown.manna2.R;
 import org.ssutown.manna2.MeetingRoom.meeting_Info;
 
@@ -50,6 +55,7 @@ public class FragmentMeetingSetting extends Fragment {
         meeting_info = MeetingMainActivity.info;
         Button setmeeting = (Button)view.findViewById(R.id.setmeeting);
         Button kakaoInvite = (Button)view.findViewById(R.id.invite);
+        final Button exit = (Button)view.findViewById(R.id.exit);
 
         ArrayList<User> users= MeetingMainActivity.users;
 
@@ -66,6 +72,32 @@ public class FragmentMeetingSetting extends Fragment {
 
             }
         });
+
+        final Context context = this.getActivity();
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                alert.setTitle("미팅탈퇴");
+                alert.setMessage("미팅방을 탈퇴하시겠습니까?");
+
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Toast.makeText(getActivity(),"탈퇴되었습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alert.setNegativeButton("아니요",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                });
+                alert.show();
+            }
+        });
+
+
 
         kakaoInvite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +142,9 @@ public class FragmentMeetingSetting extends Fragment {
             }
         });
 
+    }
+
+    public void out(){
     }
 
 
