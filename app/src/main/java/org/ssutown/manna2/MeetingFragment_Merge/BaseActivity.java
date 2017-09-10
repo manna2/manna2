@@ -1,5 +1,8 @@
 package org.ssutown.manna2.MeetingFragment_Merge;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import org.ssutown.manna2.Fragment.CalendarItem;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
 import org.ssutown.manna2.MeetingRoom.User;
+import org.ssutown.manna2.NoticeListview.ListViewItem;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static org.ssutown.manna2.MeetingFragment.MeetingMainActivity.users;
 
@@ -48,6 +54,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
+    final String meetingid = MeetingMainActivity.meetingid;
 
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
@@ -494,12 +501,51 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+
+        int month = Integer.valueOf(event.getStartTime().toString().split("MONTH=")[1].split(",")[0])+1;
+        int day = Integer.valueOf(event.getStartTime().toString().split("DAY_OF_MONTH=")[1].split(",")[0]);
+        Toast.makeText(this, "Clicked " + String.valueOf(month)+"month, "+String.valueOf(day)+"day", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("미팅 시간 정하기");
+        alert.setMessage("미팅 시간 입력");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        input.setText("미팅 시간: "+String.valueOf(month)+"월 "+String.valueOf(day)+"일 \n"+ "시간: ");
+
+        alert.setPositiveButton("미팅 확정", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+
+                long noticeid = MakeRandom();
+                ListViewItem newitem = new ListViewItem(String.valueOf(userID),
+                        "bear",value, String.valueOf(noticeid));
+
+                databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
+                Log.i("message", value);
+// Do something with value!
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+// Canceled.
+                    }
+                });
+        alert.show();
+
+
+
+
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -509,5 +555,16 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     public WeekView getWeekView() {
         return mWeekView;
+    }
+    public long MakeRandom(){
+        Random random = new Random();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+        Date date = new Date();
+        String today = df.format(date);
+        String ran = String.valueOf(random.nextInt()%9000+10000);
+
+        String id = today+ran;
+        long noticeid = Long.valueOf(id);
+        return noticeid;
     }
 }
