@@ -52,11 +52,19 @@ public class PatternLockApproach extends AppCompatActivity {
             if(new String(PatternLockUtils.patternToString(mPatternLockView, pattern)).equals(getPreferences()))
             {   //암호를 정상적으로 입력한 경우
                 finish();
+
+                Intent intent = new Intent(getApplicationContext(), Security_Lock.class);
+                startActivity(intent);
             }
             else
             {
+                Intent intent = new Intent(getApplication(),PatternLockCheck.class);
+                startActivity(intent);
+
                 Toast toast = Toast.makeText(getApplicationContext(),"다시 시도",Toast.LENGTH_SHORT);
                 toast.show();
+
+                finish();
             }
 
         }
@@ -75,7 +83,7 @@ public class PatternLockApproach extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_patternlock_check);
+        setContentView(R.layout.activity_patternlock);
 
         mPatternLockView = (PatternLockView) findViewById(R.id.patter_lock_view);
         mPatternLockView.setDotCount(3);
