@@ -60,7 +60,7 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
     static private ArrayList<User> memberID = MeetingMainActivity.users;
-    static String value1;
+    static String value = "";
 
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -507,6 +507,19 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
         final int day = Integer.valueOf(event.getStartTime().toString().split("DAY_OF_MONTH=")[1].split(",")[0]);
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        String noticeevent;
+        if ((month < 10) && (day < 10)) {
+            noticeevent = "year2017" + "month0" + month + "day0" + day;
+
+        } else if ((month < 10)) {
+            noticeevent = "year2017" + "month0" + month + "day" + day;
+        } else if (day < 10) {
+            noticeevent = "year2017" + "month" + month + "day0" + day;
+        } else {
+            noticeevent = "year2017" + "month" + month + "day" + day;
+        }
+        final String notice1 = noticeevent;
+
         alert.setTitle("미팅 시간 정하기");
         alert.setMessage("미팅 시간 입력" + String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 ");
 
@@ -516,14 +529,37 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
         alert.setPositiveButton("미팅 확정", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                value1 = value;
+                 value = input.getText().toString();
                 long noticeid = MakeRandom();
                 ListViewItem newitem = new ListViewItem(String.valueOf(userID),
                         "bear",String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 \n"+ value, String.valueOf(noticeid));
 
                 databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
+                databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if(ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_id().equals(String.valueOf(meetingid))){
+                                String title = ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_name();
+
+                                for(int i=0;i<memberID.size();i++){
+                                    long uniquekey = MakeRandom();
+                                    CalendarItem list = new CalendarItem(value,notice1,"meet",uniquekey,title,"x","x","x","x","x","x","x","x","x");
+
+                                    databaseReference.child("user_Info").child(String.valueOf(memberID.get(i).getUserID())).child("calendar").push().setValue(list);
+                                }
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
             }
@@ -536,49 +572,6 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     }
                 });
         alert.show();
-
-        String noticeevent;
-        if ((month < 10) && (day < 10)) {
-            noticeevent = "year2017" + "month0" + month + "day0" + day;
-
-        } else if ((month < 10)) {
-             noticeevent = "year2017" + "month0" + month + "day" + day;
-        } else if (day < 10) {
-             noticeevent = "year2017" + "month" + month + "day0" + day;
-        } else {
-            noticeevent = "year2017" + "month" + month + "day" + day;
-        }
-        final String notice1 = noticeevent;
-
-
-        databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if(ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_id().equals(String.valueOf(meetingid))){
-                        String title = ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_name();
-
-                        for(int i=0;i<memberID.size();i++){
-                            long uniquekey = MakeRandom();
-                            CalendarItem list = new CalendarItem(input.getText().toString()+ value1,notice1,"meet",uniquekey,title,"x","x","x","x","x","x","x","x","x");
-
-                            databaseReference.child("user_Info").child(String.valueOf(memberID.get(i).getUserID())).child("calendar").push().setValue(list);
-                        }
-
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
 
 
     }
