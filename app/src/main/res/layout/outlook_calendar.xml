@@ -4,24 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/resultcalendar1"
-        android:layout_weight="2" />
 
     <Button
-        android:text="Button"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
         android:id="@+id/outlookcalendar"
-        android:layout_weight="1" />
-
-    <TextView
-        android:text="TextView"
+        android:text="Call Microsoft Graph"
+        android:textColor="#FFFFFF"
+        android:background="#00a1f1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/resultcalendar2"
-        android:layout_weight="5" />
+        android:layout_marginTop="200dp"
+        android:textAllCaps="false" />
+
 </LinearLayout>

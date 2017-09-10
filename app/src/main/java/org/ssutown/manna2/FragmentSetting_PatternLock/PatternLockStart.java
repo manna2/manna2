@@ -1,5 +1,9 @@
 package org.ssutown.manna2.FragmentSetting_PatternLock;
 
+/**
+ * Created by yunnahae on 2017. 9. 10..
+ */
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,7 +31,7 @@ import io.reactivex.functions.Consumer;
  * Created by yunnahae on 2017. 8. 30..
  */
 
-public class PatternLockApproach extends AppCompatActivity {
+public class PatternLockStart extends AppCompatActivity {
 
 
     private PatternLockView mPatternLockView;
@@ -52,13 +56,10 @@ public class PatternLockApproach extends AppCompatActivity {
             if(new String(PatternLockUtils.patternToString(mPatternLockView, pattern)).equals(getPreferences()))
             {   //암호를 정상적으로 입력한 경우
                 finish();
-
-                Intent intent = new Intent(getApplicationContext(), Security_Lock.class);
-                startActivity(intent);
             }
             else
             {
-                Intent intent = new Intent(getApplication(),PatternLockCheck.class);
+                Intent intent = new Intent(getApplication(),PatternLockStartCheck.class);
                 startActivity(intent);
 
                 Toast toast = Toast.makeText(getApplicationContext(),"다시 시도",Toast.LENGTH_SHORT);

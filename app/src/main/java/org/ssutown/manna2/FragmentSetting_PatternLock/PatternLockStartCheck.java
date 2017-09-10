@@ -1,13 +1,19 @@
 package org.ssutown.manna2.FragmentSetting_PatternLock;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
+
+/**
+ * Created by yunnahae on 2017. 8. 29..
+ */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.content.Intent;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
@@ -17,18 +23,13 @@ import com.andrognito.rxpatternlockview.RxPatternLockView;
 import com.andrognito.rxpatternlockview.events.PatternLockCompleteEvent;
 import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent;
 
-import org.ssutown.manna2.R;
-
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by yunnahae on 2017. 8. 30..
- */
+import org.ssutown.manna2.R;
 
-public class PatternLockApproach extends AppCompatActivity {
-
+public class PatternLockStartCheck extends AppCompatActivity {
 
     private PatternLockView mPatternLockView;
 
@@ -50,25 +51,27 @@ public class PatternLockApproach extends AppCompatActivity {
                     PatternLockUtils.patternToString(mPatternLockView, pattern));
 
             if(new String(PatternLockUtils.patternToString(mPatternLockView, pattern)).equals(getPreferences()))
-            {   //암호를 정상적으로 입력한 경우
+            {   //만약 두 암호가 같은 경우 ( 즉, 정상적인 경우 )
+
                 finish();
 
-                Intent intent = new Intent(getApplicationContext(), Security_Lock.class);
-                startActivity(intent);
             }
             else
-            {
-                Intent intent = new Intent(getApplication(),PatternLockCheck.class);
+            {   // 두 암호가 다른 경우
+                Intent intent = new Intent(getApplication(),PatternLockStartCheck.class);
                 startActivity(intent);
 
-                Toast toast = Toast.makeText(getApplicationContext(),"다시 시도",Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(),"잘못된 암호 입력입니다",Toast.LENGTH_SHORT);
                 toast.show();
 
                 finish();
             }
 
-        }
+            savePreferences(true);
 
+            finish();
+
+        }
 
         @Override
         public void onCleared() {
@@ -83,7 +86,7 @@ public class PatternLockApproach extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_patternlock);
+        setContentView(R.layout.activity_patternlock_check);
 
         mPatternLockView = (PatternLockView) findViewById(R.id.patter_lock_view);
         mPatternLockView.setDotCount(3);
@@ -134,6 +137,13 @@ public class PatternLockApproach extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         return pref.getString("patternlock", "");
+    }
+
+    private void savePreferences(Boolean check){
+        SharedPreferences pref = getSharedPreferences("prefC", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("on/off", check);
+        editor.commit();
     }
 
 }

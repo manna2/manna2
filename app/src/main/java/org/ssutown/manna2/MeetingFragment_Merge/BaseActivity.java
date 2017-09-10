@@ -1,5 +1,8 @@
 package org.ssutown.manna2.MeetingFragment_Merge;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.Fragment.CalendarItem;
+import org.ssutown.manna2.Fragment.FragmentHome;
 import org.ssutown.manna2.MainActivity;
 import org.ssutown.manna2.MeetingFragment.MeetingMainActivity;
 import org.ssutown.manna2.MeetingRoom.User;
+import org.ssutown.manna2.NoticeListview.ListViewItem;
 import org.ssutown.manna2.R;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static org.ssutown.manna2.MeetingFragment.MeetingMainActivity.users;
 
@@ -48,12 +55,13 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
-
+    final String meetingid = MeetingMainActivity.meetingid;
+    protected long userID = FragmentHome.userID;
     private int mWeekViewType = TYPE_WEEK_VIEW;
     private WeekView mWeekView;
-    private ArrayList<User> memberID = MeetingMainActivity.users;
+    static private ArrayList<User> memberID = MeetingMainActivity.users;
+    static String value = "";
 
-    private long userID = MainActivity.userID;
     private ArrayList<HashMap<String, String>> mSavedEvents;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
@@ -494,12 +502,84 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+
+        final int month = Integer.valueOf(event.getStartTime().toString().split("MONTH=")[1].split(",")[0])+1;
+        final int day = Integer.valueOf(event.getStartTime().toString().split("DAY_OF_MONTH=")[1].split(",")[0]);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        String noticeevent;
+        if ((month < 10) && (day < 10)) {
+            noticeevent = "year2017" + "month0" + month + "day0" + day;
+
+        } else if ((month < 10)) {
+            noticeevent = "year2017" + "month0" + month + "day" + day;
+        } else if (day < 10) {
+            noticeevent = "year2017" + "month" + month + "day0" + day;
+        } else {
+            noticeevent = "year2017" + "month" + month + "day" + day;
+        }
+        final String notice1 = noticeevent;
+
+        alert.setTitle("미팅 시간 정하기");
+        alert.setMessage("미팅 시간 입력" + String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 ");
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        input.setText("시간 및 위치: ");
+
+        alert.setPositiveButton("미팅 확정", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                 value = input.getText().toString();
+                long noticeid = MakeRandom();
+                ListViewItem newitem = new ListViewItem(String.valueOf(userID),
+                        "bear",String.valueOf(month)+ "월/ "+String.valueOf(day)+"일 \n"+ value, String.valueOf(noticeid));
+
+                databaseReference.child("meeting_Info").child(meetingid).child("Notices").push().setValue(newitem);
+                databaseReference.child("meeting_List").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if(ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_id().equals(String.valueOf(meetingid))){
+                                String title = ds.getValue(org.ssutown.manna2.MeetingRoom.meeting_Info.class).getMeeting_name();
+
+                                for(int i=0;i<memberID.size();i++){
+                                    long uniquekey = MakeRandom();
+                                    CalendarItem list = new CalendarItem(value,notice1,"meet",uniquekey,title,"x","x","x","x","x","x","x","x","x");
+
+                                    databaseReference.child("user_Info").child(String.valueOf(memberID.get(i).getUserID())).child("calendar").push().setValue(list);
+                                }
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                });
+        alert.show();
+
+
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -509,5 +589,16 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
 
     public WeekView getWeekView() {
         return mWeekView;
+    }
+    public long MakeRandom(){
+        Random random = new Random();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+        Date date = new Date();
+        String today = df.format(date);
+        String ran = String.valueOf(random.nextInt()%9000+10000);
+
+        String id = today+ran;
+        long noticeid = Long.valueOf(id);
+        return noticeid;
     }
 }

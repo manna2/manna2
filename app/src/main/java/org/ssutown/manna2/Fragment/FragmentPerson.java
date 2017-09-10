@@ -33,7 +33,10 @@ public class FragmentPerson extends Fragment {
         Context context = this.getActivity();
         final SharedPreferences login = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
-//        if(login.getBoolean("key", true)) {
+        Log.i("SharedPreferences", String.valueOf(login.getInt("login", 0)));
+
+        //이제 다이얼로그 한번 띄우는거 부터 해야해
+//        if(login.getInt("login", 0) == 0 ) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         // 제목셋팅key
         alertDialogBuilder.setTitle("계정 연동");
@@ -57,8 +60,10 @@ public class FragmentPerson extends Fragment {
                                 //
 
                                 SharedPreferences.Editor et1 = login.edit();
-                                et1.putBoolean("key", false);
+                                et1.putInt("login", 2);
                                 et1.apply();
+                                Log.i("SharedPreferences1", String.valueOf(login.getInt("login", 0)));
+
                             }
                         })
                 .setNegativeButton("아웃룩",
@@ -67,9 +72,9 @@ public class FragmentPerson extends Fragment {
                                     DialogInterface dialog, int id) {
 
                                 SharedPreferences.Editor et1 = login.edit();
-                                et1.putBoolean("key", false);
+                                et1.putInt("login", 2);
                                 et1.apply();
-
+                                Log.i("SharedPreferences2", String.valueOf(login.getInt("login", 0)));
                                 Intent intent = new Intent(getActivity(), OutlookLogin.class);
                                 startActivity(intent);
 

@@ -16,6 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.ssutown.manna2.Fragment.FragmentSample;
+import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLockApproach;
+import org.ssutown.manna2.FragmentSetting_PatternLock.PatternLockStart;
 import org.ssutown.manna2.HomeFragment.profile;
 import org.ssutown.manna2.MeetingRoom.User;
 import org.ssutown.manna2.MeetingRoom.meeting;
@@ -53,6 +55,14 @@ public class MainActivity extends FragmentActivity {
 //        }
 
         Log.d("ID", "onCreate: " + getUserID());
+
+
+        if(getPreferences() == true)
+        {
+            Intent intent = new Intent(getApplicationContext(), PatternLockStart.class);
+            startActivity(intent);
+        }
+
 
     }
 
@@ -163,6 +173,11 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
+    }
+
+    private Boolean getPreferences(){
+        SharedPreferences pref = getSharedPreferences("prefC", MODE_PRIVATE);
+        return pref.getBoolean("on/off",false);
     }
 
 }
