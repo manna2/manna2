@@ -142,7 +142,8 @@ public class MaterialCalendarFragment extends Fragment implements View.OnClickLi
                 mSavedEvents.clear();
                 mSavedDay.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    mSavedEvents.add(ds.getValue(CalendarItem.class));
+                    if(!ds.getValue(CalendarItem.class).getEnd().equals("meet"))
+                        mSavedEvents.add(ds.getValue(CalendarItem.class));
                     //들어감
                 }
                 for(int i=0;i<mSavedEvents.size();i++) {
