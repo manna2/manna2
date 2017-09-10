@@ -65,11 +65,11 @@ public class FragmentSetting extends Fragment {
                     }
                     else if(getPreferences() == true)
                     {
-//                        Intent intentApproach = new Intent(getActivity(), PatternLockApproach.class);
-//                        startActivity(intentApproach);
+                        Intent intentApproach = new Intent(getActivity(), PatternLockApproach.class);
+                        startActivity(intentApproach);
 
-                        Intent intent = new Intent(getActivity(), Security_Lock.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getActivity(), Security_Lock.class);
+//                        startActivity(intent);
                     }
 
                 }
