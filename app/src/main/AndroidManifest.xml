@@ -58,6 +58,8 @@
         <activity android:name=".FragmentSetting_PatternLock.Security_Lock"/>
         <activity android:name=".FragmentSetting_PatternLock.PatternLockCheck"/>
         <activity android:name=".FragmentSetting_PatternLock.PatternLockApproach"/>
+        <activity android:name=".FragmentSetting_PatternLock.PatternLockStart"/>
+        <activity android:name=".FragmentSetting_PatternLock.PatternLockStartCheck"/>
 
     </application>
 
