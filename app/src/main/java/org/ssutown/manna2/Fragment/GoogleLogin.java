@@ -186,15 +186,35 @@ public class GoogleLogin extends Activity
                 this, Manifest.permission.GET_ACCOUNTS)) {
             String accountName = getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
+
+
+
+
+            startActivityForResult(
+                    mCredential.newChooseAccountIntent(),
+                    REQUEST_ACCOUNT_PICKER);
+
+
+
+
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
                 sendAccountName(accountName);
                 getResultsFromApi();
+
+                Log.v("googleLog","1");
+
+
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(
                         mCredential.newChooseAccountIntent(),
                         REQUEST_ACCOUNT_PICKER);
+
+
+                Log.v("googleLog","2");
+
+
             }
         } else {
             // Request the GET_ACCOUNTS permission via a user dialog
