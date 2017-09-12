@@ -182,6 +182,12 @@ public class GoogleLogin extends Activity
     @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
     private void chooseAccount() {
 
+
+        startActivityForResult(
+                mCredential.newChooseAccountIntent(),
+                REQUEST_ACCOUNT_PICKER);
+
+
         if (EasyPermissions.hasPermissions(
                 this, Manifest.permission.GET_ACCOUNTS)) {
             String accountName = getPreferences(Context.MODE_PRIVATE)
