@@ -47,6 +47,7 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
         userID = Kakao_Login.getLong("KAKAO_ID", 0);
 
+
 //        if (Kakao_Login.getBoolean("Kakao_Login", false)){
 ////            FirebaseDatabase database = FirebaseDatabase.getInstance();
 ////            DatabaseReference databaseReference = database.getReference();

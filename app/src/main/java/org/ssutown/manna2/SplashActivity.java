@@ -51,13 +51,13 @@ public class SplashActivity extends AppCompatActivity {
         SessionCallback sessionCallback;
         Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
 
-        if(Kakao_Login.getBoolean("KAKAO_LOGIN",false)){
-            Log.d(TAG, "onCreate: " + GET_FROM_SharedPreferences);
-            Log.d(TAG, "onSuccess: id " + Kakao_Login.getLong("KAKAO_ID",0) + " " + Kakao_Login.getBoolean("KAKAO_LOGIN",false));
-            Intent returnIntent = new Intent();
-            setResult(GET_FROM_SharedPreferences, returnIntent);
-            finish();
-        }
+//        if(Kakao_Login.getBoolean("KAKAO_LOGIN",false)){
+//            Log.d(TAG, "onCreate: " + GET_FROM_SharedPreferences);
+//            Log.d(TAG, "onSuccess: id " + Kakao_Login.getLong("KAKAO_ID",0) + " " + Kakao_Login.getBoolean("KAKAO_LOGIN",false));
+//            Intent returnIntent = new Intent();
+//            setResult(GET_FROM_SharedPreferences, returnIntent);
+//            finish();
+//        }
 
 //        SharedPreferences.Editor editor = Kakao_Login.edit();
 //        editor.putBoolean("KAKAO_ID", false);
