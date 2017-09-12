@@ -424,7 +424,8 @@ public class GoogleLogin extends Activity
         protected List<String> doInBackground(Void... params) {
             try {
 
-                Log.v("googleLog","doInBackground");
+                Log.v("" +
+                        "","doInBackground");
 
                 return getDataFromApi();
             } catch (Exception e) {
@@ -466,7 +467,7 @@ public class GoogleLogin extends Activity
                 eventStrings.add(
                         String.format("%s (%s) (%s)", event.getSummary(), start, end));
                 Log.i("calendar", start.toString()+ end.toString());
-//test                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
+                saveEventtoFirebase(event.getSummary(), start.toString(), end.toString());
 
             }
 

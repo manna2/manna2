@@ -36,7 +36,7 @@ public class FragmentPerson extends Fragment {
         Log.i("SharedPreferences", String.valueOf(login.getInt("login", 0)));
 
         //이제 다이얼로그 한번 띄우는거 부터 해야해
-        if(login.getInt("login", 0) == 0 ) {
+//        if(login.getInt("login", 0) == 0 ) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         // 제목셋팅key
         alertDialogBuilder.setTitle("계정 연동");
@@ -86,7 +86,7 @@ public class FragmentPerson extends Fragment {
 
         // 다이얼로그 보여주기
         alertDialog.show();
-        }
+//        }
 
         if (savedInstanceState == null) {
             getActivity().getFragmentManager().beginTransaction().add(R.id.main_container1, new MaterialCalendarFragment()).commit();
