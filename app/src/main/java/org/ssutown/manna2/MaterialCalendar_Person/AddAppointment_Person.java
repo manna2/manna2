@@ -276,7 +276,7 @@ public class AddAppointment_Person extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             long uniquekey = MakeRandom();
             String eventname = name_a;
             String eventstart = start_a;
