@@ -62,7 +62,6 @@ public class AddAppointment_Person extends Activity {
     private com.google.api.services.calendar.Calendar mService = null;
     GoogleAccountCredential mCredential;
 
-
     long userID = FragmentHome.userID;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference calendardb = database.getReference();
@@ -222,7 +221,8 @@ public class AddAppointment_Person extends Activity {
          * @throws IOException
          */
 
-        public void insertEvent(com.google.api.services.calendar.Calendar mService,String name_a,String start_a,String end_a) throws IOException {
+        public void insertEvent(com.google.api.services.calendar.Calendar mService,String name_a,
+                                String start_a,String end_a) throws IOException {
 
             Log.v("googleAdd","insertEvent()");
 
@@ -272,9 +272,11 @@ public class AddAppointment_Person extends Activity {
             try {
                 mService.events().insert(calendarId, event).execute();
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            
             long uniquekey = MakeRandom();
             String eventname = name_a;
             String eventstart = start_a;

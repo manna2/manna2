@@ -11,11 +11,40 @@
     tools:context="org.ssutown.manna2.Fragment.FragmentSetting"
     tools:showIn="@layout/activity_main">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:id="@+id/bar21"
+        />
+
+    <TextView
+        android:text="설정"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:id="@+id/person"
+        android:background="#ffffffff"
+        android:layout_below="@+id/bar21"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#99000000"
+        android:layout_below="@+id/person"
+        android:id="@+id/bar22"
+        android:layout_marginTop="5dp"
+        />
+
     <ListView
         android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
         android:divider="#D3D3D3"
+        android:layout_below="@+id/bar22"
         android:dividerHeight="2dp"/>
 
 
