@@ -7,6 +7,7 @@ android {
         applicationId "org.ssutown.manna2"
         minSdkVersion 21
         targetSdkVersion 23
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -33,7 +34,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
 
-
+    compile 'com.android.support:multidex:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
 

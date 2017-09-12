@@ -31,14 +31,20 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import org.ssutown.manna2.Fragment.CalendarItem;
+import org.ssutown.manna2.Fragment.FragmentHome;
 import org.ssutown.manna2.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -55,6 +61,9 @@ public class AddAppointment_Person extends Activity {
     private com.google.api.services.calendar.Calendar mService = null;
     GoogleAccountCredential mCredential;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference calendardb = database.getReference();
+    long userID = FragmentHome.userID;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -210,7 +219,8 @@ public class AddAppointment_Person extends Activity {
          * @throws IOException
          */
 
-        public void insertEvent(com.google.api.services.calendar.Calendar mService,String name_a,String start_a,String end_a) throws IOException {
+        public void insertEvent(com.google.api.services.calendar.Calendar mService,String name_a,
+                                String start_a,String end_a) throws IOException {
 
             Log.v("googleAdd","insertEvent()");
 
@@ -260,10 +270,87 @@ public class AddAppointment_Person extends Activity {
             try {
                 mService.events().insert(calendarId, event).execute();
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            long uniquekey = MakeRandom();
+            String eventname = name_a;
+            String eventstart = start_a;
+            String eventend = end_a;
+
+            if(start_a.contains("T")){
+                String tempstart[] = eventstart.split("T");
+                String tempstart1 = tempstart[0];
+                String tempstart2 = tempstart[1];
+
+                String startday1[] = tempstart1.split("-");
+                String starttime[] = tempstart2.split(":");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String starthour = starttime[0];
+                String startminute = starttime[1];
+
+                String tempend[] = eventend.split("T");
+                String tempend1 = tempend[0];
+                String tempend2 = tempend[1];
+
+
+                String endday1[] = tempend1.split("-");
+                String endtime[] = tempend2.split(":");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                String endhour = endtime[0];
+                String endminute = endtime[1];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,starthour,startminute, endyear, endmonth, endday, endhour, endminute);
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+
+            }
+            else{
+                String startday1[] = start_a.split("-");
+
+                String startyear = startday1[0];
+                String startmonth = startday1[1];
+                String startday = startday1[2];
+
+                String endday1[] = end_a.split("-");
+
+                String endyear = endday1[0];
+                String endmonth = endday1[1];
+                String endday = endday1[2];
+
+                CalendarItem list = new CalendarItem(eventname,eventstart,eventend,uniquekey, startyear, startmonth,
+                        startday,"x","x", endyear, endmonth, endday, "x", "x");
+
+                calendardb.child("user_Info").child(String.valueOf(userID)).child("calendar").push().setValue(list);
+                list.tostring();
+            }
+
         }
+
+        public long MakeRandom(){
+            Random random = new Random();
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+            Date date = new Date();
+            String today = df.format(date);
+            String ran = String.valueOf(random.nextInt()%9000+10000);
+
+            String id = today+ran;
+            long noticeid = Long.valueOf(id);
+            return noticeid;
+        }
+
 
         private List<String> getDataFromApi() throws IOException {
 
