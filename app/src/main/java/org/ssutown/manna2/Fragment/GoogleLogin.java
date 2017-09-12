@@ -188,15 +188,6 @@ public class GoogleLogin extends Activity
                     .getString(PREF_ACCOUNT_NAME, null);
 
 
-
-
-            startActivityForResult(
-                    mCredential.newChooseAccountIntent(),
-                    REQUEST_ACCOUNT_PICKER);
-
-
-
-
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
                 sendAccountName(accountName);
