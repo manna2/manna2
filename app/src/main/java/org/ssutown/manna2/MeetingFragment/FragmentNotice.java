@@ -121,7 +121,6 @@ public class FragmentNotice extends Fragment {
 
         //add notice 후
 
-
         //공지사항 추가가
         databaseReference.child("meeting_Info").child(meetingid).child("Notices").addValueEventListener(new ValueEventListener() {
             @Override
@@ -130,6 +129,8 @@ public class FragmentNotice extends Fragment {
                 for(final DataSnapshot ds: dataSnapshot.getChildren()) {
                     for(int i = 0; i<((MeetingMainActivity)getActivity()).users.size(); i++){
                         if(((MeetingMainActivity)getActivity()).users.get(i).getUserID().equals(ds.getValue(ListViewItem.class).getUsername())) {
+                            Log.d("meetingusers", ((MeetingMainActivity)getActivity()).users.get(i).getAnimal() +
+                                    ((MeetingMainActivity)getActivity()).users.get(i).getNickname());
                             adapter.addItem(((MeetingMainActivity)getActivity()).users.get(i).getAnimal(),
                                     ((MeetingMainActivity)getActivity()).users.get(i).getNickname(),
                                     ds.getValue(ListViewItem.class).getContents(),

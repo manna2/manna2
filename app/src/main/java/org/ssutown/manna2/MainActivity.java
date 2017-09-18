@@ -47,6 +47,15 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences Kakao_Login = getSharedPreferences("Kakao_Login", MODE_PRIVATE);
         userID = Kakao_Login.getLong("KAKAO_ID", 0);
 
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference databaseReference = firebaseDatabase.getReference();
+//
+//        meeting meeting = new meeting("2017091210404313032");
+//        databaseReference.child("user_Info").child("0").child("personalMeetingList").push().setValue(meeting);
+//
+//        User user = new User("fox","soongsil","0");
+//        databaseReference.child("meeting_Info").child("2017091210404313032").child("Users").push().setValue(user);
+
 
 //        if (Kakao_Login.getBoolean("Kakao_Login", false)){
 ////            FirebaseDatabase database = FirebaseDatabase.getInstance();

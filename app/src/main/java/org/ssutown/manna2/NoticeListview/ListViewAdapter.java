@@ -53,6 +53,7 @@ public class ListViewAdapter extends BaseAdapter {
 //        int image = R.drawable.bear;
 
         Log.d("listviewAdapter", "getView: " + animal);
+
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageResource(setProfileIamge(animal));
         iconImageView.getLayoutParams().height = 130;
