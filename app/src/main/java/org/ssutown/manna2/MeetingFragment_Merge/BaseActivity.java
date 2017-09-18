@@ -242,7 +242,10 @@ public class BaseActivity extends AppCompatActivity implements WeekView.EventCli
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         HashMap<String, String> temp = new HashMap<String, String>();
 
-                        if(ds.getValue(CalendarItem.class).getStarthour().equals("x") ){
+                        if(ds.getValue(CalendarItem.class).getStartday().equals("x")){
+
+                        }
+                        else if(ds.getValue(CalendarItem.class).getStarthour().equals("x") ){
                             if(ds.getValue(CalendarItem.class).getStartyear().equals(ds.getValue(CalendarItem.class).getEndyear()) &&
                                     ds.getValue(CalendarItem.class).getStartmonth().equals(ds.getValue(CalendarItem.class).getEndmonth()) &&
                                             ds.getValue(CalendarItem.class).getStartday().equals(ds.getValue(CalendarItem.class).getEndday())) {
