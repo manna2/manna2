@@ -53,4 +53,4 @@ MANNA2
 ![Alt text](./calendar.png "Optional title")
 
 4. 팀원들과의 스케줄 통합한 화면
-![Alt text](./integrate.png "Optional title")
+![Alt text](./intergrate.png "Optional title")
