@@ -34,6 +34,7 @@ MANNA2
 - Google calendar API
 - Microsoft Outlook calendar API
 - Kakaotalk login API
+- Google firebase API
 
 ## 실행 화면
 
